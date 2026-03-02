@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" role="img" aria-labelledby="t d">
+  <title id="t">Reels Promo Event</title>
+  <desc id="d">Komposisi feed vertikal untuk reels promosi event</desc>
+  <defs><linearGradient id="bg" x1="0" x2="1" y1="0" y2="1"><stop offset="0%" stop-color="#123459"/><stop offset="100%" stop-color="#5a8bc2"/></linearGradient></defs>
+  <rect width="1200" height="900" fill="url(#bg)"/>
+  <rect x="120" y="90" width="960" height="720" rx="28" fill="#f7fbff"/>
+  <rect x="210" y="160" width="220" height="580" rx="18" fill="#dceafa"/>
+  <rect x="490" y="160" width="220" height="580" rx="18" fill="#cfe2f8"/>
+  <rect x="770" y="160" width="220" height="580" rx="18" fill="#c2daf5"/>
+  <circle cx="320" cy="655" r="24" fill="#1f6ecf"/>
+  <circle cx="600" cy="655" r="24" fill="#1f6ecf"/>
+  <circle cx="880" cy="655" r="24" fill="#1f6ecf"/>
+</svg>

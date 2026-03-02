@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="720" viewBox="0 0 720 720" role="img" aria-labelledby="title desc">
+  <title id="title">Dummy Foto Profil</title>
+  <desc id="desc">Ilustrasi profil untuk halaman CV</desc>
+  <defs>
+    <linearGradient id="g5" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#dce9f9" />
+      <stop offset="100%" stop-color="#f2f7fc" />
+    </linearGradient>
+  </defs>
+  <rect width="720" height="720" fill="url(#g5)" />
+  <circle cx="360" cy="260" r="120" fill="#95b4dc" />
+  <rect x="180" y="400" width="360" height="210" rx="110" fill="#95b4dc" />
+  <text x="190" y="660" fill="#23405f" font-family="Segoe UI, Arial, sans-serif" font-size="34" font-weight="700">Foto Dummy Profile</text>
+</svg>

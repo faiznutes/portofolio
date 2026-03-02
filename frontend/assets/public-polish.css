@@ -1,0 +1,22 @@
+main {
+  scroll-margin-top: 90px;
+}
+
+main section {
+  scroll-margin-top: 100px;
+}
+
+.rounded-2xl,
+.rounded-3xl {
+  overflow: hidden;
+}
+
+img {
+  image-rendering: auto;
+}
+
+@media (max-width: 1023px) {
+  main {
+    padding-bottom: 16px;
+  }
+}

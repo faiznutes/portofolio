@@ -1,0 +1,15 @@
+{
+  "name": "Faiznute Portfolio",
+  "short_name": "Faiznute",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#f6f7f8",
+  "theme_color": "#137fec",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

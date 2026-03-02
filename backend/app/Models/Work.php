@@ -1,0 +1,50 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+
+class Work extends Model
+{
+    use HasFactory;
+
+    protected $fillable = [
+        'category_id',
+        'title',
+        'slug',
+        'excerpt',
+        'content',
+        'cover_image',
+        'project_url',
+        'tools_json',
+        'gallery_json',
+        'is_featured',
+        'is_published',
+        'published_at',
+        'sort_order',
+    ];
+
+    protected function casts(): array
+    {
+        return [
+            'is_featured' => 'boolean',
+            'is_published' => 'boolean',
+            'published_at' => 'datetime',
+            'tools_json' => 'array',
+            'gallery_json' => 'array',
+        ];
+    }
+
+    public function category(): BelongsTo
+    {
+        return $this->belongsTo(Category::class);
+    }
+
+    public function tags(): BelongsToMany
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+}

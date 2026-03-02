@@ -1,0 +1,52 @@
+.admin-unified-layout main.admin-content-root {
+  padding-bottom: 28px;
+}
+
+.admin-unified-layout .admin-content-root > div,
+.admin-unified-layout .admin-content-root > section,
+.admin-unified-layout .admin-content-root > article {
+  max-width: 1320px;
+}
+
+.admin-unified-layout .admin-content-root .text-3xl,
+.admin-unified-layout .admin-content-root .text-2xl {
+  letter-spacing: -0.015em;
+}
+
+.admin-unified-layout .admin-content-root table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.admin-unified-layout .admin-content-root .rounded-full.text-xs,
+.admin-unified-layout .admin-content-root .rounded-full.text-[10px] {
+  letter-spacing: 0.04em;
+}
+
+.admin-unified-layout .admin-content-root .shadow-sm {
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05) !important;
+}
+
+.admin-unified-layout .admin-content-root .border-slate-200,
+.admin-unified-layout .admin-content-root .dark\:border-slate-800 {
+  border-color: #e2e8f0 !important;
+}
+
+@media (max-width: 1023px) {
+  .admin-unified-layout .admin-content-root .text-3xl {
+    font-size: 1.5rem !important;
+    line-height: 1.25 !important;
+  }
+
+  .admin-unified-layout .admin-content-root .px-6,
+  .admin-unified-layout .admin-content-root .lg\:px-8,
+  .admin-unified-layout .admin-content-root .lg\:px-40 {
+    padding-left: 0.85rem !important;
+    padding-right: 0.85rem !important;
+  }
+
+  .admin-unified-layout .admin-content-root .gap-8 {
+    gap: 1rem !important;
+  }
+}

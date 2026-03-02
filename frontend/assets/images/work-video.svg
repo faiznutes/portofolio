@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" role="img" aria-labelledby="title desc">
+  <title id="title">Dummy Work Video</title>
+  <desc id="desc">Preview dummy project kategori video</desc>
+  <defs>
+    <linearGradient id="g3" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#132c47" />
+      <stop offset="100%" stop-color="#376ca8" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="900" fill="url(#g3)" />
+  <rect x="140" y="140" width="920" height="620" rx="26" fill="#f6faff" opacity="0.92" />
+  <rect x="200" y="220" width="800" height="430" rx="16" fill="#deebf8" />
+  <polygon points="525,340 525,530 710,435" fill="#1f6ecf" />
+  <text x="160" y="815" fill="#dceaff" font-family="Segoe UI, Arial, sans-serif" font-size="44" font-weight="700">Dummy Project - Video</text>
+</svg>

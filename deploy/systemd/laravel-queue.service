@@ -1,0 +1,14 @@
+[Unit]
+Description=Laravel Queue Worker
+After=network.target
+
+[Service]
+User=www-data
+Group=www-data
+Restart=always
+RestartSec=5
+ExecStart=/usr/bin/php /var/www/faiznute.site/backend/artisan queue:work --sleep=3 --tries=3 --max-time=3600
+WorkingDirectory=/var/www/faiznute.site/backend
+
+[Install]
+WantedBy=multi-user.target

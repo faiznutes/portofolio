@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CMS Admin - Hero Banners</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+<link rel="stylesheet" href="../assets/layout-shared.css" />
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="flex h-screen overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-64 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col">
+<div class="p-6 flex items-center gap-3">
+<div class="p-2 bg-primary rounded-lg text-white">
+<span class="material-symbols-outlined block">dashboard</span>
+</div>
+<h2 class="text-xl font-bold tracking-tight">CMS Admin</h2>
+</div>
+<nav class="flex-1 px-4 space-y-2 mt-4">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors" href="dashboard.html">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="font-medium text-sm">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 bg-primary/10 text-primary rounded-lg" href="banners.html">
+<span class="material-symbols-outlined">gallery_thumbnail</span>
+<span class="font-medium text-sm">Hero Banners</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors" href="works.html">
+<span class="material-symbols-outlined">description</span>
+<span class="font-medium text-sm">Pages</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors" href="works.html">
+<span class="material-symbols-outlined">photo_library</span>
+<span class="font-medium text-sm">Media Library</span>
+</a>
+<div class="pt-4 mt-4 border-t border-slate-200 dark:border-slate-800">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors" href="settings.html">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-medium text-sm">Settings</span>
+</a>
+</div>
+</nav>
+<div class="p-4 border-t border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden" data-alt="User profile avatar circle">
+<img alt="Admin user profile picture" data-alt="Admin user profile picture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBlzK48aYwe_FswLf6ybkFs8IUtT8i_gtp4FyNsycD1kREXvmllFIuhQ9XaacOR6c2zVauZc3O7knZODgvrxJYqzi5G-RZGcy-04ANpjclaYIieQ-oI86LfG-IxKMbeY8Ik8caAQzNdWQdjlcrdpGLnYzA10ez5mcDTKYSBd7ssV8EqBr6sh0WM5cBL-LJIAWjWvvaXLiO9e8APd534EzdzL_YR02Lmj9z4g08rXPNSC2dGunt0yqjsrT1cpqFJDmROYTs3dqGS4I"/>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-semibold truncate">Alex Rivera</p>
+<p class="text-xs text-slate-500 truncate">Administrator</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col overflow-hidden">
+<!-- Top Navigation -->
+<header class="h-16 border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md px-8 flex items-center justify-between z-10">
+<div class="flex items-center flex-1 max-w-md">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-slate-100 dark:bg-slate-800 border-none rounded-lg text-sm focus:ring-2 focus:ring-primary" placeholder="Search banners..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="relative p-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white dark:border-slate-900"></span>
+</button>
+<button class="p-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors">
+<span class="material-symbols-outlined">help</span>
+</button>
+</div>
+</header>
+<!-- Page Scroll Area -->
+<div class="flex-1 overflow-y-auto p-8">
+<div class="max-w-6xl mx-auto">
+<!-- Page Header -->
+<div class="flex items-end justify-between mb-8">
+<div>
+<h1 class="text-3xl font-extrabold tracking-tight">Hero Banners</h1>
+<p class="text-slate-500 dark:text-slate-400 mt-1">Design and manage the top section of your homepage.</p>
+</div>
+<button class="flex items-center gap-2 bg-primary text-white px-5 py-2.5 rounded-lg font-bold hover:bg-primary/90 transition-all shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-[20px]">add</span>
+                        Create New Banner
+                    </button>
+</div>
+<!-- Banner Table Card -->
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden mb-8">
+<div class="p-6 border-b border-slate-200 dark:border-slate-800 flex justify-between items-center">
+<h3 class="font-bold text-lg">Active Banners</h3>
+<div class="flex gap-2">
+<button class="p-2 rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800">
+<span class="material-symbols-outlined text-[20px]">filter_list</span>
+</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-slate-50 dark:bg-slate-800/50 text-slate-500 text-xs font-bold uppercase tracking-wider">
+<tr>
+<th class="px-6 py-4">Preview</th>
+<th class="px-6 py-4">Banner Details</th>
+<th class="px-6 py-4">CTA Link</th>
+<th class="px-6 py-4">Status</th>
+<th class="px-6 py-4 text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200 dark:divide-slate-800">
+<tr>
+<td class="px-6 py-4">
+<div class="w-24 h-14 bg-slate-200 dark:bg-slate-700 rounded-md overflow-hidden" data-alt="Blue abstract landscape background">
+<img alt="Blue abstract landscape" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_OcfHNQWwEt8MZAu1PBtosW40fWuHeOUbjq0_eQhP3OI0kXBUkiXcZfu_1ceXTBY36uxNU_Hhsdl84zk-um6CUC2aAWs7rOYImLeVlJP8BbQVN4SuTMuUYyGXVvsJvfLIY06YZXneLlkcz_L1iGa52ZT-QN1vcb0V6SIbtIMjuoBgnwEuLFyTm5n7V45vFEIP3NVdQIcuOuC6s9Hxtm2NIpYP_nPh5UGEvvp_PaZvr2VwoOoBpIh-XYcRLvzIFp4bNtXYwZEvYnI"/>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="font-bold text-sm">Summer Sale 2024</div>
+<div class="text-xs text-slate-500 truncate max-w-[200px]">Up to 50% off on all items...</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-primary text-sm font-medium hover:underline">/collections/sale</span>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
+                                            Live
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-primary transition-colors mx-1"><span class="material-symbols-outlined">edit</span></button>
+<button class="text-slate-400 hover:text-red-500 transition-colors mx-1"><span class="material-symbols-outlined">delete</span></button>
+</td>
+</tr>
+<tr>
+<td class="px-6 py-4">
+<div class="w-24 h-14 bg-slate-200 dark:bg-slate-700 rounded-md overflow-hidden" data-alt="Minimalist desk setup with laptop">
+<img alt="Minimalist desk setup" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFZkEuot5Fqz9p7MyVrvbR1WIkwOzjVsgjgmhYi6S5QCrWpnOy2_zJh9HMtYn9_AA0QkIaZcCvNP9Q2E9fIauNpk3cYPY_PsBzI-UyDT_95tuu_ePmomOG83tg3gHzUKUBu2lxHbIbPxaSmCqhPg95V8xDldapi6JdWkwWLP_ASlyHa2wmXxQ6ZZVC_5cNihDo4CoS3Ta1YkFlpjozRF0nJZDMBF6s-T19HBNH2oNea0arjCptshTXjrYD_cbKv21EDVXOLVoOttc"/>
+</div>
+</td>
+<td class="px-6 py-4">
+<div class="font-bold text-sm">New Arrivals</div>
+<div class="text-xs text-slate-500 truncate max-w-[200px]">Check out our latest accessories...</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-primary text-sm font-medium hover:underline">/collections/new</span>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-800 dark:bg-slate-800 dark:text-slate-400">
+                                            Draft
+                                        </span>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-primary transition-colors mx-1"><span class="material-symbols-outlined">edit</span></button>
+<button class="text-slate-400 hover:text-red-500 transition-colors mx-1"><span class="material-symbols-outlined">delete</span></button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Editor Section -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Edit Form -->
+<div class="lg:col-span-2 space-y-8">
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-6">
+<h3 class="font-bold text-lg mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">edit_note</span>
+                                Edit Banner Content
+                            </h3>
+<div class="space-y-6">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="space-y-2">
+<label class="text-sm font-semibold">Headline</label>
+<input class="w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg text-sm focus:ring-primary" type="text" value="Summer Sale 2024"/>
+</div>
+<div class="space-y-2">
+<label class="text-sm font-semibold">Subheadline</label>
+<input class="w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg text-sm focus:ring-primary" type="text" value="Up to 50% off on all items"/>
+</div>
+</div>
+<div class="space-y-2">
+<label class="text-sm font-semibold">Description</label>
+<textarea class="w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg text-sm focus:ring-primary" rows="3">Refresh your wardrobe with our newest summer collection. Limited time offer only for this season.</textarea>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="space-y-2">
+<label class="text-sm font-semibold">CTA Button Text</label>
+<input class="w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg text-sm focus:ring-primary" type="text" value="Shop Now"/>
+</div>
+<div class="space-y-2">
+<label class="text-sm font-semibold">CTA Link URL</label>
+<input class="w-full px-4 py-2 bg-slate-50 dark:bg-slate-800 border-slate-200 dark:border-slate-700 rounded-lg text-sm focus:ring-primary" type="text" value="/collections/sale"/>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-6">
+<h3 class="font-bold text-lg mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">image</span>
+                                Media Asset
+                            </h3>
+<div class="border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-xl p-8 flex flex-col items-center justify-center bg-slate-50 dark:bg-slate-800/20 hover:bg-slate-100 dark:hover:bg-slate-800/40 transition-colors cursor-pointer group">
+<span class="material-symbols-outlined text-4xl text-slate-300 dark:text-slate-600 group-hover:text-primary transition-colors">cloud_upload</span>
+<p class="mt-4 font-bold text-slate-900 dark:text-slate-100">Click to upload or drag and drop</p>
+<p class="text-xs text-slate-500 mt-1">Recommended size: 1920x1080px (MAX. 5MB)</p>
+</div>
+<div class="mt-4 flex items-center gap-4 p-3 bg-slate-50 dark:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-700">
+<div class="w-16 h-10 rounded bg-slate-200 dark:bg-slate-700 overflow-hidden" data-alt="Thumbnail of abstract blue design">
+<img alt="Asset preview" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4uUKbXtNUY6r1VYMEBNarVPb-_K6Ks8xxN7FgSdb8gbejj3K6bLSlrfGcyXEhGO7fO-tA4SMOoQmN0WSR1YM_J3Re0UIJnQcYkiCPc3IdhLrKa5tFcEuKseMgjiD7qtRCAfN2YkF1jwDrV0nhydJVqVkuOd0HdGz8e8k-FrzELoL6KgFNu0H5YkpUC9ilyU7GPX-_R44cfs2j8v3KiOziupOXFt7aq6VRGAQDXD7jZeFlshlV7Qxfv28L5-ZbE3M82yLv3ik5Qfc"/>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-semibold truncate">summer_campaign_hero.jpg</p>
+<p class="text-xs text-slate-500">2.4 MB</p>
+</div>
+<button class="text-red-500 hover:bg-red-50 p-2 rounded-lg transition-colors">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Sidebar Preview -->
+<div class="space-y-8">
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm p-6 sticky top-8">
+<h3 class="font-bold text-lg mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">visibility</span>
+                                Desktop Preview
+                            </h3>
+<div class="relative aspect-video bg-slate-100 dark:bg-slate-800 rounded-lg overflow-hidden border border-slate-200 dark:border-slate-700 group">
+<img alt="Banner background preview" class="w-full h-full object-cover" data-alt="Banner background preview image" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJt5l9MTUSN-Ch8O_5m0hTt0ILGI0I0Ji1HRnAeOUbrRVuwb-TsBcyd-mi8Qx8--Tp4xUVS7AX2VCwIIaoU04muAIg46Ruttr426FW1x2ymu5q3fpY5AQ4cwlNnixnc0lXfr1xiagqzQcKN7W5VMDhufcQoPwt4LoY0tiBqsykO_YDJydAfDej_XWgXA7oidtnX5G5KN_fu1W8K6nc0UBwXluufpjZXz2EwPgCtP3BqXDvgjNCclUR1Lhznzd6Dh7d24MhxueKWzo"/>
+<div class="absolute inset-0 bg-black/40 flex flex-col justify-center px-6 text-white">
+<h4 class="text-xl font-bold leading-tight">Summer Sale 2024</h4>
+<p class="text-[10px] opacity-90 mt-1 line-clamp-2">Refresh your wardrobe with our newest summer collection.</p>
+<div class="mt-4">
+<span class="px-4 py-1.5 bg-primary text-white text-[10px] font-bold rounded uppercase tracking-wider">Shop Now</span>
+</div>
+</div>
+<div class="absolute top-2 right-2 flex gap-1">
+<span class="p-1 bg-white/20 backdrop-blur rounded-full text-[10px]"><span class="material-symbols-outlined text-[14px]">desktop_windows</span></span>
+<span class="p-1 bg-white/20 backdrop-blur rounded-full text-[10px] opacity-50"><span class="material-symbols-outlined text-[14px]">smartphone</span></span>
+</div>
+</div>
+<div class="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800 space-y-4">
+<div class="flex items-center justify-between">
+<span class="text-sm font-medium">Publish Schedule</span>
+<span class="text-xs text-slate-500">Immediate</span>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-sm font-medium">Auto-Play Video</span>
+<div class="w-10 h-5 bg-primary rounded-full relative">
+<div class="absolute right-1 top-1 w-3 h-3 bg-white rounded-full"></div>
+</div>
+</div>
+<div class="flex items-center justify-between">
+<span class="text-sm font-medium">Overlay Opacity</span>
+<span class="text-sm font-bold">40%</span>
+</div>
+<input class="w-full h-1 bg-slate-200 dark:bg-slate-700 rounded-lg appearance-none cursor-pointer accent-primary" type="range"/>
+</div>
+<div class="mt-8 flex gap-3">
+<button class="flex-1 py-2.5 px-4 bg-primary text-white font-bold rounded-lg hover:bg-primary/90 transition-all shadow-md">
+                                    Save Changes
+                                </button>
+<button class="py-2.5 px-4 bg-slate-100 dark:bg-slate-800 font-bold rounded-lg hover:bg-slate-200 dark:hover:bg-slate-700 transition-all">
+                                    Cancel
+                                </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<script src="../assets/admin-layout.js"></script>
+</body></html>

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Login</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: '#137fec'
+            },
+            fontFamily: {
+              display: ['Manrope', 'sans-serif']
+            }
+          }
+        }
+      };
+    </script>
+  </head>
+  <body class="min-h-screen bg-slate-100 font-display text-slate-900">
+    <main class="mx-auto flex min-h-screen max-w-6xl items-center justify-center px-6 py-10">
+      <section class="grid w-full max-w-4xl overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xl lg:grid-cols-2">
+        <div class="hidden bg-slate-900 p-10 text-white lg:block">
+          <p class="text-xs font-bold uppercase tracking-[0.2em] text-blue-300">Faiznute CMS</p>
+          <h1 class="mt-4 text-3xl font-black leading-tight">Admin Control Center</h1>
+          <p class="mt-3 text-sm text-slate-300">Login dengan akun admin untuk mengelola portfolio, leads, dan pengaturan situs secara real-time.</p>
+        </div>
+        <div class="p-8 sm:p-10">
+          <h2 class="text-2xl font-black">Sign In</h2>
+          <p class="mt-2 text-sm text-slate-500">Gunakan kredensial admin yang sudah disiapkan seeder.</p>
+          <form class="mt-8 space-y-4" data-admin-login-form>
+            <div>
+              <label class="mb-1 block text-sm font-semibold" for="email">Email</label>
+              <input id="email" name="email" type="email" required class="w-full rounded-lg border-slate-300" placeholder="admin@portfolio.local" />
+            </div>
+            <div>
+              <label class="mb-1 block text-sm font-semibold" for="password">Password</label>
+              <input id="password" name="password" type="password" required class="w-full rounded-lg border-slate-300" placeholder="admin12345" />
+            </div>
+            <p class="text-sm font-semibold text-slate-500" data-login-notice>Masuk untuk lanjut ke dashboard admin.</p>
+            <button type="submit" class="w-full rounded-lg bg-primary py-3 font-bold text-white">Login Admin</button>
+          </form>
+        </div>
+      </section>
+    </main>
+    <script src="../assets/api-config.js"></script>
+    <script src="../assets/admin-auth.js"></script>
+  </body>
+</html>

@@ -1,0 +1,13 @@
+[Unit]
+Description=Laravel Scheduler Runner
+After=network.target
+
+[Service]
+Type=oneshot
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/faiznute.site/backend
+ExecStart=/usr/bin/php artisan schedule:run
+
+[Install]
+WantedBy=multi-user.target

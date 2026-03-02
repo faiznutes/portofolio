@@ -1,0 +1,57 @@
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid rgba(19, 127, 236, 0.45);
+  outline-offset: 2px;
+}
+
+#mobile-menu {
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.12);
+}
+
+.mobile-menu-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 6, 23, 0.38);
+  z-index: 45;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease;
+}
+
+.mobile-menu-backdrop.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.lock-scroll {
+  overflow: hidden;
+}
+
+.noscript-fallback {
+  border-bottom: 1px solid #e2e8f0;
+  background: #fff7ed;
+  color: #7c2d12;
+  padding: 10px 14px;
+  font-family: Manrope, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.noscript-fallback a {
+  color: #9a3412;
+  text-decoration: underline;
+  margin-right: 8px;
+}

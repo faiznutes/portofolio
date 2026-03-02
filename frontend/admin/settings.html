@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Admin CMS Settings</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101922",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<link rel="stylesheet" href="../assets/layout-shared.css" />
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 transition-colors duration-200">
+<div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden">
+<div class="layout-container flex h-full grow flex-col">
+<!-- Navigation Bar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-6 lg:px-40 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-primary">
+<span class="material-symbols-outlined text-3xl">shield_person</span>
+<h2 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-tight">Admin CMS</h2>
+</div>
+<label class="hidden md:flex flex-col min-w-40 h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+<div class="text-slate-500 flex items-center justify-center pl-4">
+<span class="material-symbols-outlined text-xl">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 border-none bg-transparent focus:outline-0 focus:ring-0 h-full placeholder:text-slate-400 px-4 text-base font-normal" placeholder="Search settings..." value=""/>
+</div>
+</label>
+</div>
+<div class="flex flex-1 justify-end gap-4 items-center">
+<div class="flex gap-2">
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-primary/10 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-primary/10 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10 border-2 border-primary" data-alt="User profile avatar circle" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBcm1Rm2kH0-gb4C0YmhhaHEO8mc-gGCQzmQtCZs52ETinTYe5G8Nw69DADePPDQbq97DZLadVO_8RpqCGxH2A7gmvyrOdgL2Mzf-za0yR2sBH0cucPAMsuFfy3ARyFvqZve-YoevofHZOwqmJBSho_h1XHUKsQVOxwjLREGgcUh1bTa3_4d7JloSx37hiyS7_JuqWZ7RTkbLS-_RbR2Y35pxIB6PXDayIk1uJD0VTeBBfZtg4A70XtHx7PQ8usTqs-hB9o1iIRCg0");'></div>
+</div>
+</header>
+<main class="px-4 lg:px-40 flex flex-1 flex-col lg:flex-row gap-8 py-8">
+<!-- Sidebar Menu -->
+<aside class="w-full lg:w-64 flex flex-col gap-2">
+<div class="px-3 mb-2">
+<p class="text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider">Dashboard</p>
+</div>
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800 transition-all" href="dashboard.html">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-sm font-semibold">Overview</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary text-white shadow-lg shadow-primary/20" href="settings.html">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-sm font-semibold">Site Settings</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800 transition-all" href="settings.html">
+<span class="material-symbols-outlined">language</span>
+<span class="text-sm font-semibold">SEO Config</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800 transition-all" href="settings.html">
+<span class="material-symbols-outlined">person</span>
+<span class="text-sm font-semibold">Profile</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-800 transition-all" href="settings.html">
+<span class="material-symbols-outlined">security</span>
+<span class="text-sm font-semibold">Security</span>
+</a>
+</nav>
+</aside>
+<!-- Content Area -->
+<div class="flex-1 flex flex-col gap-6">
+<div id="general">
+<h1 class="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">General Settings</h1>
+<p class="text-slate-500 dark:text-slate-400 mt-1">Configure your global platform parameters and preferences.</p>
+</div>
+<!-- Tabs -->
+<div class="border-b border-slate-200 dark:border-slate-800 overflow-x-auto">
+<div class="flex gap-8 min-w-max">
+<button data-settings-tab="true" data-target="#general" class="border-b-2 border-primary text-primary px-1 py-3 text-sm font-bold tracking-wide" type="button" aria-selected="true">General Information</button>
+<button data-settings-tab="true" data-target="#seo" class="border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 px-1 py-3 text-sm font-bold tracking-wide transition-all" type="button" aria-selected="false">SEO &amp; Metadata</button>
+<button data-settings-tab="true" data-target="#profile" class="border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 px-1 py-3 text-sm font-bold tracking-wide transition-all" type="button" aria-selected="false">Profile</button>
+<button data-settings-tab="true" data-target="#security" class="border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 px-1 py-3 text-sm font-bold tracking-wide transition-all" type="button" aria-selected="false">Security</button>
+</div>
+</div>
+<!-- Form Section: Site Info -->
+<section id="site-settings" data-tab-panel="general" class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-6">
+<h2 class="text-lg font-bold mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">info</span>
+                            Site Information
+                        </h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="flex flex-col gap-2">
+<label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Website Name</label>
+<input class="form-input rounded-lg border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:border-primary focus:ring-primary/20" type="text" value="Modern Admin Panel"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Support Email</label>
+<input class="form-input rounded-lg border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:border-primary focus:ring-primary/20" type="email" value="support@platform.com"/>
+</div>
+<div class="flex flex-col gap-2 md:col-span-2">
+<label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Description</label>
+<textarea class="form-input rounded-lg border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 focus:border-primary focus:ring-primary/20" rows="3">The ultimate admin dashboard for managing modern web applications with ease.</textarea>
+</div>
+</div>
+</section>
+<!-- Form Section: Branding -->
+<section id="profile" data-tab-panel="profile" class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-6">
+<h2 class="text-lg font-bold mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">palette</span>
+                            Profile &amp; Branding
+                        </h2>
+<div class="flex flex-col sm:flex-row gap-8 items-start">
+<div class="flex flex-col items-center gap-3">
+<div class="w-24 h-24 bg-primary/10 rounded-xl flex items-center justify-center border-2 border-dashed border-primary/40 relative group overflow-hidden">
+<span class="material-symbols-outlined text-primary text-4xl">image</span>
+<div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity cursor-pointer">
+<span class="material-symbols-outlined text-white">upload</span>
+</div>
+</div>
+<span class="text-xs font-medium text-slate-500">Logo (256x256)</span>
+</div>
+<div class="flex-1 grid grid-cols-1 sm:grid-cols-2 gap-4">
+<div class="flex flex-col gap-2">
+<label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Primary Color</label>
+<div class="flex items-center gap-2">
+<div class="w-10 h-10 rounded bg-primary border border-slate-200 dark:border-slate-700"></div>
+<input class="form-input flex-1 rounded-lg border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800" type="text" value="#137fec"/>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Default Locale</label>
+<select class="form-select rounded-lg border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800">
+<option>English (US)</option>
+<option>Spanish (ES)</option>
+<option>French (FR)</option>
+</select>
+</div>
+</div>
+</div>
+</section>
+<!-- SEO Settings Preview -->
+<section id="seo" data-tab-panel="seo" class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-6">
+<h2 class="text-lg font-bold mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">manage_search</span>
+                            SEO &amp; Social Cards
+                        </h2>
+<div class="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-slate-100 dark:border-slate-800">
+<p class="text-xs text-green-600 dark:text-green-400 mb-1">https://www.yourdomain.com</p>
+<h3 class="text-blue-600 dark:text-blue-400 text-lg font-medium hover:underline cursor-pointer">Admin CMS | Management Dashboard</h3>
+<p class="text-slate-600 dark:text-slate-400 text-sm mt-1 line-clamp-2">Manage your platform effortlessly with our powerful, clean admin interface. Fully customizable and optimized for modern workflows.</p>
+</div>
+<div class="mt-6 flex justify-end gap-3">
+<button class="px-5 py-2.5 rounded-lg border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 font-bold text-sm hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">Discard Changes</button>
+<button class="px-5 py-2.5 rounded-lg bg-primary text-white font-bold text-sm shadow-lg shadow-primary/20 hover:brightness-110 transition-all">Save All Settings</button>
+</div>
+</section>
+<!-- Account Security Section -->
+<section id="security" data-tab-panel="security" class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800 p-6 mb-8">
+<div class="flex justify-between items-start mb-6">
+<div>
+<h2 class="text-lg font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">security</span>
+                                    Account Security
+                                </h2>
+<p class="text-sm text-slate-500 mt-1">Manage your password and authentication methods.</p>
+</div>
+<span class="bg-green-100 text-green-700 text-[10px] font-black uppercase px-2 py-1 rounded-full tracking-tighter">Secure</span>
+</div>
+<div class="flex flex-col gap-4">
+<div class="flex items-center justify-between p-4 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">verified_user</span>
+</div>
+<div>
+<p class="text-sm font-bold">Two-Factor Authentication (2FA)</p>
+<p class="text-xs text-slate-500">Currently enabled via Authenticator App</p>
+</div>
+</div>
+<button class="text-primary text-sm font-bold hover:underline">Manage</button>
+</div>
+<div class="flex items-center justify-between p-4 rounded-lg bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined">key</span>
+</div>
+<div>
+<p class="text-sm font-bold">Password</p>
+<p class="text-xs text-slate-500">Last changed 3 months ago</p>
+</div>
+</div>
+<button class="text-primary text-sm font-bold hover:underline">Change</button>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Footer -->
+<footer class="px-4 lg:px-40 py-6 border-t border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-4">
+<p class="text-slate-500 text-sm">© 2024 Admin CMS Framework. All rights reserved.</p>
+<div class="flex gap-6">
+<a class="text-slate-500 hover:text-primary text-sm transition-colors" href="settings.html">Documentation</a>
+<a class="text-slate-500 hover:text-primary text-sm transition-colors" href="settings.html">Privacy Policy</a>
+<a class="text-slate-500 hover:text-primary text-sm transition-colors" href="settings.html">Terms of Service</a>
+</div>
+</footer>
+</div>
+</div>
+<script src="../assets/admin-layout.js"></script>
+</body></html>
