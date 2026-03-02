@@ -13,7 +13,7 @@
 
   var host = String(window.location.hostname || '').toLowerCase();
   if (host === 'faiznute.site' || host === 'www.faiznute.site') {
-    ensureMeta('portfolio-api-base', 'https://api.faiznute.site');
+    ensureMeta('portfolio-api-base', 'https://faiznute.site');
   }
 
   function ensureAsset(tag, key, attrs) {

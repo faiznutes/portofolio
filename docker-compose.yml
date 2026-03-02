@@ -20,12 +20,10 @@ services:
       context: .
       dockerfile: deploy/docker/backend.Dockerfile
     restart: unless-stopped
-    ports:
-      - "8000"
     environment:
       APP_ENV: production
       APP_DEBUG: "false"
-      APP_URL: https://api.faiznute.site
+      APP_URL: https://faiznute.site
       APP_LOCALE: id
       APP_FALLBACK_LOCALE: id
       FRONTEND_URL: https://faiznute.site
@@ -36,9 +34,3 @@ services:
       SESSION_DRIVER: file
       QUEUE_CONNECTION: sync
       LOG_CHANNEL: stderr
-    labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.portofolio-api.rule=Host(`api.faiznute.site`)"
-      - "traefik.http.routers.portofolio-api.entrypoints=http,https"
-      - "traefik.http.routers.portofolio-api.tls=true"
-      - "traefik.http.services.portofolio-api.loadbalancer.server.port=8000"
