@@ -1,0 +1,8 @@
+services:
+  portofolio-web:
+    build:
+      context: .
+      dockerfile: deploy/docker/frontend.Dockerfile
+    restart: unless-stopped
+    ports:
+      - "80"
