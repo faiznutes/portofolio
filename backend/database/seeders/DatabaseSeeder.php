@@ -14,6 +14,8 @@ use App\Models\User;
 use App\Models\Work;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
@@ -25,6 +27,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        Schema::disableForeignKeyConstraints();
+        DB::table('tag_work')->truncate();
+        DB::table('works')->truncate();
+        DB::table('categories')->truncate();
+        DB::table('tags')->truncate();
+        DB::table('services')->truncate();
+        DB::table('testimonials')->truncate();
+        DB::table('cv_items')->truncate();
+        DB::table('highlights')->truncate();
+        DB::table('banners')->truncate();
+        DB::table('settings')->truncate();
+        Schema::enableForeignKeyConstraints();
+
         $admin = User::query()->updateOrCreate(
             ['email' => 'admin@portfolio.local'],
             [

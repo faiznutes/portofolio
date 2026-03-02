@@ -38,6 +38,8 @@
     if (!grid) return;
 
     var notice = document.querySelector('[data-works-notice]');
+    grid.innerHTML = '<p class="text-sm text-slate-500">Memuat karya...</p>';
+    if (notice) notice.textContent = '';
 
     try {
       var response = await fetch(api.url('api/public/works'));
@@ -47,8 +49,9 @@
       var works = payload && payload.data ? payload.data : [];
 
       if (!works.length) {
+        grid.innerHTML = '<p class="text-sm text-slate-500">Belum ada karya yang dipublish.</p>';
         if (notice) {
-          notice.textContent = 'Belum ada karya yang dipublish.';
+          notice.textContent = '';
         }
         return;
       }
@@ -70,12 +73,11 @@
       }).join('');
 
       if (notice) {
-        notice.textContent = 'Data karya diambil dari API.';
+        notice.textContent = '';
       }
     } catch (error) {
-      if (notice) {
-        notice.textContent = 'Menampilkan fallback konten lokal.';
-      }
+      grid.innerHTML = '<p class="text-sm text-amber-700">Gagal memuat karya dari server.</p>';
+      if (notice) notice.textContent = '';
     }
   }
 
@@ -165,20 +167,25 @@
         }
       }
     } catch (error) {
-      // Keep static fallback content when API is unavailable.
+      if (titleEl) titleEl.textContent = 'Project tidak ditemukan atau gagal dimuat.';
+      if (contentEl) contentEl.textContent = 'Silakan kembali ke halaman karya dan pilih project lain.';
     }
   }
 
   async function loadServicesPage() {
     var section = document.querySelector('[data-services-grid]');
     if (!section) return;
+    section.innerHTML = '<p class="text-sm text-slate-500">Memuat layanan...</p>';
 
     try {
       var response = await fetch(api.url('api/public/services'));
       if (!response.ok) throw new Error('Failed');
       var payload = await response.json();
       var services = payload && payload.data ? payload.data : [];
-      if (!services.length) return;
+      if (!services.length) {
+        section.innerHTML = '<p class="text-sm text-slate-500">Belum ada layanan aktif.</p>';
+        return;
+      }
 
       section.innerHTML = services.map(function (service) {
         return '<article class="rounded-2xl border border-slate-200 bg-white p-7">'
@@ -188,7 +195,7 @@
           + '</article>';
       }).join('');
     } catch (error) {
-      // keep fallback
+      section.innerHTML = '<p class="text-sm text-amber-700">Gagal memuat layanan dari server.</p>';
     }
   }
 
@@ -196,13 +203,19 @@
     var list = document.querySelector('[data-cv-experience]');
     var skillList = document.querySelector('[data-cv-skills]');
     if (!list && !skillList) return;
+    if (list) list.innerHTML = '<p class="text-sm text-slate-500">Memuat pengalaman...</p>';
+    if (skillList) skillList.innerHTML = '<p class="text-sm text-slate-500">Memuat skill...</p>';
 
     try {
       var response = await fetch(api.url('api/public/cv-items'));
       if (!response.ok) throw new Error('Failed');
       var payload = await response.json();
       var items = payload && payload.data ? payload.data : [];
-      if (!items.length) return;
+      if (!items.length) {
+        if (list) list.innerHTML = '<p class="text-sm text-slate-500">Belum ada data pengalaman.</p>';
+        if (skillList) skillList.innerHTML = '<p class="text-sm text-slate-500">Belum ada data skill.</p>';
+        return;
+      }
 
       var experiences = items.filter(function (x) { return x.section === 'experience'; });
       var skills = items.filter(function (x) { return x.section === 'skill'; });
@@ -220,7 +233,8 @@
         }).join('');
       }
     } catch (error) {
-      // keep fallback
+      if (list) list.innerHTML = '<p class="text-sm text-amber-700">Gagal memuat data CV.</p>';
+      if (skillList) skillList.innerHTML = '';
     }
   }
 
@@ -228,6 +242,8 @@
     var featured = document.querySelector('[data-home-featured-works]');
     var testimonials = document.querySelector('[data-home-testimonials]');
     if (!featured && !testimonials) return;
+    if (featured) featured.innerHTML = '<p class="text-sm text-slate-500">Memuat project unggulan...</p>';
+    if (testimonials) testimonials.innerHTML = '<p class="text-sm text-slate-500">Memuat testimoni...</p>';
 
     try {
       if (featured) {
@@ -263,7 +279,8 @@
         }
       }
     } catch (error) {
-      // keep fallback
+      if (featured) featured.innerHTML = '<p class="text-sm text-amber-700">Gagal memuat project unggulan.</p>';
+      if (testimonials) testimonials.innerHTML = '<p class="text-sm text-amber-700">Gagal memuat testimoni.</p>';
     }
   }
 
@@ -287,7 +304,7 @@
       applyLink('[data-social-tiktok]', social.social_tiktok);
       applyLink('[data-social-youtube]', social.social_youtube);
     } catch (error) {
-      // keep fallback
+      // Keep existing text from HTML when settings API fails.
     }
   }
 
@@ -309,7 +326,7 @@
         image.src = banner.image;
       }
     } catch (error) {
-      // keep fallback
+      // Keep existing CTA from HTML when banner API fails.
     }
   }
 
