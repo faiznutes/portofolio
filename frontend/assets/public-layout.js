@@ -95,12 +95,18 @@
     var main = document.querySelector('main');
     if (main && !main.id) main.id = 'main-content';
 
+    function useDimBackdrop() {
+      return window.matchMedia('(max-width: 767px)').matches;
+    }
+
     function setOpen(open) {
       if (!menu || !btn) return;
       menu.classList.toggle('hidden', !open);
       btn.setAttribute('aria-expanded', String(open));
-      if (backdrop) backdrop.classList.toggle('open', open);
-      document.body.classList.toggle('lock-scroll', open);
+      if (backdrop) {
+        backdrop.classList.toggle('open', open && useDimBackdrop());
+      }
+      document.body.classList.toggle('lock-scroll', open && useDimBackdrop());
     }
 
     if (btn && menu) {
@@ -120,6 +126,11 @@
       }
       document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape') setOpen(false);
+      });
+      window.addEventListener('resize', function () {
+        if (!menu.classList.contains('hidden')) {
+          setOpen(true);
+        }
       });
     }
   }
