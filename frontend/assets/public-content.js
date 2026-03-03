@@ -33,6 +33,56 @@
     el.setAttribute('href', href);
   }
 
+  function normalizeInternalUrl(url) {
+    var value = String(url || '').trim();
+    if (!value) return '';
+    if (/^https?:\/\//i.test(value)) return value;
+    if (value.indexOf('/') === 0) return value;
+    return value;
+  }
+
+  var projectUrlBySlug = {
+    'bangalexzz-mie-ayam-landing': '/landing-pages/resto-mie-ayam-landing.html',
+    'bangalexzz-nasi-campur-landing': '/landing-pages/facebook-social-handling-demo.html',
+    'bangalexzz-dimsum-modern-landing': '/landing-pages/snack-dimsum-modern.html',
+    'bangalexzz-dimsum-playful-landing': '/landing-pages/snack-dimsum-playful.html',
+    'bangalexzz-dimsum-luxury-landing': '/landing-pages/snack-dimsum-luxury.html',
+    'property-agent-classic': '/landing-pages/property-agent-classic.html',
+    'property-agent-eco-living': '/landing-pages/property-agent-eco-living.html',
+    'property-agent-urban': '/landing-pages/property-agent-urban.html',
+    'property-agent-terpercaya': '/landing-pages/property-agent-terpercaya.html'
+  };
+
+  var coverImageBySlug = {
+    'bangalexzz-dimsum-modern-landing': 'assets/images/real-event.jpg',
+    'bangalexzz-dimsum-playful-landing': 'assets/images/real-coffee.jpg',
+    'bangalexzz-dimsum-luxury-landing': 'assets/images/real-property.jpg',
+    'bangalexzz-nasi-campur-landing': 'assets/images/real-social.jpg'
+  };
+
+  function getWorkImage(work) {
+    var slug = work && work.slug ? String(work.slug) : '';
+    if (slug && coverImageBySlug[slug]) return coverImageBySlug[slug];
+    return (work && work.cover_image) ? work.cover_image : 'assets/images/legacy/banner/banner1.jpg';
+  }
+
+  function getWorkPrimaryUrl(work) {
+    var slug = work && work.slug ? String(work.slug) : '';
+    if (slug && projectUrlBySlug[slug]) {
+      return normalizeInternalUrl(projectUrlBySlug[slug]);
+    }
+    if (work && work.project_url) {
+      return normalizeInternalUrl(work.project_url);
+    }
+    return 'work-detail.html?slug=' + encodeURIComponent((work && work.slug) ? work.slug : 'work');
+  }
+
+  function onImageErrorFallback(image) {
+    if (!image || image.dataset.fallbackApplied === '1') return;
+    image.dataset.fallbackApplied = '1';
+    image.src = 'assets/images/legacy/banner/banner1.jpg';
+  }
+
   async function loadWorksPage() {
     var grid = document.querySelector('[data-works-grid]');
     if (!grid) return;
@@ -57,17 +107,24 @@
       }
 
       grid.innerHTML = works.map(function (work) {
-        var image = work.cover_image || 'assets/images/real-banner.jpg';
+        var image = getWorkImage(work);
         var title = escapeHtml(work.title || 'Untitled Work');
         var category = escapeHtml(getWorkCategory(work));
-        var slug = encodeURIComponent(work.slug || 'work');
+        var primaryUrl = escapeHtml(getWorkPrimaryUrl(work));
+        var detailUrl = 'work-detail.html?slug=' + encodeURIComponent(work.slug || 'work');
+        var primaryLabel = work.project_url ? 'Lihat demo' : 'Lihat detail';
 
         return '<article class="overflow-hidden rounded-2xl border border-slate-200 bg-white">'
-          + '<img src="' + escapeHtml(image) + '" alt="' + title + '" class="aspect-[4/3] w-full object-cover" />'
+          + '<a href="' + primaryUrl + '">'
+          + '<img src="' + escapeHtml(image) + '" alt="' + title + '" class="aspect-[4/3] w-full object-cover" loading="lazy" onerror="this.onerror=null;this.src=\'assets/images/legacy/banner/banner1.jpg\'" />'
+          + '</a>'
           + '<div class="p-5">'
           + '<p class="text-xs font-bold uppercase text-primary">' + category + '</p>'
           + '<h3 class="mt-1 text-lg font-bold">' + title + '</h3>'
-          + '<a class="mt-3 inline-block text-sm font-bold text-primary" href="work-detail.html?slug=' + slug + '">Lihat detail</a>'
+          + '<div class="mt-3 flex items-center gap-4">'
+          + '<a class="inline-block text-sm font-bold text-primary" href="' + primaryUrl + '">' + primaryLabel + '</a>'
+          + '<a class="inline-block text-sm font-semibold text-slate-500" href="' + escapeHtml(detailUrl) + '">Detail</a>'
+          + '</div>'
           + '</div>'
           + '</article>';
       }).join('');
@@ -115,9 +172,12 @@
       var categoryName = getWorkCategory(work);
       titleEl.textContent = work.title || titleEl.textContent;
       if (typeEl) typeEl.textContent = categoryName;
-      if (imageEl && work.cover_image) {
-        imageEl.src = work.cover_image;
+      if (imageEl) {
+        imageEl.src = getWorkImage(work);
         imageEl.alt = work.title || imageEl.alt;
+        imageEl.onerror = function () {
+          onImageErrorFallback(imageEl);
+        };
       }
       if (contentEl && work.content) {
         contentEl.textContent = work.content;
@@ -139,8 +199,9 @@
       }
 
       if (liveLink) {
-        if (work.project_url) {
-          liveLink.href = work.project_url;
+        var projectUrl = getWorkPrimaryUrl(work);
+        if (projectUrl && projectUrl.indexOf('work-detail.html') !== 0) {
+          liveLink.href = projectUrl;
           liveLink.classList.remove('hidden');
         } else {
           liveLink.classList.add('hidden');
@@ -158,7 +219,7 @@
               return '<a href="' + src + '" target="_blank" rel="noreferrer" class="rounded-xl border border-slate-200 bg-white p-4 text-sm font-semibold hover:border-primary hover:text-primary">' + title + '</a>';
             }
             return '<a href="' + src + '" target="_blank" rel="noreferrer" class="overflow-hidden rounded-xl border border-slate-200 bg-white">'
-              + '<img src="' + src + '" alt="' + title + '" class="aspect-[16/10] w-full object-cover" />'
+              + '<img src="' + src + '" alt="' + title + '" class="aspect-[16/10] w-full object-cover" loading="lazy" onerror="this.onerror=null;this.src=\'assets/images/legacy/banner/banner1.jpg\'" />'
               + '<p class="p-3 text-sm font-semibold">' + title + '</p>'
               + '</a>';
           }).join('');
@@ -253,7 +314,7 @@
           var works = (worksPayload && worksPayload.data ? worksPayload.data : []).slice(0, 3);
           if (works.length) {
             featured.innerHTML = works.map(function (work) {
-              var image = work.cover_image || 'assets/images/real-banner.jpg';
+              var image = work.cover_image || 'assets/images/legacy/banner/banner1.jpg';
               return '<article class="overflow-hidden rounded-2xl border border-slate-200 bg-white">'
                 + '<img src="' + escapeHtml(image) + '" alt="' + escapeHtml(work.title) + '" class="aspect-[4/3] w-full object-cover" />'
                 + '<div class="p-5"><h3 class="font-bold">' + escapeHtml(work.title) + '</h3><p class="mt-2 text-sm text-slate-600">' + escapeHtml(work.excerpt || 'Project portfolio terbaru') + '</p></div>'
