@@ -60,10 +60,127 @@
     'bangalexzz-nasi-campur-landing': 'assets/images/real-social.jpg'
   };
 
+  var DEFAULT_IMAGE = 'assets/images/real-banner.jpg';
+  var FALLBACK_WORKS = [
+    {
+      slug: 'bangalexzz-mie-ayam-landing',
+      title: 'Bangalexzz Mie Ayam Landing Page',
+      excerpt: 'Landing page F&B modern dengan struktur conversion-friendly.',
+      cover_image: 'assets/images/real-catering.jpg',
+      project_url: '/landing-pages/resto-mie-ayam-landing.html',
+      category: { name: 'Landing Page' }
+    },
+    {
+      slug: 'bangalexzz-nasi-campur-landing',
+      title: 'Bangalexzz Nasi Campur Landing Page',
+      excerpt: 'Demo handling konten social media dengan layout feed.',
+      cover_image: 'assets/images/real-social.jpg',
+      project_url: '/landing-pages/facebook-social-handling-demo.html',
+      category: { name: 'Landing Page' }
+    },
+    {
+      slug: 'bangalexzz-dimsum-modern-landing',
+      title: 'Bangalexzz Dimsum Modern Landing Page',
+      excerpt: 'Landing page dimsum modern dengan visual premium.',
+      cover_image: 'assets/images/real-event.jpg',
+      project_url: '/landing-pages/snack-dimsum-modern.html',
+      category: { name: 'Landing Page' }
+    },
+    {
+      slug: 'bangalexzz-dimsum-playful-landing',
+      title: 'Bangalexzz Dimsum Playful Landing Page',
+      excerpt: 'Landing page playful dengan tone cerah dan interaktif.',
+      cover_image: 'assets/images/real-coffee.jpg',
+      project_url: '/landing-pages/snack-dimsum-playful.html',
+      category: { name: 'Landing Page' }
+    },
+    {
+      slug: 'property-agent-classic',
+      title: 'Agent Properti - Solusi Properti Terpercaya',
+      excerpt: 'Landing page properti corporate untuk lead konsultasi.',
+      cover_image: 'assets/images/real-property.jpg',
+      project_url: '/landing-pages/property-agent-classic.html',
+      category: { name: 'Landing Page' }
+    },
+    {
+      slug: 'property-agent-urban',
+      title: 'Urban Properti - Investasi Cerdas Jakarta',
+      excerpt: 'Landing page fokus trust, ROI, dan CTA cepat.',
+      cover_image: 'assets/images/real-clinic.jpg',
+      project_url: '/landing-pages/property-agent-urban.html',
+      category: { name: 'Landing Page' }
+    }
+  ];
+
+  function getFallbackWorks() {
+    return FALLBACK_WORKS.map(function (item) {
+      return Object.assign({}, item, {
+        category: Object.assign({}, item.category || { name: 'General' })
+      });
+    });
+  }
+
+  async function fetchJsonWithFallback(path) {
+    var cleanPath = String(path || '').replace(/^\/+/, '');
+    var candidates = [];
+    var primaryUrl = api.url(cleanPath);
+    if (primaryUrl) candidates.push(primaryUrl);
+
+    var origin = String(window.location.origin || '').replace(/\/+$/, '');
+    if (origin && origin !== 'null') {
+      candidates.push(origin + '/' + cleanPath);
+    }
+
+    var seen = {};
+    var uniqueCandidates = candidates.filter(function (item) {
+      if (!item || seen[item]) return false;
+      seen[item] = true;
+      return true;
+    });
+
+    var lastError = null;
+    for (var i = 0; i < uniqueCandidates.length; i += 1) {
+      try {
+        var response = await fetch(uniqueCandidates[i]);
+        if (!response.ok) throw new Error('HTTP ' + response.status);
+        return await response.json();
+      } catch (error) {
+        lastError = error;
+      }
+    }
+
+    throw (lastError || new Error('No available server'));
+  }
+
+  function renderWorkCards(grid, works) {
+    grid.innerHTML = works.map(function (work) {
+      var image = getWorkImage(work);
+      var title = escapeHtml(work.title || 'Untitled Work');
+      var category = escapeHtml(getWorkCategory(work));
+      var primaryUrl = escapeHtml(getWorkPrimaryUrl(work));
+      var detailUrl = 'work-detail.html?slug=' + encodeURIComponent(work.slug || 'work');
+      var primaryLabel = work.project_url ? 'Lihat demo' : 'Lihat detail';
+
+      return '<article class="overflow-hidden rounded-2xl border border-slate-200 bg-white">'
+        + '<a href="' + primaryUrl + '">'
+        + '<img src="' + escapeHtml(image) + '" alt="' + title + '" class="aspect-[4/3] w-full object-cover" loading="lazy" onerror="this.onerror=null;this.src=\'' + DEFAULT_IMAGE + '\'" />'
+        + '</a>'
+        + '<div class="p-5">'
+        + '<p class="text-xs font-bold uppercase text-primary">' + category + '</p>'
+        + '<h3 class="mt-1 text-lg font-bold">' + title + '</h3>'
+        + '<div class="mt-3 flex items-center gap-4">'
+        + '<a class="inline-block text-sm font-bold text-primary" href="' + primaryUrl + '">' + primaryLabel + '</a>'
+        + '<a class="inline-block text-sm font-semibold text-slate-500" href="' + escapeHtml(detailUrl) + '">Detail</a>'
+        + '</div>'
+        + '</div>'
+        + '</article>';
+    }).join('');
+  }
+
   function getWorkImage(work) {
     var slug = work && work.slug ? String(work.slug) : '';
     if (slug && coverImageBySlug[slug]) return coverImageBySlug[slug];
-    return (work && work.cover_image) ? work.cover_image : 'assets/images/legacy/banner/banner1.jpg';
+    return (work && work.cover_image) ? work.cover_image : DEFAULT_IMAGE;
   }
 
   function getWorkPrimaryUrl(work) {
@@ -80,7 +197,7 @@
   function onImageErrorFallback(image) {
     if (!image || image.dataset.fallbackApplied === '1') return;
     image.dataset.fallbackApplied = '1';
-    image.src = 'assets/images/legacy/banner/banner1.jpg';
+    image.src = DEFAULT_IMAGE;
   }
 
   async function loadWorksPage() {
@@ -92,10 +209,7 @@
     if (notice) notice.textContent = '';
 
     try {
-      var response = await fetch(api.url('api/public/works'));
-      if (!response.ok) throw new Error('Failed to load works');
-
-      var payload = await response.json();
+      var payload = await fetchJsonWithFallback('api/public/works');
       var works = payload && payload.data ? payload.data : [];
 
       if (!works.length) {
@@ -106,33 +220,19 @@
         return;
       }
 
-      grid.innerHTML = works.map(function (work) {
-        var image = getWorkImage(work);
-        var title = escapeHtml(work.title || 'Untitled Work');
-        var category = escapeHtml(getWorkCategory(work));
-        var primaryUrl = escapeHtml(getWorkPrimaryUrl(work));
-        var detailUrl = 'work-detail.html?slug=' + encodeURIComponent(work.slug || 'work');
-        var primaryLabel = work.project_url ? 'Lihat demo' : 'Lihat detail';
-
-        return '<article class="overflow-hidden rounded-2xl border border-slate-200 bg-white">'
-          + '<a href="' + primaryUrl + '">'
-          + '<img src="' + escapeHtml(image) + '" alt="' + title + '" class="aspect-[4/3] w-full object-cover" loading="lazy" onerror="this.onerror=null;this.src=\'assets/images/legacy/banner/banner1.jpg\'" />'
-          + '</a>'
-          + '<div class="p-5">'
-          + '<p class="text-xs font-bold uppercase text-primary">' + category + '</p>'
-          + '<h3 class="mt-1 text-lg font-bold">' + title + '</h3>'
-          + '<div class="mt-3 flex items-center gap-4">'
-          + '<a class="inline-block text-sm font-bold text-primary" href="' + primaryUrl + '">' + primaryLabel + '</a>'
-          + '<a class="inline-block text-sm font-semibold text-slate-500" href="' + escapeHtml(detailUrl) + '">Detail</a>'
-          + '</div>'
-          + '</div>'
-          + '</article>';
-      }).join('');
+      renderWorkCards(grid, works);
 
       if (notice) {
         notice.textContent = '';
       }
     } catch (error) {
+      var fallbackWorks = getFallbackWorks();
+      if (fallbackWorks.length) {
+        renderWorkCards(grid, fallbackWorks);
+        if (notice) notice.textContent = 'Server belum tersedia. Menampilkan karya lokal sementara.';
+        return;
+      }
+
       grid.innerHTML = '<p class="text-sm text-amber-700">Gagal memuat karya dari server.</p>';
       if (notice) notice.textContent = '';
     }
@@ -154,18 +254,13 @@
 
     try {
       if (!slug) {
-        var worksResponse = await fetch(api.url('api/public/works'));
-        if (!worksResponse.ok) throw new Error('Failed to load works');
-        var worksPayload = await worksResponse.json();
+        var worksPayload = await fetchJsonWithFallback('api/public/works');
         var works = worksPayload && worksPayload.data ? worksPayload.data : [];
         if (!works.length) return;
         slug = works[0].slug;
       }
 
-      var detailResponse = await fetch(api.url('api/public/works/' + encodeURIComponent(slug)));
-      if (!detailResponse.ok) throw new Error('Failed to load work detail');
-
-      var detailPayload = await detailResponse.json();
+      var detailPayload = await fetchJsonWithFallback('api/public/works/' + encodeURIComponent(slug));
       var work = detailPayload && detailPayload.data ? detailPayload.data : null;
       if (!work) return;
 
@@ -219,7 +314,7 @@
               return '<a href="' + src + '" target="_blank" rel="noreferrer" class="rounded-xl border border-slate-200 bg-white p-4 text-sm font-semibold hover:border-primary hover:text-primary">' + title + '</a>';
             }
             return '<a href="' + src + '" target="_blank" rel="noreferrer" class="overflow-hidden rounded-xl border border-slate-200 bg-white">'
-              + '<img src="' + src + '" alt="' + title + '" class="aspect-[16/10] w-full object-cover" loading="lazy" onerror="this.onerror=null;this.src=\'assets/images/legacy/banner/banner1.jpg\'" />'
+              + '<img src="' + src + '" alt="' + title + '" class="aspect-[16/10] w-full object-cover" loading="lazy" onerror="this.onerror=null;this.src=\'' + DEFAULT_IMAGE + '\'" />'
               + '<p class="p-3 text-sm font-semibold">' + title + '</p>'
               + '</a>';
           }).join('');
@@ -228,6 +323,44 @@
         }
       }
     } catch (error) {
+      var fallbackItems = getFallbackWorks();
+      var fallbackWork = null;
+      if (slug) {
+        fallbackWork = fallbackItems.find(function (item) {
+          return String(item.slug) === String(slug);
+        }) || null;
+      }
+      if (!fallbackWork && fallbackItems.length) {
+        fallbackWork = fallbackItems[0];
+      }
+
+      if (fallbackWork) {
+        var fallbackCategory = getWorkCategory(fallbackWork);
+        if (titleEl) titleEl.textContent = fallbackWork.title || titleEl.textContent;
+        if (typeEl) typeEl.textContent = fallbackCategory;
+        if (imageEl) {
+          imageEl.src = getWorkImage(fallbackWork);
+          imageEl.alt = fallbackWork.title || imageEl.alt;
+        }
+        if (contentEl) {
+          contentEl.textContent = fallbackWork.content || fallbackWork.excerpt || 'Detail project tersedia saat server aktif kembali.';
+        }
+        if (tagsEl) {
+          tagsEl.innerHTML = '<span class="rounded-full bg-slate-100 px-3 py-1.5">Kategori: ' + escapeHtml(fallbackCategory) + '</span>';
+        }
+        if (liveLink) {
+          var fallbackUrl = getWorkPrimaryUrl(fallbackWork);
+          if (fallbackUrl) {
+            liveLink.href = fallbackUrl;
+            liveLink.classList.remove('hidden');
+          }
+        }
+        if (galleryEl) {
+          galleryEl.innerHTML = '<p class="text-sm text-slate-500">Gallery lengkap akan tampil saat koneksi server tersedia.</p>';
+        }
+        return;
+      }
+
       if (titleEl) titleEl.textContent = 'Project tidak ditemukan atau gagal dimuat.';
       if (contentEl) contentEl.textContent = 'Silakan kembali ke halaman karya dan pilih project lain.';
     }
@@ -239,9 +372,7 @@
     section.innerHTML = '<p class="text-sm text-slate-500">Memuat layanan...</p>';
 
     try {
-      var response = await fetch(api.url('api/public/services'));
-      if (!response.ok) throw new Error('Failed');
-      var payload = await response.json();
+      var payload = await fetchJsonWithFallback('api/public/services');
       var services = payload && payload.data ? payload.data : [];
       if (!services.length) {
         section.innerHTML = '<p class="text-sm text-slate-500">Belum ada layanan aktif.</p>';
@@ -268,9 +399,7 @@
     if (skillList) skillList.innerHTML = '<p class="text-sm text-slate-500">Memuat skill...</p>';
 
     try {
-      var response = await fetch(api.url('api/public/cv-items'));
-      if (!response.ok) throw new Error('Failed');
-      var payload = await response.json();
+      var payload = await fetchJsonWithFallback('api/public/cv-items');
       var items = payload && payload.data ? payload.data : [];
       if (!items.length) {
         if (list) list.innerHTML = '<p class="text-sm text-slate-500">Belum ada data pengalaman.</p>';
@@ -308,26 +437,21 @@
 
     try {
       if (featured) {
-        var worksResponse = await fetch(api.url('api/public/works'));
-        if (worksResponse.ok) {
-          var worksPayload = await worksResponse.json();
+        var worksPayload = await fetchJsonWithFallback('api/public/works');
           var works = (worksPayload && worksPayload.data ? worksPayload.data : []).slice(0, 3);
           if (works.length) {
             featured.innerHTML = works.map(function (work) {
-              var image = work.cover_image || 'assets/images/legacy/banner/banner1.jpg';
+              var image = getWorkImage(work);
               return '<article class="overflow-hidden rounded-2xl border border-slate-200 bg-white">'
                 + '<img src="' + escapeHtml(image) + '" alt="' + escapeHtml(work.title) + '" class="aspect-[4/3] w-full object-cover" />'
                 + '<div class="p-5"><h3 class="font-bold">' + escapeHtml(work.title) + '</h3><p class="mt-2 text-sm text-slate-600">' + escapeHtml(work.excerpt || 'Project portfolio terbaru') + '</p></div>'
                 + '</article>';
             }).join('');
           }
-        }
       }
 
       if (testimonials) {
-        var testResponse = await fetch(api.url('api/public/testimonials'));
-        if (testResponse.ok) {
-          var testPayload = await testResponse.json();
+        var testPayload = await fetchJsonWithFallback('api/public/testimonials');
           var testItems = (testPayload && testPayload.data ? testPayload.data : []).slice(0, 3);
           if (testItems.length) {
             testimonials.innerHTML = testItems.map(function (item) {
@@ -337,19 +461,29 @@
                 + '</article>';
             }).join('');
           }
-        }
       }
     } catch (error) {
-      if (featured) featured.innerHTML = '<p class="text-sm text-amber-700">Gagal memuat project unggulan.</p>';
+      if (featured) {
+        var fallbackWorks = getFallbackWorks().slice(0, 3);
+        if (fallbackWorks.length) {
+          featured.innerHTML = fallbackWorks.map(function (work) {
+            var image = getWorkImage(work);
+            return '<article class="overflow-hidden rounded-2xl border border-slate-200 bg-white">'
+              + '<img src="' + escapeHtml(image) + '" alt="' + escapeHtml(work.title) + '" class="aspect-[4/3] w-full object-cover" />'
+              + '<div class="p-5"><h3 class="font-bold">' + escapeHtml(work.title) + '</h3><p class="mt-2 text-sm text-slate-600">' + escapeHtml(work.excerpt || 'Project portfolio terbaru') + '</p></div>'
+              + '</article>';
+          }).join('');
+        } else {
+          featured.innerHTML = '<p class="text-sm text-amber-700">Gagal memuat project unggulan.</p>';
+        }
+      }
       if (testimonials) testimonials.innerHTML = '<p class="text-sm text-amber-700">Gagal memuat testimoni.</p>';
     }
   }
 
   async function loadGlobalSettings() {
     try {
-      var response = await fetch(api.url('api/public/settings'));
-      if (!response.ok) throw new Error('Failed');
-      var payload = await response.json();
+      var payload = await fetchJsonWithFallback('api/public/settings');
       var settings = payload && payload.data ? payload.data : {};
       var profile = settings.profile || {};
       var contact = settings.contact || {};
@@ -371,9 +505,7 @@
 
   async function loadGlobalCta() {
     try {
-      var response = await fetch(api.url('api/public/banners'));
-      if (!response.ok) throw new Error('Failed');
-      var payload = await response.json();
+      var payload = await fetchJsonWithFallback('api/public/banners');
       var banner = payload && payload.data && payload.data.length ? payload.data[0] : null;
       if (!banner) return;
 

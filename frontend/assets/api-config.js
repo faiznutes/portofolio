@@ -6,8 +6,13 @@
   var metaEl = document.querySelector('meta[name="portfolio-api-base"]');
   var metaBase = metaEl ? metaEl.getAttribute('content') : '';
   var host = String(window.location.hostname || '').toLowerCase();
+  var protocol = String(window.location.protocol || '').toLowerCase();
   var isLocal = host === 'localhost' || host === '127.0.0.1';
-  var defaultBase = isLocal ? 'http://127.0.0.1:8000' : window.location.origin;
+  var isFileProtocol = protocol === 'file:';
+  var hasWebOrigin = String(window.location.origin || '').toLowerCase() !== 'null';
+  var defaultBase = (isLocal || isFileProtocol || !hasWebOrigin)
+    ? 'http://127.0.0.1:8000'
+    : window.location.origin;
   var base = storageBase || metaBase || defaultBase;
 
   function normalize(url) {

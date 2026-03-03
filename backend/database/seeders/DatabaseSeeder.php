@@ -101,7 +101,7 @@ class DatabaseSeeder extends Seeder
                 'tools' => ['Adobe Illustrator', 'Adobe Photoshop'],
                 'gallery' => [
                     ['type' => 'image', 'title' => 'Social Banner', 'src' => 'assets/images/legacy/banner/Social.jpg'],
-                    ['type' => 'image', 'title' => 'Banner 1', 'src' => 'assets/images/legacy/banner/banner1.jpg'],
+                    ['type' => 'image', 'title' => 'Campaign Visual 1', 'src' => 'assets/images/real-social.jpg'],
                     ['type' => 'image', 'title' => 'Banner 2', 'src' => 'assets/images/legacy/banner/banner2.jpg'],
                     ['type' => 'image', 'title' => 'Banner 3', 'src' => 'assets/images/legacy/banner/banner3.jpg'],
                 ],
@@ -390,7 +390,7 @@ class DatabaseSeeder extends Seeder
 
         Banner::query()->updateOrCreate(
             ['title' => 'Bangun visual brand yang rapi dan meyakinkan'],
-            ['subtitle' => 'Dari desain, video, sampai landing page campaign dalam satu ekosistem kerja.', 'image' => 'assets/images/legacy/banner/banner1.jpg', 'cta_label' => 'Konsultasi', 'cta_url' => 'contact.html', 'is_active' => true, 'sort_order' => 1]
+            ['subtitle' => 'Dari desain, video, sampai landing page campaign dalam satu ekosistem kerja.', 'image' => 'assets/images/real-banner.jpg', 'cta_label' => 'Konsultasi', 'cta_url' => 'contact.html', 'is_active' => true, 'sort_order' => 1]
         );
 
         $admin->tokens()->delete();
