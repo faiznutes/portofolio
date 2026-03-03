@@ -6,6 +6,35 @@
   background: #f6f7f8;
 }
 
+.admin-preload aside,
+.admin-preload main > *,
+.admin-preload .admin-mobile-menu-btn,
+.admin-preload .admin-backdrop,
+.admin-preload .admin-shell-shared {
+  display: none !important;
+}
+
+.admin-preload main {
+  position: relative;
+  min-height: 100vh;
+}
+
+.admin-preload main::before {
+  content: 'Memuat panel admin...';
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  right: 24px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #475569;
+  padding: 12px 14px;
+  font-family: Manrope, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+}
+
 .admin-shared-sidebar {
   position: fixed;
   top: 0;
@@ -226,7 +255,7 @@
 .admin-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(2, 6, 23, 0.45);
+  background: rgba(2, 6, 23, 0.14);
   opacity: 0;
   visibility: hidden;
   z-index: 1050;
