@@ -76,6 +76,10 @@
     return window.location.pathname.split('/').pop() || 'dashboard.html';
   }
 
+  function finishPreload() {
+    document.body.classList.remove('admin-preload');
+  }
+
   function ensureFormModal() {
     var existing = document.getElementById('admin-form-modal');
     if (existing) return existing;
@@ -775,24 +779,29 @@
   }
 
   auth.ready.then(function (user) {
-    if (!user) return;
+    if (!user) {
+      finishPreload();
+      return;
+    }
     var page = pathPage();
+    var task;
 
-    if (page === 'dashboard.html') return renderDashboard();
-    if (page === 'works.html') return renderWorks();
-    if (page === 'categories.html') return renderCategories();
-    if (page === 'tags.html') return renderTags();
-    if (page === 'leads.html') return renderLeads();
-    if (page === 'settings.html') return renderSettings();
+    if (page === 'dashboard.html') task = renderDashboard();
+    else if (page === 'works.html') task = renderWorks();
+    else if (page === 'categories.html') task = renderCategories();
+    else if (page === 'tags.html') task = renderTags();
+    else if (page === 'leads.html') task = renderLeads();
+    else if (page === 'settings.html') task = renderSettings();
 
-    if (page === 'services.html') return renderServices();
-    if (page === 'testimonials.html') return renderTestimonials();
-    if (page === 'cv.html') return renderCvItems();
-    if (page === 'highlights.html') return renderHighlights();
-    if (page === 'banners.html') return renderBanners();
+    else if (page === 'services.html') task = renderServices();
+    else if (page === 'testimonials.html') task = renderTestimonials();
+    else if (page === 'cv.html') task = renderCvItems();
+    else if (page === 'highlights.html') task = renderHighlights();
+    else if (page === 'banners.html') task = renderBanners();
+    else task = renderPlaceholder('Module', 'No live renderer assigned for this page yet.');
 
-    return renderPlaceholder('Module', 'No live renderer assigned for this page yet.');
+    return Promise.resolve(task).finally(finishPreload);
   }).catch(function () {
-    // handled by auth
+    finishPreload();
   });
 })();

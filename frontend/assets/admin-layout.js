@@ -116,7 +116,6 @@
     '</aside>';
 
   document.body.insertBefore(shell, document.body.firstChild);
-  document.body.classList.remove('admin-preload');
 
   var btn = document.getElementById('admin-menu-btn');
   var sidebar = document.getElementById('admin-sidebar');
