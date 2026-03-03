@@ -121,12 +121,16 @@
   var sidebar = document.getElementById('admin-sidebar');
   var backdrop = document.getElementById('admin-backdrop');
 
+  function useDimBackdrop() {
+    return window.matchMedia('(max-width: 767px)').matches;
+  }
+
   function setOpen(open) {
     if (!btn || !sidebar || !backdrop) return;
     btn.setAttribute('aria-expanded', String(open));
     sidebar.classList.toggle('open', open);
-    backdrop.classList.toggle('open', open);
-    document.body.classList.toggle('admin-lock-scroll', open);
+    backdrop.classList.toggle('open', open && useDimBackdrop());
+    document.body.classList.toggle('admin-lock-scroll', open && useDimBackdrop());
   }
 
   if (btn) {
@@ -151,6 +155,10 @@
   }
 
   window.addEventListener('resize', function () {
+    if (btn && btn.getAttribute('aria-expanded') === 'true' && window.innerWidth < 1024) {
+      setOpen(true);
+      return;
+    }
     if (window.innerWidth >= 1024) {
       setOpen(false);
     }
