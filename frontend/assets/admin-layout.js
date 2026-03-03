@@ -122,7 +122,7 @@
   var backdrop = document.getElementById('admin-backdrop');
 
   function useDimBackdrop() {
-    return window.matchMedia('(max-width: 767px)').matches;
+    return window.matchMedia('(max-width: 640px)').matches;
   }
 
   function setOpen(open) {

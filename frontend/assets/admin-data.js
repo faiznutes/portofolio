@@ -51,6 +51,11 @@
     return root;
   }
 
+  var initialRoot = appRoot();
+  if (initialRoot) {
+    initialRoot.innerHTML = '<div class="rounded-xl border border-slate-200 bg-white p-5 text-sm font-semibold text-slate-600">Memuat dashboard admin...</div>';
+  }
+
   async function api(path, options) {
     var response = await auth.request(path, options || {});
     if (response.status === 401) {

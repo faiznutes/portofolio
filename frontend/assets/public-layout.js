@@ -96,7 +96,7 @@
     if (main && !main.id) main.id = 'main-content';
 
     function useDimBackdrop() {
-      return window.matchMedia('(max-width: 767px)').matches;
+      return window.matchMedia('(max-width: 640px)').matches;
     }
 
     function setOpen(open) {
