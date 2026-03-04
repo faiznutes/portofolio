@@ -619,10 +619,7 @@
       applyText('[data-global-cta-label]', banner.cta_label);
       applyLink('[data-global-cta-link]', banner.cta_url);
 
-      var image = document.querySelector('[data-global-cta-image]');
-      if (image && banner.image && image.dataset.bannerFixed !== '1') {
-        image.src = banner.image;
-      }
+      // Keep per-page banner image from HTML to avoid cross-page banner overrides.
     } catch (error) {
       // Keep existing CTA from HTML when banner API fails.
     }
