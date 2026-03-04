@@ -21,6 +21,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
             'admin' => \App\Http\Middleware\EnsureAdmin::class,
+            'api-observability' => \App\Http\Middleware\ApiObservability::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
@@ -32,6 +33,7 @@ return Application::configure(basePath: dirname(__DIR__))
             if ($e instanceof ValidationException) {
                 return response()->json([
                     'success' => false,
+                    'error_code' => 'validation_failed',
                     'message' => 'Validation failed.',
                     'errors' => $e->errors(),
                 ], 422);
@@ -40,6 +42,7 @@ return Application::configure(basePath: dirname(__DIR__))
             if ($e instanceof AuthenticationException) {
                 return response()->json([
                     'success' => false,
+                    'error_code' => 'unauthenticated',
                     'message' => 'Unauthenticated.',
                 ], 401);
             }
@@ -47,6 +50,7 @@ return Application::configure(basePath: dirname(__DIR__))
             if ($e instanceof AuthorizationException) {
                 return response()->json([
                     'success' => false,
+                    'error_code' => 'forbidden',
                     'message' => 'Forbidden.',
                 ], 403);
             }
@@ -54,6 +58,7 @@ return Application::configure(basePath: dirname(__DIR__))
             if ($e instanceof ModelNotFoundException || $e instanceof NotFoundHttpException) {
                 return response()->json([
                     'success' => false,
+                    'error_code' => 'resource_not_found',
                     'message' => 'Resource not found.',
                 ], 404);
             }
@@ -61,6 +66,7 @@ return Application::configure(basePath: dirname(__DIR__))
             if ($e instanceof MethodNotAllowedHttpException) {
                 return response()->json([
                     'success' => false,
+                    'error_code' => 'method_not_allowed',
                     'message' => 'Method not allowed.',
                 ], 405);
             }
@@ -69,6 +75,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
             return response()->json([
                 'success' => false,
+                'error_code' => $status >= 500 ? 'internal_error' : 'http_error',
                 'message' => $status >= 500 ? 'Internal server error.' : $e->getMessage(),
             ], $status);
         });

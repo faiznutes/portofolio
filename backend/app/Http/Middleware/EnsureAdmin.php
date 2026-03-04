@@ -19,6 +19,7 @@ class EnsureAdmin
         if (! $user || ! $user->is_admin) {
             return response()->json([
                 'success' => false,
+                'error_code' => 'forbidden',
                 'message' => 'Forbidden. Admin access required.',
             ], 403);
         }

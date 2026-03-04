@@ -10,6 +10,7 @@ use Carbon\CarbonImmutable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
@@ -41,6 +42,13 @@ class AuthController extends Controller
             ->first();
 
         if (! $user || ! Hash::check($credentials['password'], $user->password)) {
+            Log::warning('Auth login failed', [
+                'event' => 'auth.login_failed',
+                'email_sha256' => hash('sha256', mb_strtolower(trim($credentials['email']))),
+                'ip' => (string) $request->ip(),
+                'request_id' => $request->attributes->get('request_id'),
+            ]);
+
             throw ValidationException::withMessages([
                 'email' => ['The provided credentials are incorrect.'],
             ]);
@@ -49,6 +57,14 @@ class AuthController extends Controller
         $tokenName = $this->tokenName($request);
         $user->tokens()->where('name', $tokenName)->delete();
         $token = $user->createToken($tokenName, ['*'], $this->tokenExpiry())->plainTextToken;
+
+        Log::info('Auth login succeeded', [
+            'event' => 'auth.login_succeeded',
+            'user_id' => $user->id,
+            'is_admin' => (bool) $user->is_admin,
+            'ip' => (string) $request->ip(),
+            'request_id' => $request->attributes->get('request_id'),
+        ]);
 
         return response()->json([
             'message' => 'Login successful.',
@@ -73,7 +89,15 @@ class AuthController extends Controller
 
     public function logout(Request $request): JsonResponse
     {
+        $userId = $request->user()?->id;
         $request->user()?->currentAccessToken()?->delete();
+
+        Log::info('Auth logout succeeded', [
+            'event' => 'auth.logout_succeeded',
+            'user_id' => $userId,
+            'ip' => (string) $request->ip(),
+            'request_id' => $request->attributes->get('request_id'),
+        ]);
 
         return response()->json([
             'message' => 'Logout successful.',

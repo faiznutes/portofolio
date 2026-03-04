@@ -15,7 +15,7 @@ use App\Http\Controllers\Api\PublicContentController;
 use App\Http\Controllers\Api\PublicLeadController;
 use Illuminate\Support\Facades\Route;
 
-Route::prefix('auth')->group(function (): void {
+Route::prefix('auth')->middleware('api-observability')->group(function (): void {
     Route::post('/register', [AuthController::class, 'register'])->middleware('throttle:auth-login');
     Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:auth-login');
 
@@ -25,7 +25,7 @@ Route::prefix('auth')->group(function (): void {
     });
 });
 
-Route::prefix('public')->middleware('throttle:public-api')->group(function (): void {
+Route::prefix('public')->middleware(['api-observability', 'throttle:public-api'])->group(function (): void {
     Route::get('/health', function () {
         return response()->json([
             'success' => true,
@@ -50,7 +50,7 @@ Route::prefix('public')->middleware('throttle:public-api')->group(function (): v
     Route::post('/leads', [PublicLeadController::class, 'store'])->middleware('throttle:lead-submit');
 });
 
-Route::prefix('admin')->middleware(['auth:sanctum', 'admin', 'throttle:admin-api'])->group(function (): void {
+Route::prefix('admin')->middleware(['api-observability', 'auth:sanctum', 'admin', 'throttle:admin-api'])->group(function (): void {
     Route::apiResource('categories', CategoryController::class);
     Route::apiResource('tags', TagController::class);
     Route::apiResource('works', WorkController::class);

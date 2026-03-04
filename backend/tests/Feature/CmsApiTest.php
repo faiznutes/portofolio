@@ -23,6 +23,7 @@ class CmsApiTest extends TestCase
     {
         $this->getJson('/api/public/health')
             ->assertOk()
+            ->assertHeader('X-Request-Id')
             ->assertJsonPath('success', true)
             ->assertJsonPath('message', 'API is healthy.');
 
@@ -140,6 +141,7 @@ class CmsApiTest extends TestCase
         $this->getJson('/api/admin/categories')
             ->assertUnauthorized()
             ->assertJsonPath('success', false)
+            ->assertJsonPath('error_code', 'unauthenticated')
             ->assertJsonPath('message', 'Unauthenticated.');
     }
 
@@ -152,6 +154,7 @@ class CmsApiTest extends TestCase
             ->getJson('/api/admin/categories')
             ->assertForbidden()
             ->assertJsonPath('success', false)
+            ->assertJsonPath('error_code', 'forbidden')
             ->assertJsonPath('message', 'Forbidden. Admin access required.');
     }
 
