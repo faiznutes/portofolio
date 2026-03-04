@@ -295,6 +295,30 @@
     return 'https://wa.me/' + encodeURIComponent(wa) + '?text=' + encodeURIComponent(message);
   }
 
+  function getServiceBullets(service) {
+    var title = String((service && service.title) || '').toLowerCase();
+    var summary = String((service && service.summary) || '').toLowerCase();
+    if (title.indexOf('starter') !== -1 || title.indexOf('promo') !== -1) {
+      return ['Siap live lebih cepat', 'Struktur CTA langsung jelas', 'Cocok untuk campaign awal'];
+    }
+    if (title.indexOf('landing') !== -1) {
+      return ['Fokus conversion flow', 'Section trust dan benefit', 'Form lead siap pakai'];
+    }
+    if (title.indexOf('social') !== -1 || summary.indexOf('feed') !== -1) {
+      return ['Visual feed konsisten', 'Template promo siap publish', 'Mendukung awareness campaign'];
+    }
+    if (title.indexOf('company profile') !== -1) {
+      return ['Perkuat kredibilitas brand', 'Informasi bisnis terstruktur', 'Siap presentasi ke calon klien'];
+    }
+    if (title.indexOf('video') !== -1) {
+      return ['Storyline campaign lebih kuat', 'Format siap multi-platform', 'Editing profesional terarah'];
+    }
+    if (title.indexOf('full funnel') !== -1) {
+      return ['Strategi konten end-to-end', 'Website dan visual terintegrasi', 'Arahkan traffic menjadi lead'];
+    }
+    return ['Scope layanan jelas', 'Eksekusi profesional', 'Didesain untuk hasil bisnis'];
+  }
+
   function getWorkPrimaryUrl(work) {
     return getWorkNavigation(work).href;
   }
@@ -508,14 +532,26 @@
         return parsePriceRank(a.price) - parsePriceRank(b.price);
       });
 
+      var bestValueIndex = Math.floor((services.length - 1) / 2);
+
       section.innerHTML = services.map(function (service, index) {
         var packageLabel = 'Paket Promo ' + (index + 1);
-        var orderLink = buildWaOrderLink(waPhone, packageLabel, service.title);
+        var badge = '';
+        if (index === 0) badge = 'Paling Hemat';
+        if (index === bestValueIndex) badge = 'Best Value';
+        var orderLink = buildWaOrderLink(waPhone, packageLabel, service.title + ' - ' + String(service.price || 'Konsultasi harga'));
+        var bullets = getServiceBullets(service);
         return '<article class="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm">'
+          + '<div class="flex flex-wrap items-center gap-2">'
           + '<p class="inline-flex rounded-full bg-primary/10 px-3 py-1 text-xs font-bold uppercase tracking-wide text-primary">' + packageLabel + '</p>'
-          + '<h3 class="text-xl font-bold">' + escapeHtml(service.title) + '</h3>'
+          + (badge ? '<span class="inline-flex rounded-full bg-amber-100 px-3 py-1 text-xs font-bold uppercase tracking-wide text-amber-700">' + badge + '</span>' : '')
+          + '</div>'
+          + '<h3 class="mt-3 text-xl font-bold">' + escapeHtml(service.title) + '</h3>'
           + '<p class="mt-2 text-sm text-slate-600">' + escapeHtml(service.summary || 'Layanan profesional untuk kebutuhan bisnis Anda.') + '</p>'
           + '<p class="mt-4 text-base font-extrabold text-primary">' + escapeHtml(service.price || 'Konsultasi harga') + '</p>'
+          + '<ul class="mt-4 space-y-1 text-sm text-slate-600">'
+          + bullets.map(function (item) { return '<li>• ' + escapeHtml(item) + '</li>'; }).join('')
+          + '</ul>'
           + '<a href="' + orderLink + '" target="_blank" rel="noopener noreferrer" class="mt-5 inline-flex rounded-xl bg-primary px-4 py-2.5 text-sm font-bold text-white hover:bg-sky-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary">Order layanan ini</a>'
           + '</article>';
       }).join('');
