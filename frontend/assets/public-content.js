@@ -53,12 +53,12 @@
       thumbnail: 'https://images.unsplash.com/photo-1544148103-0773bf10d330?w=1200&h=800&auto=format&fit=crop',
       summary: 'Landing page Nasi Campur dengan visual menu, opsi custom, dan CTA pemesanan cepat.'
     },
-    'bangalexzz-dimsum-modern-landing': { type: 'internal', url: '/landing-pages/snack-dimsum-modern.html', thumbnail: 'assets/images/real-event.jpg' },
-    'bangalexzz-dimsum-playful-landing': { type: 'internal', url: '/landing-pages/snack-dimsum-playful.html', thumbnail: 'assets/images/real-coffee.jpg' },
-    'bangalexzz-dimsum-luxury-landing': { type: 'internal', url: '/landing-pages/snack-dimsum-luxury.html', thumbnail: 'assets/images/real-property.jpg' },
+    'bangalexzz-dimsum-modern-landing': { type: 'internal', url: '/landing-pages/snack-dimsum-modern.html', thumbnail: 'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=1200&h=800&auto=format&fit=crop' },
+    'bangalexzz-dimsum-playful-landing': { type: 'internal', url: '/landing-pages/snack-dimsum-playful.html', thumbnail: 'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=1200&h=800&auto=format&fit=crop' },
+    'bangalexzz-dimsum-luxury-landing': { type: 'internal', url: '/landing-pages/snack-dimsum-luxury.html', thumbnail: 'https://images.unsplash.com/photo-1496116214517-7982d5a9d84f?w=1200&h=800&auto=format&fit=crop' },
     'property-agent-classic': { type: 'internal', url: '/landing-pages/property-agent-classic.html', thumbnail: 'assets/images/real-property.jpg' },
-    'property-agent-eco-living': { type: 'internal', url: '/landing-pages/property-agent-eco-living.html', thumbnail: 'assets/images/real-hero.jpg' },
-    'property-agent-urban': { type: 'internal', url: '/landing-pages/property-agent-urban.html', thumbnail: 'assets/images/real-clinic.jpg' },
+    'property-agent-eco-living': { type: 'internal', url: '/landing-pages/property-agent-eco-living.html', thumbnail: 'assets/images/real-property.jpg' },
+    'property-agent-urban': { type: 'internal', url: '/landing-pages/property-agent-urban.html', thumbnail: 'assets/images/real-property.jpg' },
     'property-agent-terpercaya': { type: 'internal', url: '/landing-pages/property-agent-terpercaya.html', thumbnail: 'assets/images/real-property.jpg' }
   };
 
