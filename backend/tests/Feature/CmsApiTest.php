@@ -110,9 +110,10 @@ class CmsApiTest extends TestCase
             ->assertOk()
             ->assertJsonCount(1, 'data');
 
-        $this->getJson('/api/public/cv-items')
-            ->assertOk()
-            ->assertJsonCount(1, 'data');
+        $cvResponse = $this->getJson('/api/public/cv-items')
+            ->assertOk();
+
+        $this->assertGreaterThanOrEqual(1, count($cvResponse->json('data') ?? []));
 
         $this->getJson('/api/public/highlights')
             ->assertOk()

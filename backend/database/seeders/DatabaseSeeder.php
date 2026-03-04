@@ -381,26 +381,76 @@ class DatabaseSeeder extends Seeder
             ['role' => 'F&B Brand', 'quote' => 'Visual kemasan dan sosial media jadi lebih konsisten dan menarik.', 'rating' => 5, 'is_active' => true, 'sort_order' => 3]
         );
 
-        CvItem::query()->updateOrCreate(
-            ['section' => 'experience', 'title' => 'Freelance Web Creator'],
-            ['organization' => 'Independent', 'period' => 'Januari 2021 - Sekarang', 'description' => 'Mengerjakan proyek desain grafis, video editing, social media visual, dan landing page untuk UMKM, F&B, event, dan properti.', 'is_active' => true, 'sort_order' => 1]
-        );
-        CvItem::query()->updateOrCreate(
-            ['section' => 'experience', 'title' => 'PT Symphony Kreasi Indonesia'],
-            ['organization' => 'PT Symphony Kreasi Indonesia', 'period' => 'Juni 2024 - Desember 2025', 'description' => 'Graphic design, video editing, digital marketing, operator streaming TikTok, talent manager, dan content manager.', 'is_active' => true, 'sort_order' => 2]
-        );
-        CvItem::query()->updateOrCreate(
-            ['section' => 'skill', 'title' => 'Laravel'],
-            ['organization' => null, 'period' => null, 'description' => 'Backend framework utama untuk proyek web.', 'is_active' => true, 'sort_order' => 1]
-        );
-        CvItem::query()->updateOrCreate(
-            ['section' => 'skill', 'title' => 'Adobe Premiere Pro'],
-            ['organization' => null, 'period' => null, 'description' => 'Editing video profesional dengan transisi cinematic.', 'is_active' => true, 'sort_order' => 2]
-        );
-        CvItem::query()->updateOrCreate(
-            ['section' => 'skill', 'title' => 'Adobe Illustrator'],
-            ['organization' => null, 'period' => null, 'description' => 'Desain vektor dan branding modern.', 'is_active' => true, 'sort_order' => 3]
-        );
+        $experienceItems = [
+            [
+                'title' => 'Freelance Graphic Designer & Video Editor',
+                'organization' => 'Independent',
+                'period' => 'Januari 2021 - Sekarang',
+                'description' => 'Menangani branding visual, social media content, dan video campaign untuk UMKM, F&B, event, dan properti.',
+                'sort_order' => 1,
+            ],
+            [
+                'title' => 'PT Symphony Kreasi Indonesia',
+                'organization' => 'PT Symphony Kreasi Indonesia',
+                'period' => 'Juni 2024 - Desember 2025',
+                'description' => 'Graphic design, video editing, digital marketing, operator streaming TikTok, talent manager, dan content manager.',
+                'sort_order' => 2,
+            ],
+            [
+                'title' => 'Streaming Operator & Live Commerce Support',
+                'organization' => 'Project Based',
+                'period' => '2022 - Sekarang',
+                'description' => 'Mengelola kebutuhan teknis live streaming, flow konten, dan koordinasi tim saat campaign live commerce berlangsung.',
+                'sort_order' => 3,
+            ],
+        ];
+
+        $skillItems = [
+            ['title' => 'Adobe Photoshop', 'description' => 'Photo editing, compositing, dan visual branding design.', 'sort_order' => 1],
+            ['title' => 'Adobe Illustrator', 'description' => 'Desain vektor, logo system, dan kebutuhan identitas visual.', 'sort_order' => 2],
+            ['title' => 'Adobe Premiere Pro', 'description' => 'Editing video campaign, short form, dan ads content.', 'sort_order' => 3],
+            ['title' => 'Adobe After Effects', 'description' => 'Motion graphics dan animasi elemen visual untuk konten digital.', 'sort_order' => 4],
+            ['title' => 'Canva', 'description' => 'Produksi cepat konten visual social media dengan template konsisten.', 'sort_order' => 5],
+            ['title' => 'CapCut', 'description' => 'Editing video vertikal untuk kebutuhan TikTok, Reels, dan Shorts.', 'sort_order' => 6],
+            ['title' => 'Branding & Visual Strategy', 'description' => 'Menyusun arah visual brand agar konsisten di semua touchpoint.', 'sort_order' => 7],
+            ['title' => 'Live Streaming Production', 'description' => 'Setup live, alur rundown, dan quality control saat siaran berlangsung.', 'sort_order' => 8],
+        ];
+
+        foreach ($experienceItems as $item) {
+            CvItem::query()->updateOrCreate(
+                ['section' => 'experience', 'title' => $item['title']],
+                [
+                    'organization' => $item['organization'],
+                    'period' => $item['period'],
+                    'description' => $item['description'],
+                    'is_active' => true,
+                    'sort_order' => $item['sort_order'],
+                ]
+            );
+        }
+
+        foreach ($skillItems as $item) {
+            CvItem::query()->updateOrCreate(
+                ['section' => 'skill', 'title' => $item['title']],
+                [
+                    'organization' => null,
+                    'period' => null,
+                    'description' => $item['description'],
+                    'is_active' => true,
+                    'sort_order' => $item['sort_order'],
+                ]
+            );
+        }
+
+        CvItem::query()
+            ->where('section', 'experience')
+            ->whereNotIn('title', array_column($experienceItems, 'title'))
+            ->update(['is_active' => false]);
+
+        CvItem::query()
+            ->where('section', 'skill')
+            ->whereNotIn('title', array_column($skillItems, 'title'))
+            ->update(['is_active' => false]);
 
         Highlight::query()->updateOrCreate(
             ['title' => 'Muhamad Faiz Abdurrahman - Graphic Designer & Video Editor'],
