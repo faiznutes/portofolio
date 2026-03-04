@@ -274,6 +274,27 @@
     return String((work && work.excerpt) || 'Buka project untuk melihat implementasi lengkap.');
   }
 
+  function normalizeWhatsAppNumber(phone) {
+    var digits = String(phone || '').replace(/[^\d+]/g, '');
+    if (!digits) return '6285155043133';
+    if (digits.indexOf('+') === 0) digits = digits.slice(1);
+    if (digits.indexOf('0') === 0) return '62' + digits.slice(1);
+    if (digits.indexOf('62') === 0) return digits;
+    return digits;
+  }
+
+  function parsePriceRank(priceText) {
+    var numbers = String(priceText || '').replace(/[^\d]/g, '');
+    if (!numbers) return Number.MAX_SAFE_INTEGER;
+    return Number(numbers);
+  }
+
+  function buildWaOrderLink(phone, packageLabel, serviceTitle) {
+    var wa = normalizeWhatsAppNumber(phone);
+    var message = 'Halo, saya ingin membeli layanan ' + packageLabel + ' (' + String(serviceTitle || 'Layanan') + ') apakah tersedia?';
+    return 'https://wa.me/' + encodeURIComponent(wa) + '?text=' + encodeURIComponent(message);
+  }
+
   function getWorkPrimaryUrl(work) {
     return getWorkNavigation(work).href;
   }
@@ -467,18 +488,35 @@
     section.innerHTML = '<p class="text-sm text-slate-500">Memuat layanan...</p>';
 
     try {
-      var payload = await fetchJsonWithFallback('api/public/services');
+      var responses = await Promise.all([
+        fetchJsonWithFallback('api/public/services'),
+        fetchJsonWithFallback('api/public/settings').catch(function () { return { data: {} }; })
+      ]);
+
+      var payload = responses[0] || { data: [] };
+      var settingsPayload = responses[1] || { data: {} };
       var services = payload && payload.data ? payload.data : [];
+      var contact = settingsPayload && settingsPayload.data && settingsPayload.data.contact ? settingsPayload.data.contact : {};
+      var waPhone = contact.contact_phone || '6285155043133';
+
       if (!services.length) {
         section.innerHTML = '<p class="text-sm text-slate-500">Belum ada layanan aktif.</p>';
         return;
       }
 
-      section.innerHTML = services.map(function (service) {
-        return '<article class="rounded-2xl border border-slate-200 bg-white p-7">'
+      services = services.slice().sort(function (a, b) {
+        return parsePriceRank(a.price) - parsePriceRank(b.price);
+      });
+
+      section.innerHTML = services.map(function (service, index) {
+        var packageLabel = 'Paket Promo ' + (index + 1);
+        var orderLink = buildWaOrderLink(waPhone, packageLabel, service.title);
+        return '<article class="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm">'
+          + '<p class="inline-flex rounded-full bg-primary/10 px-3 py-1 text-xs font-bold uppercase tracking-wide text-primary">' + packageLabel + '</p>'
           + '<h3 class="text-xl font-bold">' + escapeHtml(service.title) + '</h3>'
           + '<p class="mt-2 text-sm text-slate-600">' + escapeHtml(service.summary || 'Layanan profesional untuk kebutuhan bisnis Anda.') + '</p>'
-          + '<p class="mt-4 text-sm font-semibold text-primary">' + escapeHtml(service.price || 'Konsultasi harga') + '</p>'
+          + '<p class="mt-4 text-base font-extrabold text-primary">' + escapeHtml(service.price || 'Konsultasi harga') + '</p>'
+          + '<a href="' + orderLink + '" target="_blank" rel="noopener noreferrer" class="mt-5 inline-flex rounded-xl bg-primary px-4 py-2.5 text-sm font-bold text-white hover:bg-sky-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary">Order layanan ini</a>'
           + '</article>';
       }).join('');
     } catch (error) {

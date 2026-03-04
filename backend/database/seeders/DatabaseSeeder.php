@@ -344,20 +344,28 @@ class DatabaseSeeder extends Seeder
         );
 
         Service::query()->updateOrCreate(
-            ['slug' => 'landing-page'],
-            ['title' => 'Landing Page', 'summary' => 'Desain halaman promosi cepat live dan conversion-focused.', 'price' => 'Mulai Rp2.500.000', 'is_active' => true, 'sort_order' => 1]
+            ['slug' => 'promo-starter-page'],
+            ['title' => 'Starter Page Promo', 'summary' => 'Satu halaman promo untuk launching cepat dengan CTA WhatsApp dan copywriting dasar.', 'price' => 'Rp1.200.000', 'is_active' => true, 'sort_order' => 1]
         );
         Service::query()->updateOrCreate(
-            ['slug' => 'company-profile'],
-            ['title' => 'Company Profile', 'summary' => 'Website profil bisnis lengkap untuk kredibilitas brand.', 'price' => 'Mulai Rp4.500.000', 'is_active' => true, 'sort_order' => 2]
+            ['slug' => 'landing-page-growth'],
+            ['title' => 'Landing Page Growth', 'summary' => 'Landing page conversion-ready dengan section trust, benefit, dan form lead capture.', 'price' => 'Rp2.300.000', 'is_active' => true, 'sort_order' => 2]
         );
         Service::query()->updateOrCreate(
-            ['slug' => 'video-brand-campaign'],
-            ['title' => 'Video Brand Campaign', 'summary' => 'Konsep dan editing video campaign dengan storytelling kuat.', 'price' => 'Mulai Rp1.800.000', 'is_active' => true, 'sort_order' => 3]
+            ['slug' => 'social-media-package'],
+            ['title' => 'Social Media Visual Package', 'summary' => 'Paket desain feed, story, dan materi promo agar visual brand konsisten di semua channel.', 'price' => 'Rp3.000.000', 'is_active' => true, 'sort_order' => 3]
         );
         Service::query()->updateOrCreate(
-            ['slug' => 'social-media-design'],
-            ['title' => 'Social Media Design', 'summary' => 'Produksi desain visual untuk konten media sosial yang konsisten.', 'price' => 'Mulai Rp1.200.000', 'is_active' => true, 'sort_order' => 4]
+            ['slug' => 'company-profile-business'],
+            ['title' => 'Company Profile Business', 'summary' => 'Website profil bisnis multi-section untuk membangun kredibilitas dan memperjelas positioning.', 'price' => 'Rp4.500.000', 'is_active' => true, 'sort_order' => 4]
+        );
+        Service::query()->updateOrCreate(
+            ['slug' => 'video-campaign-pro'],
+            ['title' => 'Video Campaign Pro', 'summary' => 'Produksi video campaign dengan perencanaan konten, editing profesional, dan format multi-platform.', 'price' => 'Rp6.500.000', 'is_active' => true, 'sort_order' => 5]
+        );
+        Service::query()->updateOrCreate(
+            ['slug' => 'full-funnel-brand-system'],
+            ['title' => 'Full Funnel Brand System', 'summary' => 'Paket end-to-end: landing page, visual campaign, dan optimasi konten untuk penjualan berkelanjutan.', 'price' => 'Rp9.800.000', 'is_active' => true, 'sort_order' => 6]
         );
 
         Testimonial::query()->updateOrCreate(
