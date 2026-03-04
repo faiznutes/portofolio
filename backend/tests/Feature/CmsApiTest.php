@@ -233,6 +233,48 @@ class CmsApiTest extends TestCase
             ->assertJsonStructure(['errors' => ['email', 'message']]);
     }
 
+    public function test_public_lead_honeypot_is_accepted_without_persisting_data(): void
+    {
+        $response = $this->postJson('/api/public/leads', [
+            'name' => 'Bot User',
+            'email' => 'bot@example.com',
+            'message' => 'spam message',
+            'website' => 'https://spam.example.com',
+        ]);
+
+        $response
+            ->assertCreated()
+            ->assertJsonPath('data.id', null)
+            ->assertJsonPath('data.status', 'new');
+
+        $this->assertDatabaseMissing('leads', [
+            'email' => 'bot@example.com',
+        ]);
+    }
+
+    public function test_admin_categories_support_pagination_with_meta(): void
+    {
+        $user = User::factory()->create(['is_admin' => true]);
+        $token = $user->createToken('pagination-token')->plainTextToken;
+
+        foreach (range(1, 30) as $index) {
+            Category::query()->create([
+                'name' => 'Category '.$index,
+                'slug' => 'category-'.$index,
+                'is_active' => true,
+                'sort_order' => $index,
+            ]);
+        }
+
+        $this->withToken($token)
+            ->getJson('/api/admin/categories?paginate=1&per_page=10&page=2')
+            ->assertOk()
+            ->assertJsonCount(10, 'data')
+            ->assertJsonPath('meta.current_page', 2)
+            ->assertJsonPath('meta.per_page', 10)
+            ->assertJsonPath('meta.total', 30);
+    }
+
     public function test_admin_created_published_work_is_visible_on_public_endpoints(): void
     {
         $user = User::factory()->create(['is_admin' => true]);

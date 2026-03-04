@@ -46,6 +46,16 @@ class AppServiceProvider extends ServiceProvider
             ];
         });
 
+        RateLimiter::for('lead-submit', function (Request $request) {
+            $email = mb_strtolower(trim((string) $request->input('email', '')));
+            $identifier = ($email !== '' ? $email : 'anonymous').'|'.$request->ip();
+
+            return [
+                Limit::perMinute(6)->by($identifier),
+                Limit::perMinute(15)->by($request->ip()),
+            ];
+        });
+
         RateLimiter::for('admin-api', function (Request $request) {
             $identifier = $request->user()?->id ? 'user:'.$request->user()->id : $request->ip();
 

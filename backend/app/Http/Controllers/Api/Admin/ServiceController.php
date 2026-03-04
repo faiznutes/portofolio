@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Admin;
 
+use App\Http\Controllers\Concerns\HandlesApiPagination;
 use App\Http\Controllers\Controller;
 use App\Models\Service;
 use Illuminate\Http\JsonResponse;
@@ -9,9 +10,14 @@ use Illuminate\Http\Request;
 
 class ServiceController extends Controller
 {
-    public function index(): JsonResponse
+    use HandlesApiPagination;
+
+    public function index(Request $request): JsonResponse
     {
-        return response()->json(['data' => Service::query()->orderBy('sort_order')->orderBy('title')->get()]);
+        return response()->json($this->paginatedData(
+            $request,
+            Service::query()->orderBy('sort_order')->orderBy('title')
+        ));
     }
 
     public function store(Request $request): JsonResponse

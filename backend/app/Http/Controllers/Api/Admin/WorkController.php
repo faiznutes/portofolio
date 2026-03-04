@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Admin;
 
+use App\Http\Controllers\Concerns\HandlesApiPagination;
 use App\Http\Controllers\Controller;
 use App\Models\Work;
 use Illuminate\Http\JsonResponse;
@@ -9,16 +10,18 @@ use Illuminate\Http\Request;
 
 class WorkController extends Controller
 {
-    public function index(): JsonResponse
-    {
-        $works = Work::query()
-            ->with(['category:id,name,slug', 'tags:id,name,slug'])
-            ->orderByDesc('is_featured')
-            ->orderBy('sort_order')
-            ->orderByDesc('created_at')
-            ->get();
+    use HandlesApiPagination;
 
-        return response()->json(['data' => $works]);
+    public function index(Request $request): JsonResponse
+    {
+        return response()->json($this->paginatedData(
+            $request,
+            Work::query()
+                ->with(['category:id,name,slug', 'tags:id,name,slug'])
+                ->orderByDesc('is_featured')
+                ->orderBy('sort_order')
+                ->orderByDesc('created_at')
+        ));
     }
 
     public function store(Request $request): JsonResponse

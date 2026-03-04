@@ -47,7 +47,7 @@ Route::prefix('public')->middleware('throttle:public-api')->group(function (): v
     Route::get('/cv-items', [PublicContentController::class, 'cvItems']);
     Route::get('/highlights', [PublicContentController::class, 'highlights']);
     Route::get('/banners', [PublicContentController::class, 'banners']);
-    Route::post('/leads', [PublicLeadController::class, 'store']);
+    Route::post('/leads', [PublicLeadController::class, 'store'])->middleware('throttle:lead-submit');
 });
 
 Route::prefix('admin')->middleware(['auth:sanctum', 'admin', 'throttle:admin-api'])->group(function (): void {

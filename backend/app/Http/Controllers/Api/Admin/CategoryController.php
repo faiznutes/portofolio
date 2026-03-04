@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Admin;
 
+use App\Http\Controllers\Concerns\HandlesApiPagination;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use Illuminate\Http\JsonResponse;
@@ -9,11 +10,14 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function index(): JsonResponse
+    use HandlesApiPagination;
+
+    public function index(Request $request): JsonResponse
     {
-        return response()->json([
-            'data' => Category::query()->orderBy('sort_order')->orderBy('name')->get(),
-        ]);
+        return response()->json($this->paginatedData(
+            $request,
+            Category::query()->orderBy('sort_order')->orderBy('name')
+        ));
     }
 
     public function store(Request $request): JsonResponse

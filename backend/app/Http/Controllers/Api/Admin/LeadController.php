@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Admin;
 
+use App\Http\Controllers\Concerns\HandlesApiPagination;
 use App\Http\Controllers\Controller;
 use App\Models\Lead;
 use Illuminate\Http\JsonResponse;
@@ -9,11 +10,14 @@ use Illuminate\Http\Request;
 
 class LeadController extends Controller
 {
-    public function index(): JsonResponse
-    {
-        $leads = Lead::query()->latest()->get();
+    use HandlesApiPagination;
 
-        return response()->json(['data' => $leads]);
+    public function index(Request $request): JsonResponse
+    {
+        return response()->json($this->paginatedData(
+            $request,
+            Lead::query()->latest()
+        ));
     }
 
     public function show(Lead $lead): JsonResponse

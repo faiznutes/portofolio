@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Admin;
 
+use App\Http\Controllers\Concerns\HandlesApiPagination;
 use App\Http\Controllers\Controller;
 use App\Models\Setting;
 use Illuminate\Http\JsonResponse;
@@ -9,11 +10,14 @@ use Illuminate\Http\Request;
 
 class SettingController extends Controller
 {
-    public function index(): JsonResponse
-    {
-        $settings = Setting::query()->orderBy('group')->orderBy('key')->get();
+    use HandlesApiPagination;
 
-        return response()->json(['data' => $settings]);
+    public function index(Request $request): JsonResponse
+    {
+        return response()->json($this->paginatedData(
+            $request,
+            Setting::query()->orderBy('group')->orderBy('key')
+        ));
     }
 
     public function store(Request $request): JsonResponse

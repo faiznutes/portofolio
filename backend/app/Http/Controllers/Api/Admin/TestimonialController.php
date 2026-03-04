@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Admin;
 
+use App\Http\Controllers\Concerns\HandlesApiPagination;
 use App\Http\Controllers\Controller;
 use App\Models\Testimonial;
 use Illuminate\Http\JsonResponse;
@@ -9,9 +10,14 @@ use Illuminate\Http\Request;
 
 class TestimonialController extends Controller
 {
-    public function index(): JsonResponse
+    use HandlesApiPagination;
+
+    public function index(Request $request): JsonResponse
     {
-        return response()->json(['data' => Testimonial::query()->orderBy('sort_order')->orderByDesc('created_at')->get()]);
+        return response()->json($this->paginatedData(
+            $request,
+            Testimonial::query()->orderBy('sort_order')->orderByDesc('created_at')
+        ));
     }
 
     public function store(Request $request): JsonResponse

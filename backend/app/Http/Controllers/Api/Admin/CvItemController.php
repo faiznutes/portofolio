@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Admin;
 
+use App\Http\Controllers\Concerns\HandlesApiPagination;
 use App\Http\Controllers\Controller;
 use App\Models\CvItem;
 use Illuminate\Http\JsonResponse;
@@ -9,9 +10,14 @@ use Illuminate\Http\Request;
 
 class CvItemController extends Controller
 {
-    public function index(): JsonResponse
+    use HandlesApiPagination;
+
+    public function index(Request $request): JsonResponse
     {
-        return response()->json(['data' => CvItem::query()->orderBy('section')->orderBy('sort_order')->get()]);
+        return response()->json($this->paginatedData(
+            $request,
+            CvItem::query()->orderBy('section')->orderBy('sort_order')
+        ));
     }
 
     public function store(Request $request): JsonResponse
