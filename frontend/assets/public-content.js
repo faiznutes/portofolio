@@ -63,7 +63,7 @@
     'property-agent-terpercaya': { type: 'internal', url: '/landing-pages/property-agent-terpercaya', thumbnail: 'assets/images/real-property.jpg' }
   };
 
-  var DEFAULT_IMAGE = 'assets/images/banner-karya.png';
+  var DEFAULT_IMAGE = 'assets/images/banner-karya.webp';
   var FALLBACK_WORKS = [
     {
       slug: 'bangalexzz-mie-ayam-landing',

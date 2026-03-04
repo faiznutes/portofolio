@@ -10,7 +10,15 @@ return new class extends Migration
         DB::table('banners')
             ->where('image', 'assets/images/real-banner.jpg')
             ->update([
-                'image' => 'assets/images/banner-index.png',
+                'image' => 'assets/images/banner-index.webp',
+                'cta_url' => '/contact',
+                'updated_at' => now(),
+            ]);
+
+        DB::table('banners')
+            ->where('image', 'assets/images/banner-index.png')
+            ->update([
+                'image' => 'assets/images/banner-index.webp',
                 'cta_url' => '/contact',
                 'updated_at' => now(),
             ]);
@@ -19,7 +27,7 @@ return new class extends Migration
     public function down(): void
     {
         DB::table('banners')
-            ->where('image', 'assets/images/banner-index.png')
+            ->where('image', 'assets/images/banner-index.webp')
             ->update([
                 'image' => 'assets/images/real-banner.jpg',
                 'cta_url' => 'contact.html',
