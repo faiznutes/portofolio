@@ -30,13 +30,16 @@ return Application::configure(basePath: dirname(__DIR__))
                 return null;
             }
 
+            $requestId = (string) ($request->attributes->get('request_id') ?: $request->header('X-Request-Id'));
+
             if ($e instanceof ValidationException) {
                 return response()->json([
                     'success' => false,
                     'error_code' => 'validation_failed',
                     'message' => 'Validation failed.',
                     'errors' => $e->errors(),
-                ], 422);
+                    'request_id' => $requestId,
+                ], 422)->header('X-Request-Id', $requestId);
             }
 
             if ($e instanceof AuthenticationException) {
@@ -44,7 +47,8 @@ return Application::configure(basePath: dirname(__DIR__))
                     'success' => false,
                     'error_code' => 'unauthenticated',
                     'message' => 'Unauthenticated.',
-                ], 401);
+                    'request_id' => $requestId,
+                ], 401)->header('X-Request-Id', $requestId);
             }
 
             if ($e instanceof AuthorizationException) {
@@ -52,7 +56,8 @@ return Application::configure(basePath: dirname(__DIR__))
                     'success' => false,
                     'error_code' => 'forbidden',
                     'message' => 'Forbidden.',
-                ], 403);
+                    'request_id' => $requestId,
+                ], 403)->header('X-Request-Id', $requestId);
             }
 
             if ($e instanceof ModelNotFoundException || $e instanceof NotFoundHttpException) {
@@ -60,7 +65,8 @@ return Application::configure(basePath: dirname(__DIR__))
                     'success' => false,
                     'error_code' => 'resource_not_found',
                     'message' => 'Resource not found.',
-                ], 404);
+                    'request_id' => $requestId,
+                ], 404)->header('X-Request-Id', $requestId);
             }
 
             if ($e instanceof MethodNotAllowedHttpException) {
@@ -68,7 +74,8 @@ return Application::configure(basePath: dirname(__DIR__))
                     'success' => false,
                     'error_code' => 'method_not_allowed',
                     'message' => 'Method not allowed.',
-                ], 405);
+                    'request_id' => $requestId,
+                ], 405)->header('X-Request-Id', $requestId);
             }
 
             $status = $e instanceof HttpExceptionInterface ? $e->getStatusCode() : 500;
@@ -77,6 +84,7 @@ return Application::configure(basePath: dirname(__DIR__))
                 'success' => false,
                 'error_code' => $status >= 500 ? 'internal_error' : 'http_error',
                 'message' => $status >= 500 ? 'Internal server error.' : $e->getMessage(),
-            ], $status);
+                'request_id' => $requestId,
+            ], $status)->header('X-Request-Id', $requestId);
         });
     })->create();
