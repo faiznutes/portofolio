@@ -2,9 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Banner;
 use App\Models\Category;
 use App\Models\CvItem;
-use App\Models\Banner;
 use App\Models\Highlight;
 use App\Models\Service;
 use App\Models\Setting;
@@ -40,23 +40,34 @@ class DatabaseSeeder extends Seeder
         DB::table('settings')->truncate();
         Schema::enableForeignKeyConstraints();
 
-        $admin = User::query()->updateOrCreate(
-            ['email' => 'admin@portfolio.local'],
-            [
-                'name' => 'Portfolio Admin',
-                'password' => 'admin12345',
-                'is_admin' => true,
-            ]
-        );
+        $isSafeSeedEnv = app()->environment(['local', 'testing']);
+        $adminEmail = env('SEED_ADMIN_EMAIL', 'admin@portfolio.local');
+        $adminPassword = env('SEED_ADMIN_PASSWORD', $isSafeSeedEnv ? 'admin12345' : null);
+        $editorEmail = env('SEED_EDITOR_EMAIL', 'editor@portfolio.local');
+        $editorPassword = env('SEED_EDITOR_PASSWORD', $isSafeSeedEnv ? 'editor12345' : null);
 
-        User::query()->updateOrCreate(
-            ['email' => 'editor@portfolio.local'],
-            [
-                'name' => 'Portfolio Editor',
-                'password' => 'editor12345',
-                'is_admin' => false,
-            ]
-        );
+        $admin = null;
+        if ($adminEmail && $adminPassword) {
+            $admin = User::query()->updateOrCreate(
+                ['email' => $adminEmail],
+                [
+                    'name' => 'Portfolio Admin',
+                    'password' => $adminPassword,
+                    'is_admin' => true,
+                ]
+            );
+        }
+
+        if ($editorEmail && $editorPassword) {
+            User::query()->updateOrCreate(
+                ['email' => $editorEmail],
+                [
+                    'name' => 'Portfolio Editor',
+                    'password' => $editorPassword,
+                    'is_admin' => false,
+                ]
+            );
+        }
 
         $categoryMap = [
             'design' => Category::query()->updateOrCreate(
@@ -393,6 +404,8 @@ class DatabaseSeeder extends Seeder
             ['subtitle' => 'Dari desain, video, sampai landing page campaign dalam satu ekosistem kerja.', 'image' => 'assets/images/real-banner.jpg', 'cta_label' => 'Konsultasi', 'cta_url' => 'contact.html', 'is_active' => true, 'sort_order' => 1]
         );
 
-        $admin->tokens()->delete();
+        if ($admin) {
+            $admin->tokens()->delete();
+        }
     }
 }

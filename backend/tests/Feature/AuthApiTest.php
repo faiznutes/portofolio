@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Sanctum\PersonalAccessToken;
 use Tests\TestCase;
 
 class AuthApiTest extends TestCase
@@ -15,7 +16,7 @@ class AuthApiTest extends TestCase
         $response = $this->postJson('/api/auth/register', [
             'name' => 'Admin User',
             'email' => 'admin@example.com',
-            'password' => 'password123',
+            'password' => 'Password123',
         ]);
 
         $response
@@ -62,6 +63,54 @@ class AuthApiTest extends TestCase
 
         $this->assertDatabaseCount('personal_access_tokens', 0);
 
+    }
+
+    public function test_logout_removes_only_current_token(): void
+    {
+        $user = User::factory()->create([
+            'password' => 'password123',
+        ]);
+
+        $firstLogin = $this->postJson('/api/auth/login', [
+            'email' => $user->email,
+            'password' => 'password123',
+        ]);
+        $firstToken = $firstLogin->json('data.token');
+
+        $secondLogin = $this->postJson('/api/auth/login', [
+            'email' => $user->email,
+            'password' => 'password123',
+        ]);
+        $secondToken = $secondLogin->json('data.token');
+
+        $this->assertNotSame($firstToken, $secondToken);
+        $this->assertDatabaseCount('personal_access_tokens', 1);
+
+        $this
+            ->withToken($secondToken)
+            ->postJson('/api/auth/logout')
+            ->assertOk();
+
+        $this->assertDatabaseCount('personal_access_tokens', 0);
+    }
+
+    public function test_expired_token_cannot_access_profile(): void
+    {
+        config(['sanctum.expiration' => 1]);
+
+        $user = User::factory()->create([
+            'password' => 'password123',
+        ]);
+
+        $token = $user->createToken('manual-token')->plainTextToken;
+        $tokenId = explode('|', $token)[0] ?? null;
+        $record = PersonalAccessToken::query()->findOrFail($tokenId);
+        $record->forceFill(['created_at' => now()->subMinutes(3)])->save();
+
+        $this
+            ->withToken($token)
+            ->getJson('/api/auth/me')
+            ->assertUnauthorized();
     }
 
     public function test_profile_endpoint_requires_authentication(): void

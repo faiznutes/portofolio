@@ -2,9 +2,9 @@
 
 namespace Tests\Feature;
 
+use App\Models\Banner;
 use App\Models\Category;
 use App\Models\CvItem;
-use App\Models\Banner;
 use App\Models\Highlight;
 use App\Models\Service;
 use App\Models\Setting;
@@ -150,7 +150,9 @@ class CmsApiTest extends TestCase
 
         $this->withToken($token)
             ->getJson('/api/admin/categories')
-            ->assertForbidden();
+            ->assertForbidden()
+            ->assertJsonPath('success', false)
+            ->assertJsonPath('message', 'Forbidden. Admin access required.');
     }
 
     public function test_authenticated_user_can_manage_admin_categories(): void

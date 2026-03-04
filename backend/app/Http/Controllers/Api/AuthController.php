@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Models\User;
+use Carbon\CarbonImmutable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -20,7 +21,7 @@ class AuthController extends Controller
             'is_admin' => false,
         ]);
 
-        $token = $user->createToken('auth_token')->plainTextToken;
+        $token = $user->createToken($this->tokenName($request), ['*'], $this->tokenExpiry())->plainTextToken;
 
         return response()->json([
             'message' => 'Registration successful.',
@@ -45,7 +46,9 @@ class AuthController extends Controller
             ]);
         }
 
-        $token = $user->createToken('auth_token')->plainTextToken;
+        $tokenName = $this->tokenName($request);
+        $user->tokens()->where('name', $tokenName)->delete();
+        $token = $user->createToken($tokenName, ['*'], $this->tokenExpiry())->plainTextToken;
 
         return response()->json([
             'message' => 'Login successful.',
@@ -70,7 +73,7 @@ class AuthController extends Controller
 
     public function logout(Request $request): JsonResponse
     {
-        $request->user()?->tokens()->delete();
+        $request->user()?->currentAccessToken()?->delete();
 
         return response()->json([
             'message' => 'Logout successful.',
@@ -87,5 +90,22 @@ class AuthController extends Controller
             'created_at' => $user->created_at,
             'updated_at' => $user->updated_at,
         ];
+    }
+
+    private function tokenName(Request $request): string
+    {
+        $agent = (string) $request->userAgent();
+
+        return 'web-'.sha1($agent ?: 'unknown-agent');
+    }
+
+    private function tokenExpiry(): ?CarbonImmutable
+    {
+        $minutes = (int) config('sanctum.expiration');
+        if ($minutes <= 0) {
+            return null;
+        }
+
+        return CarbonImmutable::now()->addMinutes($minutes);
     }
 }

@@ -9,15 +9,24 @@
   var isLoginPage = pathname.endsWith('/login.html');
 
   function token() {
-    return window.localStorage.getItem(TOKEN_KEY) || '';
+    return window.sessionStorage.getItem(TOKEN_KEY) || '';
   }
 
   function setToken(value) {
     if (value) {
-      window.localStorage.setItem(TOKEN_KEY, value);
+      window.sessionStorage.setItem(TOKEN_KEY, value);
       return;
     }
-    window.localStorage.removeItem(TOKEN_KEY);
+    window.sessionStorage.removeItem(TOKEN_KEY);
+  }
+
+  function safeNextPath(rawNext) {
+    if (!rawNext) return 'dashboard.html';
+    if (!rawNext.startsWith('/')) return 'dashboard.html';
+    if (rawNext.startsWith('//')) return 'dashboard.html';
+    if (!rawNext.startsWith('/admin/')) return 'dashboard.html';
+    if (rawNext.toLowerCase().indexOf('/admin/login.html') === 0) return 'dashboard.html';
+    return rawNext;
   }
 
   function loginUrl() {
@@ -167,7 +176,7 @@
 
       setNotice('Login berhasil. Mengalihkan ke dashboard...', 'ok');
       var next = new URLSearchParams(window.location.search).get('next');
-      window.location.href = next || 'dashboard.html';
+      window.location.href = safeNextPath(next);
     } catch (err) {
       setToken('');
       setNotice('Login gagal atau akun bukan admin.', 'error');
