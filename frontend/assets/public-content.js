@@ -297,6 +297,15 @@
       works = works.filter(isLandingProject);
 
       if (!works.length) {
+        var emptyFallback = getFallbackWorks().filter(isLandingProject);
+        if (emptyFallback.length) {
+          renderWorkCards(grid, emptyFallback);
+          if (notice) {
+            notice.textContent = 'Data karya live belum tersedia. Menampilkan karya cadangan.';
+          }
+          return;
+        }
+
         grid.innerHTML = '<p class="text-sm text-slate-500">Belum ada karya yang dipublish.</p>';
         if (notice) {
           notice.textContent = '';
