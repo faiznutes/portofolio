@@ -547,6 +547,10 @@
 
       if (!services.length) {
         section.innerHTML = '<p class="text-sm text-slate-500">Belum ada layanan aktif.</p>';
+        if (compareRoot) {
+          compareRoot.innerHTML = '<p class="text-sm text-slate-500">Belum ada paket untuk dibandingkan.</p>';
+        }
+        if (compareBtn) compareBtn.classList.add('hidden');
         return;
       }
 
@@ -603,7 +607,7 @@
       if (compareBtn) compareBtn.classList.remove('hidden');
     } catch (error) {
       section.innerHTML = '<p class="text-sm text-amber-700">Gagal memuat layanan dari server.</p>';
-      if (compareRoot) compareRoot.innerHTML = '';
+      if (compareRoot) compareRoot.innerHTML = '<p class="text-sm text-amber-700">Perbandingan paket belum tersedia saat ini.</p>';
       if (compareBtn) compareBtn.classList.add('hidden');
     }
   }
