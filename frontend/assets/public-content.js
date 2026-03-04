@@ -41,23 +41,24 @@
     return value;
   }
 
-  var projectUrlBySlug = {
-    'bangalexzz-mie-ayam-landing': '/landing-pages/resto-mie-ayam-landing.html',
-    'bangalexzz-nasi-campur-landing': '/landing-pages/facebook-social-handling-demo.html',
-    'bangalexzz-dimsum-modern-landing': '/landing-pages/snack-dimsum-modern.html',
-    'bangalexzz-dimsum-playful-landing': '/landing-pages/snack-dimsum-playful.html',
-    'bangalexzz-dimsum-luxury-landing': '/landing-pages/snack-dimsum-luxury.html',
-    'property-agent-classic': '/landing-pages/property-agent-classic.html',
-    'property-agent-eco-living': '/landing-pages/property-agent-eco-living.html',
-    'property-agent-urban': '/landing-pages/property-agent-urban.html',
-    'property-agent-terpercaya': '/landing-pages/property-agent-terpercaya.html'
-  };
-
-  var coverImageBySlug = {
-    'bangalexzz-dimsum-modern-landing': 'assets/images/real-event.jpg',
-    'bangalexzz-dimsum-playful-landing': 'assets/images/real-coffee.jpg',
-    'bangalexzz-dimsum-luxury-landing': 'assets/images/real-property.jpg',
-    'bangalexzz-nasi-campur-landing': 'assets/images/real-social.jpg'
+  var WORK_OVERRIDES = {
+    'bangalexzz-mie-ayam-landing': {
+      type: 'internal',
+      url: '/landing-pages/resto-mie-ayam-landing.html',
+      thumbnail: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDMGbltDQ7JTYTw6iNMaSkPK-lmG39CLpKrsKA0LjLm5eWEPEspWVxYX_KUAchZ4LHK2mNH-x7BcVtFL4EBKHkz5DEYemPJh8w-YAw-lkd1x-Cg5s8eOKmpFSFmj3idqQapr6Qact-HwOfw0M5oQQ6capd9foLFcTTriOnBXK2JYqfeYnT2S4BgswpjwE2MO0mCylbu3b29ZmWhVmql1e_WPQQtSE9sHakMfFgGczszBLKX5CTcir1l2YZqn7GcYJr2vt4-56hzMOc'
+    },
+    'bangalexzz-nasi-campur-landing': {
+      type: 'internal',
+      url: '/landing-pages/resto-nasi-campur-landing.html',
+      thumbnail: 'assets/images/real-social.jpg'
+    },
+    'bangalexzz-dimsum-modern-landing': { type: 'internal', url: '/landing-pages/snack-dimsum-modern.html', thumbnail: 'assets/images/real-event.jpg' },
+    'bangalexzz-dimsum-playful-landing': { type: 'internal', url: '/landing-pages/snack-dimsum-playful.html', thumbnail: 'assets/images/real-coffee.jpg' },
+    'bangalexzz-dimsum-luxury-landing': { type: 'internal', url: '/landing-pages/snack-dimsum-luxury.html', thumbnail: 'assets/images/real-property.jpg' },
+    'property-agent-classic': { type: 'internal', url: '/landing-pages/property-agent-classic.html', thumbnail: 'assets/images/real-property.jpg' },
+    'property-agent-eco-living': { type: 'internal', url: '/landing-pages/property-agent-eco-living.html', thumbnail: 'assets/images/real-hero.jpg' },
+    'property-agent-urban': { type: 'internal', url: '/landing-pages/property-agent-urban.html', thumbnail: 'assets/images/real-clinic.jpg' },
+    'property-agent-terpercaya': { type: 'internal', url: '/landing-pages/property-agent-terpercaya.html', thumbnail: 'assets/images/real-property.jpg' }
   };
 
   var DEFAULT_IMAGE = 'assets/images/real-banner.jpg';
@@ -120,6 +121,82 @@
     });
   }
 
+  function getInitials(text) {
+    return String(text || '')
+      .trim()
+      .split(/\s+/)
+      .slice(0, 2)
+      .map(function (part) { return part.charAt(0).toUpperCase(); })
+      .join('') || 'WK';
+  }
+
+  function generatedThumbnail(work) {
+    var title = String((work && work.title) || 'Project');
+    var initials = getInitials(title);
+    var slug = String((work && work.slug) || 'work');
+    var hash = 0;
+    for (var i = 0; i < slug.length; i += 1) hash = ((hash << 5) - hash) + slug.charCodeAt(i);
+    var hue = Math.abs(hash) % 360;
+    var svg = '<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200">'
+      + '<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">'
+      + '<stop offset="0%" stop-color="hsl(' + hue + ',72%,52%)" />'
+      + '<stop offset="100%" stop-color="hsl(' + ((hue + 38) % 360) + ',78%,40%)" />'
+      + '</linearGradient></defs>'
+      + '<rect width="1600" height="1200" fill="url(#g)" />'
+      + '<text x="50%" y="52%" dominant-baseline="middle" text-anchor="middle" fill="white" font-size="320" font-family="Manrope,Arial,sans-serif" font-weight="800">' + initials + '</text>'
+      + '</svg>';
+    return 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg);
+  }
+
+  function isExternalUrl(url) {
+    var value = String(url || '').trim();
+    if (!/^https?:\/\//i.test(value)) return false;
+    try {
+      return new URL(value).origin !== window.location.origin;
+    } catch (error) {
+      return true;
+    }
+  }
+
+  function getWorkOverride(work) {
+    var slug = work && work.slug ? String(work.slug) : '';
+    return slug && WORK_OVERRIDES[slug] ? WORK_OVERRIDES[slug] : {};
+  }
+
+  function getWorkNavigation(work) {
+    var override = getWorkOverride(work);
+    var rawUrl = override.url || (work && work.project_url ? work.project_url : '');
+    var href = normalizeInternalUrl(rawUrl);
+    var type = override.type || (isExternalUrl(href) ? 'external' : 'internal');
+
+    if (!href) {
+      href = 'work-detail.html?slug=' + encodeURIComponent((work && work.slug) ? work.slug : 'work');
+      type = 'internal';
+    }
+
+    return {
+      href: href,
+      type: type,
+      opensNewTab: type === 'external'
+    };
+  }
+
+  function isLandingProject(work) {
+    var nav = getWorkNavigation(work);
+    return nav.href.indexOf('work-detail.html') === -1;
+  }
+
+  function bindWorkImageFallback(grid) {
+    var images = grid.querySelectorAll('img[data-thumb-fallback]');
+    images.forEach(function (image) {
+      image.addEventListener('error', function () {
+        if (image.dataset.fallbackApplied === '1') return;
+        image.dataset.fallbackApplied = '1';
+        image.src = image.dataset.thumbFallback || DEFAULT_IMAGE;
+      });
+    });
+  }
+
   async function fetchJsonWithFallback(path) {
     var cleanPath = String(path || '').replace(/^\/+/, '');
     var candidates = [];
@@ -157,41 +234,40 @@
       var image = getWorkImage(work);
       var title = escapeHtml(work.title || 'Untitled Work');
       var category = escapeHtml(getWorkCategory(work));
-      var primaryUrl = escapeHtml(getWorkPrimaryUrl(work));
-      var detailUrl = 'work-detail.html?slug=' + encodeURIComponent(work.slug || 'work');
-      var primaryLabel = work.project_url ? 'Lihat demo' : 'Lihat detail';
+      var summary = escapeHtml(work.excerpt || 'Buka project untuk melihat implementasi lengkap.');
+      var nav = getWorkNavigation(work);
+      var href = escapeHtml(nav.href);
+      var fallbackImage = generatedThumbnail(work);
+      var target = nav.opensNewTab ? ' target="_blank" rel="noopener noreferrer"' : '';
+      var routeLabel = nav.type === 'external' ? 'External' : 'Internal';
 
-      return '<article class="overflow-hidden rounded-2xl border border-slate-200 bg-white">'
-        + '<a href="' + primaryUrl + '">'
-        + '<img src="' + escapeHtml(image) + '" alt="' + title + '" class="aspect-[4/3] w-full object-cover" loading="lazy" onerror="this.onerror=null;this.src=\'' + DEFAULT_IMAGE + '\'" />'
-        + '</a>'
+      return '<article class="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-lg">'
+        + '<a class="block h-full focus:outline-none focus-visible:ring-2 focus-visible:ring-primary" href="' + href + '"' + target + ' aria-label="View Project ' + title + '">'
+        + '<img src="' + escapeHtml(image) + '" data-thumb-fallback="' + escapeHtml(fallbackImage) + '" alt="Thumbnail ' + title + '" class="aspect-[16/9] w-full object-cover" loading="lazy" decoding="async" />'
         + '<div class="p-5">'
-        + '<p class="text-xs font-bold uppercase text-primary">' + category + '</p>'
-        + '<h3 class="mt-1 text-lg font-bold">' + title + '</h3>'
-        + '<div class="mt-3 flex items-center gap-4">'
-        + '<a class="inline-block text-sm font-bold text-primary" href="' + primaryUrl + '">' + primaryLabel + '</a>'
-        + '<a class="inline-block text-sm font-semibold text-slate-500" href="' + escapeHtml(detailUrl) + '">Detail</a>'
+        + '<div class="flex items-center justify-between gap-3">'
+        + '<p class="text-xs font-bold uppercase tracking-wide text-primary">' + category + '</p>'
+        + '<span class="rounded-full bg-slate-100 px-2.5 py-1 text-[11px] font-bold text-slate-500">' + routeLabel + '</span>'
         + '</div>'
+        + '<h3 class="mt-2 text-lg font-extrabold">' + title + '</h3>'
+        + '<p class="mt-2 text-sm text-slate-600">' + summary + '</p>'
+        + '<span class="mt-4 inline-flex items-center text-sm font-bold text-primary">View Project</span>'
         + '</div>'
+        + '</a>'
         + '</article>';
     }).join('');
+
+    bindWorkImageFallback(grid);
   }
 
   function getWorkImage(work) {
-    var slug = work && work.slug ? String(work.slug) : '';
-    if (slug && coverImageBySlug[slug]) return coverImageBySlug[slug];
+    var override = getWorkOverride(work);
+    if (override.thumbnail) return override.thumbnail;
     return (work && work.cover_image) ? work.cover_image : DEFAULT_IMAGE;
   }
 
   function getWorkPrimaryUrl(work) {
-    var slug = work && work.slug ? String(work.slug) : '';
-    if (slug && projectUrlBySlug[slug]) {
-      return normalizeInternalUrl(projectUrlBySlug[slug]);
-    }
-    if (work && work.project_url) {
-      return normalizeInternalUrl(work.project_url);
-    }
-    return 'work-detail.html?slug=' + encodeURIComponent((work && work.slug) ? work.slug : 'work');
+    return getWorkNavigation(work).href;
   }
 
   function onImageErrorFallback(image) {
@@ -211,6 +287,7 @@
     try {
       var payload = await fetchJsonWithFallback('api/public/works');
       var works = payload && payload.data ? payload.data : [];
+      works = works.filter(isLandingProject);
 
       if (!works.length) {
         grid.innerHTML = '<p class="text-sm text-slate-500">Belum ada karya yang dipublish.</p>';
@@ -227,6 +304,7 @@
       }
     } catch (error) {
       var fallbackWorks = getFallbackWorks();
+      fallbackWorks = fallbackWorks.filter(isLandingProject);
       if (fallbackWorks.length) {
         renderWorkCards(grid, fallbackWorks);
         if (notice) notice.textContent = 'Server belum tersedia. Menampilkan karya lokal sementara.';
@@ -311,9 +389,9 @@
             var title = escapeHtml(item.title || 'Gallery Item');
             var src = escapeHtml(item.src || '#');
             if (item.type === 'link') {
-              return '<a href="' + src + '" target="_blank" rel="noreferrer" class="rounded-xl border border-slate-200 bg-white p-4 text-sm font-semibold hover:border-primary hover:text-primary">' + title + '</a>';
+              return '<a href="' + src + '" target="_blank" rel="noopener noreferrer" class="rounded-xl border border-slate-200 bg-white p-4 text-sm font-semibold hover:border-primary hover:text-primary">' + title + '</a>';
             }
-            return '<a href="' + src + '" target="_blank" rel="noreferrer" class="overflow-hidden rounded-xl border border-slate-200 bg-white">'
+            return '<a href="' + src + '" target="_blank" rel="noopener noreferrer" class="overflow-hidden rounded-xl border border-slate-200 bg-white">'
               + '<img src="' + src + '" alt="' + title + '" class="aspect-[16/10] w-full object-cover" loading="lazy" onerror="this.onerror=null;this.src=\'' + DEFAULT_IMAGE + '\'" />'
               + '<p class="p-3 text-sm font-semibold">' + title + '</p>'
               + '</a>';
