@@ -64,6 +64,14 @@
   };
 
   var DEFAULT_IMAGE = 'assets/images/banner-karya.webp';
+  var FALLBACK_TESTIMONIALS = [
+    { name: 'Rizky Pratama', role: 'Owner Klinik', quote: 'Website jadi lebih meyakinkan dan leads naik.', rating: 5 },
+    { name: 'Tim Next Level Properti', role: 'Property Agency', quote: 'Konsep video grand opening disusun detail dan mudah dieksekusi.', rating: 5 },
+    { name: 'Owner Ayam Lepas', role: 'F&B Brand', quote: 'Visual kemasan dan sosial media jadi lebih konsisten dan menarik.', rating: 5 },
+    { name: 'Salsa Azzahra', role: 'Owner Skincare Lokal', quote: 'Konten campaign lebih rapi dan conversion dari Instagram Ads meningkat signifikan.', rating: 5 },
+    { name: 'Rudi Hartono', role: 'Founder Coffee Shop', quote: 'Desain menu dan konten promo lebih premium, customer jadi lebih percaya kualitas brand kami.', rating: 5 },
+    { name: 'Nabila Putri', role: 'Event Organizer', quote: 'Materi visual untuk event launching selesai cepat, komunikasinya enak dan hasilnya konsisten.', rating: 5 }
+  ];
   var FALLBACK_WORKS = [
     {
       slug: 'bangalexzz-mie-ayam-landing',
@@ -121,6 +129,46 @@
         category: Object.assign({}, item.category || { name: 'General' })
       });
     });
+  }
+
+  function getMergedTestimonials(items) {
+    var merged = [];
+    var seen = {};
+    var source = Array.isArray(items) ? items : [];
+
+    source.concat(FALLBACK_TESTIMONIALS).forEach(function (item) {
+      if (!item || !item.name || !item.quote) return;
+      var key = String(item.name).toLowerCase().trim() + '|' + String(item.quote).toLowerCase().trim();
+      if (seen[key]) return;
+      seen[key] = true;
+      merged.push(item);
+    });
+
+    return merged;
+  }
+
+  function renderRatingStars(rating) {
+    var safeRating = Number.isFinite(Number(rating)) ? Number(rating) : 5;
+    var count = Math.max(1, Math.min(5, Math.round(safeRating)));
+    return '\u2605'.repeat(count) + '<span class="text-slate-300">' + '\u2605'.repeat(5 - count) + '</span>';
+  }
+
+  function renderTestimonialCard(item) {
+    var initials = getInitials(item && item.name ? item.name : 'Client');
+    var role = item && item.role ? String(item.role) : 'Client';
+    var rating = renderRatingStars(item && item.rating);
+
+    return '<article class="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-lg">'
+      + '<div class="pointer-events-none absolute -right-10 -top-10 h-28 w-28 rounded-full bg-primary/10 blur-xl"></div>'
+      + '<div class="flex items-start justify-between gap-4">'
+      + '<div class="flex items-center gap-3">'
+      + '<div class="flex h-11 w-11 items-center justify-center rounded-full bg-primary/15 text-sm font-extrabold text-primary">' + escapeHtml(initials) + '</div>'
+      + '<div><p class="text-sm font-bold text-slate-900">' + escapeHtml(item.name) + '</p><p class="text-xs text-slate-500">' + escapeHtml(role) + '</p></div>'
+      + '</div>'
+      + '<p class="text-sm tracking-wide text-amber-500" aria-label="Rating ' + escapeHtml(String(item && item.rating ? item.rating : 5)) + ' dari 5">' + rating + '</p>'
+      + '</div>'
+      + '<p class="mt-4 text-sm leading-relaxed text-slate-700">"' + escapeHtml(item.quote) + '"</p>'
+      + '</article>';
   }
 
   function getInitials(text) {
@@ -683,14 +731,11 @@
       }
 
       if (testimonials) {
-        var testItems = (testPayload && testPayload.data ? testPayload.data : []).slice(0, 3);
+        var testItems = getMergedTestimonials(testPayload && testPayload.data ? testPayload.data : []).slice(0, 6);
         if (testItems.length) {
-          testimonials.innerHTML = testItems.map(function (item) {
-            return '<article class="rounded-2xl border border-slate-200 bg-white p-6">'
-              + '<p class="text-sm text-slate-700">"' + escapeHtml(item.quote) + '"</p>'
-              + '<p class="mt-3 text-xs font-bold text-primary">' + escapeHtml(item.name) + '</p>'
-              + '</article>';
-          }).join('');
+          testimonials.innerHTML = testItems.map(renderTestimonialCard).join('');
+        } else {
+          testimonials.innerHTML = getMergedTestimonials([]).slice(0, 6).map(renderTestimonialCard).join('');
         }
       }
     } catch (error) {
@@ -708,7 +753,7 @@
           featured.innerHTML = '<p class="text-sm text-amber-700">Gagal memuat project unggulan.</p>';
         }
       }
-      if (testimonials) testimonials.innerHTML = '<p class="text-sm text-amber-700">Gagal memuat testimoni.</p>';
+      if (testimonials) testimonials.innerHTML = getMergedTestimonials([]).slice(0, 6).map(renderTestimonialCard).join('');
     }
   }
 
