@@ -35,3 +35,8 @@ services:
       SESSION_DRIVER: file
       QUEUE_CONNECTION: sync
       LOG_CHANNEL: stderr
+    volumes:
+      - portofolio_api_database:/var/www/html/database
+
+volumes:
+  portofolio_api_database:
