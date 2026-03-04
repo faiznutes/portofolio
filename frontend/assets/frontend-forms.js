@@ -82,7 +82,7 @@
     } catch (error) {
       setLoading(false);
       if (notice) {
-        notice.textContent = 'Gagal kirim ke API. Pastikan backend aktif di ' + ((api && api.baseUrl) || 'http://127.0.0.1:8000') + '.';
+        notice.textContent = 'Gagal mengirim pesan sekarang. Coba beberapa saat lagi.';
         notice.className = 'text-sm font-semibold text-amber-700';
       }
     }

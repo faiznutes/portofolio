@@ -65,6 +65,7 @@ class PublicContentController extends Controller
     public function settings(): JsonResponse
     {
         $settings = Setting::query()
+            ->whereIn('group', ['profile', 'contact', 'social'])
             ->orderBy('group')
             ->orderBy('key')
             ->get()

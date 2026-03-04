@@ -42,9 +42,9 @@ class DatabaseSeeder extends Seeder
 
         $isSafeSeedEnv = app()->environment(['local', 'testing']);
         $adminEmail = env('SEED_ADMIN_EMAIL', 'admin@portfolio.local');
-        $adminPassword = env('SEED_ADMIN_PASSWORD', $isSafeSeedEnv ? 'admin12345' : null);
+        $adminPassword = env('SEED_ADMIN_PASSWORD', $isSafeSeedEnv ? 'Admin!2026Strong' : null);
         $editorEmail = env('SEED_EDITOR_EMAIL', 'editor@portfolio.local');
-        $editorPassword = env('SEED_EDITOR_PASSWORD', $isSafeSeedEnv ? 'editor12345' : null);
+        $editorPassword = env('SEED_EDITOR_PASSWORD', $isSafeSeedEnv ? 'Editor!2026Strong' : null);
 
         $admin = null;
         if ($adminEmail && $adminPassword) {

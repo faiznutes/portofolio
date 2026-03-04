@@ -27,8 +27,9 @@ RUN COMPOSER_ALLOW_SUPERUSER=1 composer install --no-dev --prefer-dist --no-inte
 
 RUN mkdir -p database storage/framework/cache storage/framework/sessions storage/framework/views storage/logs bootstrap/cache \
     && touch database/database.sqlite \
-    && chmod -R 777 storage bootstrap/cache database
+    && chown -R www-data:www-data storage bootstrap/cache database \
+    && chmod -R 775 storage bootstrap/cache database
 
 EXPOSE 8000
 
-CMD ["sh", "-lc", "[ -f .env ] || cp .env.example .env; php artisan key:generate --force; php artisan migrate --force; php artisan db:seed --force; php artisan serve --host=0.0.0.0 --port=8000"]
+CMD ["sh", "-lc", "[ -f .env ] || cp .env.example .env; php artisan migrate --force; php artisan serve --host=0.0.0.0 --port=8000 --no-reload"]

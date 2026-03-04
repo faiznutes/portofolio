@@ -214,26 +214,22 @@
 
   async function renderDashboard() {
     var data = await Promise.all([
-      api('api/admin/works'),
-      api('api/admin/categories'),
-      api('api/admin/tags'),
-      api('api/admin/leads')
+      api('api/admin/stats'),
+      api('api/admin/leads?paginate=1&per_page=5&page=1')
     ]);
 
-    var works = data[0].data || [];
-    var categories = data[1].data || [];
-    var tags = data[2].data || [];
-    var leads = data[3].data || [];
+    var stats = data[0].data || {};
+    var leads = data[1].data || [];
     var recentLeads = leads.slice(0, 5);
 
     setRoot(
       '<div class="space-y-6">'
       + '<div><h1 class="text-3xl font-black">Admin Dashboard</h1><p class="text-sm text-slate-500 mt-1">Connected to live backend API.</p></div>'
       + '<div class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">'
-      + '<article class="rounded-xl border border-slate-200 bg-white p-5"><p class="text-xs uppercase text-slate-500">Works</p><p class="mt-2 text-3xl font-black">' + works.length + '</p></article>'
-      + '<article class="rounded-xl border border-slate-200 bg-white p-5"><p class="text-xs uppercase text-slate-500">Categories</p><p class="mt-2 text-3xl font-black">' + categories.length + '</p></article>'
-      + '<article class="rounded-xl border border-slate-200 bg-white p-5"><p class="text-xs uppercase text-slate-500">Tags</p><p class="mt-2 text-3xl font-black">' + tags.length + '</p></article>'
-      + '<article class="rounded-xl border border-slate-200 bg-white p-5"><p class="text-xs uppercase text-slate-500">Leads</p><p class="mt-2 text-3xl font-black">' + leads.length + '</p></article>'
+      + '<article class="rounded-xl border border-slate-200 bg-white p-5"><p class="text-xs uppercase text-slate-500">Works</p><p class="mt-2 text-3xl font-black">' + Number(stats.works || 0) + '</p></article>'
+      + '<article class="rounded-xl border border-slate-200 bg-white p-5"><p class="text-xs uppercase text-slate-500">Categories</p><p class="mt-2 text-3xl font-black">' + Number(stats.categories || 0) + '</p></article>'
+      + '<article class="rounded-xl border border-slate-200 bg-white p-5"><p class="text-xs uppercase text-slate-500">Tags</p><p class="mt-2 text-3xl font-black">' + Number(stats.tags || 0) + '</p></article>'
+      + '<article class="rounded-xl border border-slate-200 bg-white p-5"><p class="text-xs uppercase text-slate-500">Leads</p><p class="mt-2 text-3xl font-black">' + Number(stats.leads || 0) + '</p></article>'
       + '</div>'
       + '<section class="rounded-xl border border-slate-200 bg-white p-5">'
       + '<h2 class="text-lg font-bold">Recent Leads</h2>'

@@ -100,7 +100,7 @@ class CmsApiTest extends TestCase
 
         $this->getJson('/api/public/settings')
             ->assertOk()
-            ->assertJsonPath('data.seo.site_name', 'Portfolio Web AI');
+            ->assertJsonMissingPath('data.seo.site_name');
 
         $this->getJson('/api/public/services')
             ->assertOk()

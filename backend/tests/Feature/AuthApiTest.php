@@ -11,7 +11,7 @@ class AuthApiTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_user_can_register_and_receive_token(): void
+    public function test_register_route_is_disabled(): void
     {
         $response = $this->postJson('/api/auth/register', [
             'name' => 'Admin User',
@@ -19,17 +19,19 @@ class AuthApiTest extends TestCase
             'password' => 'Password123',
         ]);
 
-        $response
-            ->assertCreated()
-            ->assertJsonStructure([
-                'message',
-                'data' => [
-                    'user' => ['id', 'name', 'email', 'is_admin', 'created_at', 'updated_at'],
-                    'token',
-                ],
-            ]);
+        $response->assertNotFound();
+    }
 
-        $response->assertJsonPath('data.user.is_admin', false);
+    public function test_mass_assignment_cannot_elevate_is_admin(): void
+    {
+        $user = User::query()->create([
+            'name' => 'Regular User',
+            'email' => 'user@example.com',
+            'password' => 'Password123',
+            'is_admin' => true,
+        ]);
+
+        $this->assertFalse((bool) $user->fresh()->is_admin);
     }
 
     public function test_user_can_login_and_fetch_profile_then_logout(): void

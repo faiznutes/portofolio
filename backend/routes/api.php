@@ -16,7 +16,6 @@ use App\Http\Controllers\Api\PublicLeadController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('auth')->middleware('api-observability')->group(function (): void {
-    Route::post('/register', [AuthController::class, 'register'])->middleware('throttle:auth-login');
     Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:auth-login');
 
     Route::middleware('auth:sanctum')->group(function (): void {
@@ -51,6 +50,17 @@ Route::prefix('public')->middleware(['api-observability', 'throttle:public-api']
 });
 
 Route::prefix('admin')->middleware(['api-observability', 'auth:sanctum', 'admin', 'throttle:admin-api'])->group(function (): void {
+    Route::get('/stats', function () {
+        return response()->json([
+            'data' => [
+                'works' => \App\Models\Work::query()->count(),
+                'categories' => \App\Models\Category::query()->count(),
+                'tags' => \App\Models\Tag::query()->count(),
+                'leads' => \App\Models\Lead::query()->count(),
+            ],
+        ]);
+    });
+
     Route::apiResource('categories', CategoryController::class);
     Route::apiResource('tags', TagController::class);
     Route::apiResource('works', WorkController::class);

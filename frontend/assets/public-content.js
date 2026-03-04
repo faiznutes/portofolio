@@ -53,9 +53,9 @@
       thumbnail: 'https://images.unsplash.com/photo-1544148103-0773bf10d330?w=1200&h=800&auto=format&fit=crop',
       summary: 'Landing page Nasi Campur dengan visual menu, opsi custom, dan CTA pemesanan cepat.'
     },
-    'bangalexzz-dimsum-modern-landing': { type: 'internal', url: '/landing-pages/snack-dimsum-modern.html', thumbnail: 'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=1200&h=800&auto=format&fit=crop' },
-    'bangalexzz-dimsum-playful-landing': { type: 'internal', url: '/landing-pages/snack-dimsum-playful.html', thumbnail: 'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?w=1200&h=800&auto=format&fit=crop' },
-    'bangalexzz-dimsum-luxury-landing': { type: 'internal', url: '/landing-pages/snack-dimsum-luxury.html', thumbnail: 'https://images.unsplash.com/photo-1496116214517-7982d5a9d84f?w=1200&h=800&auto=format&fit=crop' },
+    'bangalexzz-dimsum-modern-landing': { type: 'internal', url: '/landing-pages/snack-dimsum-modern.html', thumbnail: 'assets/images/dimsum-spread.png' },
+    'bangalexzz-dimsum-playful-landing': { type: 'internal', url: '/landing-pages/snack-dimsum-playful.html', thumbnail: 'assets/images/dimsum-hero.png' },
+    'bangalexzz-dimsum-luxury-landing': { type: 'internal', url: '/landing-pages/snack-dimsum-luxury.html', thumbnail: 'assets/images/dimsum-xlb.png' },
     'property-agent-classic': { type: 'internal', url: '/landing-pages/property-agent-classic.html', thumbnail: 'assets/images/real-property.jpg' },
     'property-agent-eco-living': { type: 'internal', url: '/landing-pages/property-agent-eco-living.html', thumbnail: 'assets/images/real-property.jpg' },
     'property-agent-urban': { type: 'internal', url: '/landing-pages/property-agent-urban.html', thumbnail: 'assets/images/real-property.jpg' },
@@ -84,7 +84,7 @@
       slug: 'bangalexzz-dimsum-modern-landing',
       title: 'Bangalexzz Dimsum Modern Landing Page',
       excerpt: 'Landing page dimsum modern dengan visual premium.',
-      cover_image: 'assets/images/real-event.jpg',
+      cover_image: 'assets/images/dimsum-spread.png',
       project_url: '/landing-pages/snack-dimsum-modern.html',
       category: { name: 'Landing Page' }
     },
@@ -92,7 +92,7 @@
       slug: 'bangalexzz-dimsum-playful-landing',
       title: 'Bangalexzz Dimsum Playful Landing Page',
       excerpt: 'Landing page playful dengan tone cerah dan interaktif.',
-      cover_image: 'assets/images/real-coffee.jpg',
+      cover_image: 'assets/images/dimsum-hero.png',
       project_url: '/landing-pages/snack-dimsum-playful.html',
       category: { name: 'Landing Page' }
     },
@@ -108,7 +108,7 @@
       slug: 'property-agent-urban',
       title: 'Urban Properti - Investasi Cerdas Jakarta',
       excerpt: 'Landing page fokus trust, ROI, dan CTA cepat.',
-      cover_image: 'assets/images/real-clinic.jpg',
+      cover_image: 'assets/images/real-property.jpg',
       project_url: '/landing-pages/property-agent-urban.html',
       category: { name: 'Landing Page' }
     }
@@ -521,31 +521,37 @@
     if (testimonials) testimonials.innerHTML = '<p class="text-sm text-slate-500">Memuat testimoni...</p>';
 
     try {
+      var requests = [];
+      if (featured) requests.push(fetchJsonWithFallback('api/public/works')); else requests.push(Promise.resolve(null));
+      if (testimonials) requests.push(fetchJsonWithFallback('api/public/testimonials')); else requests.push(Promise.resolve(null));
+
+      var responses = await Promise.all(requests);
+      var worksPayload = responses[0];
+      var testPayload = responses[1];
+
       if (featured) {
-        var worksPayload = await fetchJsonWithFallback('api/public/works');
-          var works = (worksPayload && worksPayload.data ? worksPayload.data : []).slice(0, 3);
-          if (works.length) {
-            featured.innerHTML = works.map(function (work) {
-              var image = getWorkImage(work);
-              return '<article class="overflow-hidden rounded-2xl border border-slate-200 bg-white">'
-                + '<img src="' + escapeHtml(image) + '" alt="' + escapeHtml(work.title) + '" class="aspect-[4/3] w-full object-cover" />'
-                + '<div class="p-5"><h3 class="font-bold">' + escapeHtml(work.title) + '</h3><p class="mt-2 text-sm text-slate-600">' + escapeHtml(work.excerpt || 'Project portfolio terbaru') + '</p></div>'
-                + '</article>';
-            }).join('');
-          }
+        var works = (worksPayload && worksPayload.data ? worksPayload.data : []).slice(0, 3);
+        if (works.length) {
+          featured.innerHTML = works.map(function (work) {
+            var image = getWorkImage(work);
+            return '<article class="overflow-hidden rounded-2xl border border-slate-200 bg-white">'
+              + '<img src="' + escapeHtml(image) + '" alt="' + escapeHtml(work.title) + '" class="aspect-[4/3] w-full object-cover" />'
+              + '<div class="p-5"><h3 class="font-bold">' + escapeHtml(work.title) + '</h3><p class="mt-2 text-sm text-slate-600">' + escapeHtml(work.excerpt || 'Project portfolio terbaru') + '</p></div>'
+              + '</article>';
+          }).join('');
+        }
       }
 
       if (testimonials) {
-        var testPayload = await fetchJsonWithFallback('api/public/testimonials');
-          var testItems = (testPayload && testPayload.data ? testPayload.data : []).slice(0, 3);
-          if (testItems.length) {
-            testimonials.innerHTML = testItems.map(function (item) {
-              return '<article class="rounded-2xl border border-slate-200 bg-white p-6">'
-                + '<p class="text-sm text-slate-700">"' + escapeHtml(item.quote) + '"</p>'
-                + '<p class="mt-3 text-xs font-bold text-primary">' + escapeHtml(item.name) + '</p>'
-                + '</article>';
-            }).join('');
-          }
+        var testItems = (testPayload && testPayload.data ? testPayload.data : []).slice(0, 3);
+        if (testItems.length) {
+          testimonials.innerHTML = testItems.map(function (item) {
+            return '<article class="rounded-2xl border border-slate-200 bg-white p-6">'
+              + '<p class="text-sm text-slate-700">"' + escapeHtml(item.quote) + '"</p>'
+              + '<p class="mt-3 text-xs font-bold text-primary">' + escapeHtml(item.name) + '</p>'
+              + '</article>';
+          }).join('');
+        }
       }
     } catch (error) {
       if (featured) {
@@ -608,11 +614,16 @@
     }
   }
 
-  loadWorksPage();
-  loadWorkDetailPage();
-  loadServicesPage();
-  loadCvPage();
-  loadHomePage();
+  var page = (document.body && document.body.dataset && document.body.dataset.page)
+    ? String(document.body.dataset.page)
+    : '';
+
+  if (page === 'works') loadWorksPage();
+  if (page === 'work-detail') loadWorkDetailPage();
+  if (page === 'services') loadServicesPage();
+  if (page === 'cv') loadCvPage();
+  if (page === 'home') loadHomePage();
+
   loadGlobalSettings();
   loadGlobalCta();
 })();

@@ -8,6 +8,10 @@
   var inAdmin = pathname.indexOf('/admin/') !== -1;
   var isLoginPage = pathname.endsWith('/login.html');
 
+  if (inAdmin && !isLoginPage) {
+    document.body.style.visibility = 'hidden';
+  }
+
   function token() {
     return window.sessionStorage.getItem(TOKEN_KEY) || '';
   }
@@ -105,6 +109,8 @@
       window.location.href = 'login.html?error=admin-only';
       return null;
     }
+
+    document.body.style.visibility = 'visible';
 
     return user;
   })();
