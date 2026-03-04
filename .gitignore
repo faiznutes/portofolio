@@ -25,3 +25,9 @@ frontend/node_modules/
 
 # Legacy source clone (reference only)
 legacy-portfolio-source/
+
+# Local operational artifacts (debug/deploy checks)
+/api_health_*.txt
+/cf_*.json
+/coolify_*.json
+/site_*.html
