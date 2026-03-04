@@ -63,7 +63,7 @@
     'property-agent-terpercaya': { type: 'internal', url: '/landing-pages/property-agent-terpercaya', thumbnail: 'assets/images/real-property.jpg' }
   };
 
-  var DEFAULT_IMAGE = 'assets/images/real-banner.jpg';
+  var DEFAULT_IMAGE = 'assets/images/banner-karya.png';
   var FALLBACK_WORKS = [
     {
       slug: 'bangalexzz-mie-ayam-landing',
@@ -620,7 +620,7 @@
       applyLink('[data-global-cta-link]', banner.cta_url);
 
       var image = document.querySelector('[data-global-cta-image]');
-      if (image && banner.image) {
+      if (image && banner.image && image.dataset.bannerFixed !== '1') {
         image.src = banner.image;
       }
     } catch (error) {

@@ -401,7 +401,7 @@ class DatabaseSeeder extends Seeder
 
         Banner::query()->updateOrCreate(
             ['title' => 'Bangun visual brand yang rapi dan meyakinkan'],
-            ['subtitle' => 'Dari desain, video, sampai landing page campaign dalam satu ekosistem kerja.', 'image' => 'assets/images/real-banner.jpg', 'cta_label' => 'Konsultasi', 'cta_url' => 'contact.html', 'is_active' => true, 'sort_order' => 1]
+            ['subtitle' => 'Dari desain, video, sampai landing page campaign dalam satu ekosistem kerja.', 'image' => 'assets/images/banner-index.png', 'cta_label' => 'Konsultasi', 'cta_url' => '/contact', 'is_active' => true, 'sort_order' => 1]
         );
 
         if ($admin) {
