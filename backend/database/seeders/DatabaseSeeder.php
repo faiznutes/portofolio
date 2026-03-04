@@ -150,7 +150,7 @@ class DatabaseSeeder extends Seeder
                 'slug' => 'bangalexzz-mie-ayam-landing',
                 'title' => 'Bangalexzz Mie Ayam Landing Page',
                 'category' => 'landing-page',
-                'image' => 'assets/images/real-catering.jpg',
+                'image' => 'https://lh3.googleusercontent.com/aida-public/AB6AXuDMGbltDQ7JTYTw6iNMaSkPK-lmG39CLpKrsKA0LjLm5eWEPEspWVxYX_KUAchZ4LHK2mNH-x7BcVtFL4EBKHkz5DEYemPJh8w-YAw-lkd1x-Cg5s8eOKmpFSFmj3idqQapr6Qact-HwOfw0M5oQQ6capd9foLFcTTriOnBXK2JYqfeYnT2S4BgswpjwE2MO0mCylbu3b29ZmWhVmql1e_WPQQtSE9sHakMfFgGczszBLKX5CTcir1l2YZqn7GcYJr2vt4-56hzMOc',
                 'excerpt' => 'Landing page F&B modern dengan lokalisasi Indonesia dan struktur conversion-friendly.',
                 'content' => 'Landing page kampanye kuliner dengan hero kuat, menu grid, trust block, dan CTA pemesanan yang jelas.',
                 'project_url' => '/landing-pages/resto-mie-ayam-landing.html',
