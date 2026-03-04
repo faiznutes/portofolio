@@ -55,16 +55,16 @@
       '<a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-[60] focus:rounded focus:bg-white focus:px-3 focus:py-2 focus:text-sm focus:font-bold">Skip to content</a>' +
       '<header class="fixed inset-x-0 top-0 z-50 border-b border-slate-200 bg-bg-light/90 backdrop-blur-md">' +
       '  <div class="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-10">' +
-      '    <a href="index.html" class="text-xl font-extrabold tracking-tight">FAIZNUTE</a>' +
+      '    <a href="/" class="text-xl font-extrabold tracking-tight">FAIZNUTE</a>' +
       '    <nav class="hidden items-center gap-8 text-sm font-semibold lg:flex">' +
-      '      <a class="' + navClass('home') + '" href="index.html"' + ariaCurrent('home') + '>Home</a>' +
-      '      <a class="' + navClass('works') + '" href="works.html"' + ariaCurrent('works') + '>Karya</a>' +
-      '      <a class="' + navClass('services') + '" href="services.html"' + ariaCurrent('services') + '>Layanan</a>' +
-      '      <a class="' + navClass('cv') + '" href="cv.html"' + ariaCurrent('cv') + '>CV</a>' +
-      '      <a class="' + navClass('contact') + '" href="contact.html"' + ariaCurrent('contact') + '>Kontak</a>' +
+      '      <a class="' + navClass('home') + '" href="/"' + ariaCurrent('home') + '>Home</a>' +
+      '      <a class="' + navClass('works') + '" href="/works"' + ariaCurrent('works') + '>Karya</a>' +
+      '      <a class="' + navClass('services') + '" href="/services"' + ariaCurrent('services') + '>Layanan</a>' +
+      '      <a class="' + navClass('cv') + '" href="/cv"' + ariaCurrent('cv') + '>CV</a>' +
+      '      <a class="' + navClass('contact') + '" href="/contact"' + ariaCurrent('contact') + '>Kontak</a>' +
       '    </nav>' +
       '    <div class="hidden lg:block">' +
-      '      <a href="contact.html" class="rounded-xl bg-primary px-5 py-2.5 text-sm font-bold text-white">Konsultasi</a>' +
+      '      <a href="/contact" class="rounded-xl bg-primary px-5 py-2.5 text-sm font-bold text-white">Konsultasi</a>' +
       '    </div>' +
       '    <button id="mobile-menu-btn" class="inline-flex items-center justify-center rounded-lg border border-slate-300 bg-white p-2 text-slate-700 lg:hidden" aria-expanded="false" aria-controls="mobile-menu" aria-label="Toggle menu">' +
       '      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>' +
@@ -72,12 +72,12 @@
       '  </div>' +
       '  <div id="mobile-menu" class="hidden border-t border-slate-200 bg-white px-6 py-4 lg:hidden">' +
       '    <nav class="flex flex-col gap-1 text-sm font-semibold">' +
-      '      <a class="rounded-lg px-3 py-2 ' + mobileNavClass('home') + '" href="index.html"' + ariaCurrent('home') + '>Home</a>' +
-      '      <a class="rounded-lg px-3 py-2 ' + mobileNavClass('works') + '" href="works.html"' + ariaCurrent('works') + '>Karya</a>' +
-      '      <a class="rounded-lg px-3 py-2 ' + mobileNavClass('services') + '" href="services.html"' + ariaCurrent('services') + '>Layanan</a>' +
-      '      <a class="rounded-lg px-3 py-2 ' + mobileNavClass('cv') + '" href="cv.html"' + ariaCurrent('cv') + '>CV</a>' +
-      '      <a class="rounded-lg px-3 py-2 ' + mobileNavClass('contact') + '" href="contact.html"' + ariaCurrent('contact') + '>Kontak</a>' +
-      '      <a href="contact.html" class="mt-2 rounded-xl bg-primary px-4 py-2.5 text-center text-sm font-bold text-white">Konsultasi</a>' +
+      '      <a class="rounded-lg px-3 py-2 ' + mobileNavClass('home') + '" href="/"' + ariaCurrent('home') + '>Home</a>' +
+      '      <a class="rounded-lg px-3 py-2 ' + mobileNavClass('works') + '" href="/works"' + ariaCurrent('works') + '>Karya</a>' +
+      '      <a class="rounded-lg px-3 py-2 ' + mobileNavClass('services') + '" href="/services"' + ariaCurrent('services') + '>Layanan</a>' +
+      '      <a class="rounded-lg px-3 py-2 ' + mobileNavClass('cv') + '" href="/cv"' + ariaCurrent('cv') + '>CV</a>' +
+      '      <a class="rounded-lg px-3 py-2 ' + mobileNavClass('contact') + '" href="/contact"' + ariaCurrent('contact') + '>Kontak</a>' +
+      '      <a href="/contact" class="mt-2 rounded-xl bg-primary px-4 py-2.5 text-center text-sm font-bold text-white">Konsultasi</a>' +
       '    </nav>' +
       '  </div>' +
       '</header>';
@@ -140,7 +140,7 @@
       '<footer class="border-t border-slate-200 bg-white px-6 py-6 lg:px-10">' +
       '  <div class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 text-sm text-slate-500 md:flex-row">' +
       '    <p>© 2026 Faiznute. All rights reserved.</p>' +
-      '    <div class="flex gap-6"><a href="contact.html" class="hover:text-primary">Contact</a><a href="cv.html" class="hover:text-primary">About</a></div>' +
+      '    <div class="flex gap-6"><a href="/contact" class="hover:text-primary">Contact</a><a href="/cv" class="hover:text-primary">About</a></div>' +
       '  </div>' +
       '</footer>';
     var mainEl = document.querySelector('main');

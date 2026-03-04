@@ -3,7 +3,7 @@
   window.__worksBackButtonInit = true;
 
   function fallbackToWorks() {
-    window.location.href = '/works.html';
+    window.location.href = '/works';
   }
 
   function canGoBackToWorks() {

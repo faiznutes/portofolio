@@ -37,29 +37,30 @@
     var value = String(url || '').trim();
     if (!value) return '';
     if (/^https?:\/\//i.test(value)) return value;
+    value = value.replace(/\.html(?=($|[?#]))/i, '');
     if (value.indexOf('/') === 0) return value;
-    return value;
+    return '/' + value;
   }
 
   var WORK_OVERRIDES = {
     'bangalexzz-mie-ayam-landing': {
       type: 'internal',
-      url: '/landing-pages/resto-mie-ayam-landing.html',
+      url: '/landing-pages/resto-mie-ayam-landing',
       thumbnail: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDMGbltDQ7JTYTw6iNMaSkPK-lmG39CLpKrsKA0LjLm5eWEPEspWVxYX_KUAchZ4LHK2mNH-x7BcVtFL4EBKHkz5DEYemPJh8w-YAw-lkd1x-Cg5s8eOKmpFSFmj3idqQapr6Qact-HwOfw0M5oQQ6capd9foLFcTTriOnBXK2JYqfeYnT2S4BgswpjwE2MO0mCylbu3b29ZmWhVmql1e_WPQQtSE9sHakMfFgGczszBLKX5CTcir1l2YZqn7GcYJr2vt4-56hzMOc'
     },
     'bangalexzz-nasi-campur-landing': {
       type: 'internal',
-      url: '/landing-pages/resto-nasi-campur-landing.html',
+      url: '/landing-pages/resto-nasi-campur-landing',
       thumbnail: 'https://images.unsplash.com/photo-1544148103-0773bf10d330?w=1200&h=800&auto=format&fit=crop',
       summary: 'Landing page Nasi Campur dengan visual menu, opsi custom, dan CTA pemesanan cepat.'
     },
-    'bangalexzz-dimsum-modern-landing': { type: 'internal', url: '/landing-pages/snack-dimsum-modern.html', thumbnail: 'assets/images/dimsum-spread.png' },
-    'bangalexzz-dimsum-playful-landing': { type: 'internal', url: '/landing-pages/snack-dimsum-playful.html', thumbnail: 'assets/images/dimsum-hero.png' },
-    'bangalexzz-dimsum-luxury-landing': { type: 'internal', url: '/landing-pages/snack-dimsum-luxury.html', thumbnail: 'assets/images/dimsum-xlb.png' },
-    'property-agent-classic': { type: 'internal', url: '/landing-pages/property-agent-classic.html', thumbnail: 'assets/images/real-property.jpg' },
-    'property-agent-eco-living': { type: 'internal', url: '/landing-pages/property-agent-eco-living.html', thumbnail: 'assets/images/real-property.jpg' },
-    'property-agent-urban': { type: 'internal', url: '/landing-pages/property-agent-urban.html', thumbnail: 'assets/images/real-property.jpg' },
-    'property-agent-terpercaya': { type: 'internal', url: '/landing-pages/property-agent-terpercaya.html', thumbnail: 'assets/images/real-property.jpg' }
+    'bangalexzz-dimsum-modern-landing': { type: 'internal', url: '/landing-pages/snack-dimsum-modern', thumbnail: 'assets/images/dimsum-spread.png' },
+    'bangalexzz-dimsum-playful-landing': { type: 'internal', url: '/landing-pages/snack-dimsum-playful', thumbnail: 'assets/images/dimsum-hero.png' },
+    'bangalexzz-dimsum-luxury-landing': { type: 'internal', url: '/landing-pages/snack-dimsum-luxury', thumbnail: 'assets/images/dimsum-xlb.png' },
+    'property-agent-classic': { type: 'internal', url: '/landing-pages/property-agent-classic', thumbnail: 'assets/images/real-property.jpg' },
+    'property-agent-eco-living': { type: 'internal', url: '/landing-pages/property-agent-eco-living', thumbnail: 'assets/images/real-property.jpg' },
+    'property-agent-urban': { type: 'internal', url: '/landing-pages/property-agent-urban', thumbnail: 'assets/images/real-property.jpg' },
+    'property-agent-terpercaya': { type: 'internal', url: '/landing-pages/property-agent-terpercaya', thumbnail: 'assets/images/real-property.jpg' }
   };
 
   var DEFAULT_IMAGE = 'assets/images/real-banner.jpg';
@@ -171,7 +172,7 @@
     var type = override.type || (isExternalUrl(href) ? 'external' : 'internal');
 
     if (!href) {
-      href = 'work-detail.html?slug=' + encodeURIComponent((work && work.slug) ? work.slug : 'work');
+      href = '/work-detail?slug=' + encodeURIComponent((work && work.slug) ? work.slug : 'work');
       type = 'internal';
     }
 
@@ -184,7 +185,7 @@
 
   function isLandingProject(work) {
     var nav = getWorkNavigation(work);
-    return nav.href.indexOf('work-detail.html') === -1;
+    return nav.href.indexOf('/work-detail') === -1;
   }
 
   function bindWorkImageFallback(grid) {
@@ -389,7 +390,7 @@
 
       if (liveLink) {
         var projectUrl = getWorkPrimaryUrl(work);
-        if (projectUrl && projectUrl.indexOf('work-detail.html') !== 0) {
+        if (projectUrl && projectUrl.indexOf('/work-detail') !== 0) {
           liveLink.href = projectUrl;
           liveLink.classList.remove('hidden');
         } else {
@@ -539,7 +540,11 @@
       var testPayload = responses[1];
 
       if (featured) {
-        var works = (worksPayload && worksPayload.data ? worksPayload.data : []).slice(0, 3);
+        var allWorks = (worksPayload && worksPayload.data ? worksPayload.data : []);
+        var featuredWorks = allWorks.filter(function (work) {
+          return !!work.is_featured;
+        });
+        var works = (featuredWorks.length ? featuredWorks : allWorks).slice(0, 3);
         if (works.length) {
           featured.innerHTML = works.map(function (work) {
             var image = getWorkImage(work);
