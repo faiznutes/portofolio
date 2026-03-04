@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\HttpKernel\Exception\MethodNotAllowedHttpException;
@@ -31,6 +32,9 @@ return Application::configure(basePath: dirname(__DIR__))
             }
 
             $requestId = (string) ($request->attributes->get('request_id') ?: $request->header('X-Request-Id'));
+            if ($requestId === '') {
+                $requestId = (string) Str::uuid();
+            }
 
             if ($e instanceof ValidationException) {
                 return response()->json([
