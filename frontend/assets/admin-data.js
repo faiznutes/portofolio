@@ -309,7 +309,8 @@
       columns: [
         { label: 'Title', value: function (w) { return w.title; } },
         { label: 'Category', value: function (w) { return w.category ? w.category.name : '-'; } },
-        { label: 'Status', value: function (w) { return w.is_published ? 'published' : 'draft'; } }
+        { label: 'Status', value: function (w) { return w.is_published ? 'published' : 'draft'; } },
+        { label: 'Featured', value: function (w) { return w.is_featured ? 'yes' : 'no'; } }
       ],
       create: async function () {
         var formData = await openFormModal({
@@ -317,6 +318,7 @@
           fields: [
             { name: 'title', label: 'Title', required: true },
             { name: 'category_id', label: 'Category', type: 'select', options: [{ label: 'No Category', value: '' }].concat(categories.map(function (c) { return { label: c.name, value: String(c.id) }; })) },
+            { name: 'is_featured', label: 'Project pilihan terbaru', type: 'checkbox', defaultValue: false },
             { name: 'is_published', label: 'Publish now', type: 'checkbox', defaultValue: true }
           ]
         });
@@ -328,6 +330,7 @@
             title: formData.title,
             slug: slugify(formData.title),
             category_id: formData.category_id ? Number(formData.category_id) : null,
+            is_featured: Boolean(formData.is_featured),
             is_published: Boolean(formData.is_published),
             published_at: formData.is_published ? new Date().toISOString() : null
           })
@@ -341,11 +344,13 @@
           initial: {
             title: item.title,
             category_id: item.category_id ? String(item.category_id) : '',
+            is_featured: Boolean(item.is_featured),
             is_published: Boolean(item.is_published)
           },
           fields: [
             { name: 'title', label: 'Title', required: true },
             { name: 'category_id', label: 'Category', type: 'select', options: [{ label: 'No Category', value: '' }].concat(categories.map(function (c) { return { label: c.name, value: String(c.id) }; })) },
+            { name: 'is_featured', label: 'Project pilihan terbaru', type: 'checkbox' },
             { name: 'is_published', label: 'Published', type: 'checkbox' }
           ]
         });
@@ -357,6 +362,7 @@
             title: formData.title,
             slug: slugify(formData.title),
             category_id: formData.category_id ? Number(formData.category_id) : null,
+            is_featured: Boolean(formData.is_featured),
             is_published: Boolean(formData.is_published),
             published_at: formData.is_published ? (item.published_at || new Date().toISOString()) : null
           })
