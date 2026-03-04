@@ -328,7 +328,7 @@ class DatabaseSeeder extends Seeder
         );
         Setting::query()->updateOrCreate(
             ['key' => 'profile_bio'],
-            ['group' => 'profile', 'value' => 'Graphic Designer & Video Editor yang saat ini fokus bekerja sebagai freelancer untuk desain visual, video campaign, dan landing page bisnis.', 'type' => 'text']
+            ['group' => 'profile', 'value' => 'Graphic Designer & Video Editor yang fokus pada branding visual, video campaign, dan kebutuhan konten bisnis yang konsisten.', 'type' => 'text']
         );
         Setting::query()->updateOrCreate(
             ['key' => 'social_instagram'],
@@ -458,8 +458,8 @@ class DatabaseSeeder extends Seeder
         );
 
         Banner::query()->updateOrCreate(
-            ['title' => 'Bangun visual brand yang rapi dan meyakinkan'],
-            ['subtitle' => 'Dari desain, video, sampai landing page campaign dalam satu ekosistem kerja.', 'image' => 'assets/images/banner-index.webp', 'cta_label' => 'Konsultasi', 'cta_url' => '/contact', 'is_active' => true, 'sort_order' => 1]
+            ['title' => 'Siap perkuat branding visual dan video campaign bisnis Anda?'],
+            ['subtitle' => 'Diskusikan kebutuhan desain, video, dan strategi konten untuk campaign yang lebih terarah.', 'image' => 'assets/images/banner-index.webp', 'cta_label' => 'Diskusi via WhatsApp', 'cta_url' => 'https://wa.me/6285155043133?text=Halo%2C%20saya%20ingin%20diskusi%20branding%20visual%20dan%20video%20campaign.', 'is_active' => true, 'sort_order' => 1]
         );
 
         if ($admin) {
