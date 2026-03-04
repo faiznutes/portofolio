@@ -50,7 +50,8 @@
     'bangalexzz-nasi-campur-landing': {
       type: 'internal',
       url: '/landing-pages/resto-nasi-campur-landing.html',
-      thumbnail: 'assets/images/real-social.jpg'
+      thumbnail: 'https://images.unsplash.com/photo-1544148103-0773bf10d330?w=1200&h=800&auto=format&fit=crop',
+      summary: 'Landing page Nasi Campur dengan visual menu, opsi custom, dan CTA pemesanan cepat.'
     },
     'bangalexzz-dimsum-modern-landing': { type: 'internal', url: '/landing-pages/snack-dimsum-modern.html', thumbnail: 'assets/images/real-event.jpg' },
     'bangalexzz-dimsum-playful-landing': { type: 'internal', url: '/landing-pages/snack-dimsum-playful.html', thumbnail: 'assets/images/real-coffee.jpg' },
@@ -74,9 +75,9 @@
     {
       slug: 'bangalexzz-nasi-campur-landing',
       title: 'Bangalexzz Nasi Campur Landing Page',
-      excerpt: 'Demo handling konten social media dengan layout feed.',
-      cover_image: 'assets/images/real-social.jpg',
-      project_url: '/landing-pages/facebook-social-handling-demo.html',
+      excerpt: 'Landing page Nasi Campur dengan visual menu, opsi custom, dan CTA pemesanan cepat.',
+      cover_image: 'https://images.unsplash.com/photo-1544148103-0773bf10d330?w=1200&h=800&auto=format&fit=crop',
+      project_url: '/landing-pages/resto-nasi-campur-landing.html',
       category: { name: 'Landing Page' }
     },
     {
@@ -234,7 +235,7 @@
       var image = getWorkImage(work);
       var title = escapeHtml(work.title || 'Untitled Work');
       var category = escapeHtml(getWorkCategory(work));
-      var summary = escapeHtml(work.excerpt || 'Buka project untuk melihat implementasi lengkap.');
+      var summary = escapeHtml(getWorkSummary(work));
       var nav = getWorkNavigation(work);
       var href = escapeHtml(nav.href);
       var fallbackImage = generatedThumbnail(work);
@@ -264,6 +265,12 @@
     var override = getWorkOverride(work);
     if (override.thumbnail) return override.thumbnail;
     return (work && work.cover_image) ? work.cover_image : DEFAULT_IMAGE;
+  }
+
+  function getWorkSummary(work) {
+    var override = getWorkOverride(work);
+    if (override.summary) return String(override.summary);
+    return String((work && work.excerpt) || 'Buka project untuk melihat implementasi lengkap.');
   }
 
   function getWorkPrimaryUrl(work) {
