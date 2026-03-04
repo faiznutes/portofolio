@@ -295,6 +295,25 @@
     return 'https://wa.me/' + encodeURIComponent(wa) + '?text=' + encodeURIComponent(message);
   }
 
+  function getServiceNeedType(service) {
+    var title = String((service && service.title) || '').toLowerCase();
+    if (title.indexOf('video') !== -1) return 'video campaign';
+    if (title.indexOf('social') !== -1) return 'konten social media';
+    if (title.indexOf('company profile') !== -1) return 'website company profile';
+    if (title.indexOf('landing') !== -1 || title.indexOf('page') !== -1) return 'website landing page';
+    if (title.indexOf('full funnel') !== -1) return 'website + visual campaign';
+    return 'kebutuhan digital bisnis';
+  }
+
+  function buildWaOrderLinkWithNeed(phone, packageLabel, service) {
+    var wa = normalizeWhatsAppNumber(phone);
+    var title = String((service && service.title) || 'Layanan');
+    var price = String((service && service.price) || 'Konsultasi harga');
+    var need = getServiceNeedType(service);
+    var message = 'Halo, saya ingin membeli layanan ' + packageLabel + ' (' + title + ' - ' + price + ') apakah tersedia? Kebutuhan saya: ' + need + '.';
+    return 'https://wa.me/' + encodeURIComponent(wa) + '?text=' + encodeURIComponent(message);
+  }
+
   function getServiceBullets(service) {
     var title = String((service && service.title) || '').toLowerCase();
     var summary = String((service && service.summary) || '').toLowerCase();
@@ -508,8 +527,11 @@
 
   async function loadServicesPage() {
     var section = document.querySelector('[data-services-grid]');
+    var compareRoot = document.querySelector('[data-services-compare]');
+    var compareBtn = document.querySelector('[data-service-compare-btn]');
     if (!section) return;
     section.innerHTML = '<p class="text-sm text-slate-500">Memuat layanan...</p>';
+    if (compareRoot) compareRoot.innerHTML = '<p class="text-sm text-slate-500">Memuat perbandingan paket...</p>';
 
     try {
       var responses = await Promise.all([
@@ -539,7 +561,8 @@
         var badge = '';
         if (index === 0) badge = 'Paling Hemat';
         if (index === bestValueIndex) badge = 'Best Value';
-        var orderLink = buildWaOrderLink(waPhone, packageLabel, service.title + ' - ' + String(service.price || 'Konsultasi harga'));
+        var recommendation = index === bestValueIndex ? 'Rekomendasi untuk growth campaign' : (index === 0 ? 'Rekomendasi untuk mulai cepat' : 'Rekomendasi sesuai kebutuhan bisnis');
+        var orderLink = buildWaOrderLinkWithNeed(waPhone, packageLabel, service);
         var bullets = getServiceBullets(service);
         return '<article class="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm">'
           + '<div class="flex flex-wrap items-center gap-2">'
@@ -549,14 +572,39 @@
           + '<h3 class="mt-3 text-xl font-bold">' + escapeHtml(service.title) + '</h3>'
           + '<p class="mt-2 text-sm text-slate-600">' + escapeHtml(service.summary || 'Layanan profesional untuk kebutuhan bisnis Anda.') + '</p>'
           + '<p class="mt-4 text-base font-extrabold text-primary">' + escapeHtml(service.price || 'Konsultasi harga') + '</p>'
+          + '<p class="mt-1 text-xs font-semibold text-slate-500">' + escapeHtml(recommendation) + '</p>'
           + '<ul class="mt-4 space-y-1 text-sm text-slate-600">'
           + bullets.map(function (item) { return '<li>• ' + escapeHtml(item) + '</li>'; }).join('')
           + '</ul>'
           + '<a href="' + orderLink + '" target="_blank" rel="noopener noreferrer" class="mt-5 inline-flex rounded-xl bg-primary px-4 py-2.5 text-sm font-bold text-white hover:bg-sky-600 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary">Order layanan ini</a>'
           + '</article>';
       }).join('');
+
+      if (compareRoot) {
+        compareRoot.innerHTML = '<table class="min-w-full text-left text-sm">'
+          + '<thead><tr class="border-b border-slate-200 text-xs uppercase text-slate-500">'
+          + '<th class="py-2 pr-4">Paket</th><th class="py-2 pr-4">Harga</th><th class="py-2 pr-4">Cocok untuk</th><th class="py-2">Aksi</th>'
+          + '</tr></thead>'
+          + '<tbody>'
+          + services.map(function (service, index) {
+            var packageLabel = 'Paket Promo ' + (index + 1);
+            var need = getServiceNeedType(service);
+            var orderLink = buildWaOrderLinkWithNeed(waPhone, packageLabel, service);
+            return '<tr class="border-b border-slate-100">'
+              + '<td class="py-3 pr-4 font-bold">' + escapeHtml(packageLabel) + '</td>'
+              + '<td class="py-3 pr-4 font-semibold text-primary">' + escapeHtml(service.price || 'Konsultasi harga') + '</td>'
+              + '<td class="py-3 pr-4 text-slate-600">' + escapeHtml(need) + '</td>'
+              + '<td class="py-3"><a href="' + orderLink + '" target="_blank" rel="noopener noreferrer" class="rounded-lg border border-primary px-3 py-1.5 font-bold text-primary hover:bg-primary hover:text-white">Order</a></td>'
+              + '</tr>';
+          }).join('')
+          + '</tbody></table>';
+      }
+
+      if (compareBtn) compareBtn.classList.remove('hidden');
     } catch (error) {
       section.innerHTML = '<p class="text-sm text-amber-700">Gagal memuat layanan dari server.</p>';
+      if (compareRoot) compareRoot.innerHTML = '';
+      if (compareBtn) compareBtn.classList.add('hidden');
     }
   }
 
