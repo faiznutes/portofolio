@@ -10,6 +10,7 @@ $pages = @(
   "/services",
   "/cv",
   "/contact",
+  "/site-map",
   "/insights",
   "/portofolio-web-dev-umkm",
   "/jasa-video-editor-umkm",

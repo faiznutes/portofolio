@@ -142,7 +142,7 @@
       '<footer class="border-t border-slate-200 bg-white px-6 py-6 lg:px-10">' +
       '  <div class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 text-sm text-slate-500 md:flex-row">' +
       '    <p>© 2026 Faiznute. All rights reserved.</p>' +
-      '    <div class="flex gap-6"><a href="/contact" class="hover:text-primary">Contact</a><a href="/cv" class="hover:text-primary">About</a><a href="/insights" class="hover:text-primary">Insights</a></div>' +
+      '    <div class="flex gap-6"><a href="/contact" class="hover:text-primary">Contact</a><a href="/cv" class="hover:text-primary">About</a><a href="/insights" class="hover:text-primary">Insights</a><a href="/site-map" class="hover:text-primary">Sitemap</a></div>' +
       '  </div>' +
       '</footer>';
     var mainEl = document.querySelector('main');
