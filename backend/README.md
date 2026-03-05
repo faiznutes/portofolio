@@ -42,4 +42,4 @@ Production backend untuk portfolio + CMS admin.
 
 ## Server templates
 - Nginx + systemd templates available in `../deploy/`
-- Optional bootstrap helper (Ubuntu): `../deploy/server-bootstrap.sh`
+- Optional bootstrap helper (Ubuntu): `../deploy/server-bootstrap.sh` (default same-origin `/api/*`, legacy API subdomain hanya jika `ENABLE_LEGACY_API_SUBDOMAIN=true`)

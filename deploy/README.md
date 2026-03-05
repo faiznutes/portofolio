@@ -15,6 +15,8 @@ Install steps (Ubuntu):
 1. Copy nginx files to `/etc/nginx/sites-available/`
 2. Symlink to `/etc/nginx/sites-enabled/`
 3. `sudo nginx -t && sudo systemctl reload nginx`
+4. `deploy/server-bootstrap.sh` default ke same-origin (`/api/*`); aktifkan API subdomain legacy hanya jika perlu:
+   - `ENABLE_LEGACY_API_SUBDOMAIN=true bash deploy/server-bootstrap.sh`
 
 ## SSL (Let's Encrypt)
 ```bash

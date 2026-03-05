@@ -25,7 +25,7 @@
 
 Nginx + worker templates:
 - `deploy/nginx/faiznute.site.conf`
-- `deploy/nginx/api.faiznute.site.conf`
+- `deploy/nginx/api.faiznute.site.conf` (opsional legacy subdomain)
 - `deploy/systemd/laravel-queue.service`
 - `deploy/systemd/laravel-scheduler.service`
 - `deploy/systemd/laravel-scheduler.timer`
