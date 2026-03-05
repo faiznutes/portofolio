@@ -3,8 +3,9 @@
 This folder contains ready-to-use production templates.
 
 ## Nginx
-- `deploy/nginx/faiznute.site.conf` -> frontend static host
-- `deploy/nginx/api.faiznute.site.conf` -> Laravel API host
+- `deploy/nginx/faiznute.site.conf` -> frontend static host (same-origin `/api` recommended)
+- `deploy/nginx/api.faiznute.site.conf` -> optional dedicated API subdomain template (legacy option)
+- `deploy/docker/apache-backend.conf` -> Apache vhost untuk backend container runtime
 
 Suggested server paths:
 - Frontend root: `/var/www/faiznute.site/frontend`
@@ -18,7 +19,6 @@ Install steps (Ubuntu):
 ## SSL (Let's Encrypt)
 ```bash
 sudo certbot --nginx -d faiznute.site -d www.faiznute.site
-sudo certbot --nginx -d api.faiznute.site
 ```
 
 ## Systemd workers
@@ -31,3 +31,15 @@ Install steps:
 2. `sudo systemctl daemon-reload`
 3. `sudo systemctl enable --now laravel-queue.service`
 4. `sudo systemctl enable --now laravel-scheduler.timer`
+
+## Docker backend runtime
+- Backend container sekarang memakai Apache (`php:8.4-apache`) dengan `DocumentRoot=/var/www/html/public`.
+- Startup container memakai entrypoint `deploy/docker/backend-entrypoint.sh` untuk memastikan:
+  - `.env` tersedia,
+  - database sqlite file siap,
+  - migrasi otomatis (jika `RUN_MIGRATIONS=true`).
+- Build context Docker dibatasi lewat `.dockerignore` (exclude `node_modules`, `legacy-portfolio-source`, dan `frontend/assets/images/legacy`) agar image build lebih ringan dan konsisten.
+
+## Security headers
+- Frontend nginx template menambahkan CSP, HSTS, Referrer-Policy, dan Permissions-Policy.
+- Backend API templates (nginx/apache) menambahkan CSP restrictive + HSTS untuk hardening default.

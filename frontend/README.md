@@ -30,13 +30,28 @@ Frontend statis untuk public portfolio + admin CMS yang sudah terhubung ke backe
    - double-click `start-localhost.bat`, or
    - `python -m http.server 8080`
 3. Open `http://localhost:8080/`
+4. Jika ada perubahan class Tailwind, rebuild CSS:
+   - `cd frontend`
+   - `npm install` (sekali saja)
+   - `npm run build:css` (output ke `frontend/assets/tailwind.css`)
+5. Jika ada perubahan halaman indexable, regenerate sitemap:
+   - `cd ..` (root project)
+   - `node scripts/generate-sitemap.mjs`
 
 ## API base configuration
 - Default local API base: `http://127.0.0.1:8000`
+- Production default: same-origin `https://faiznute.site/api/*` (tanpa override manual).
 - Override from browser console:
-  - `PORTFOLIO_API.setBaseUrl('https://api.yourdomain.com')`
+  - `PORTFOLIO_API.setBaseUrl('https://yourdomain.com')`
 - Override via HTML meta tag:
-  - `<meta name="portfolio-api-base" content="https://api.yourdomain.com">`
+  - `<meta name="portfolio-api-base" content="https://yourdomain.com">`
 
 ## Admin login (seed)
-- `admin@portfolio.local` / `admin12345`
+- `admin@portfolio.local` / `Admin!2026Strong` (default local/testing fallback)
+
+## Performance and UX polish
+- Public pages memakai scroll reveal animation + progress indicator.
+- Service worker (`/sw.js`) aktif otomatis di HTTPS/localhost untuk cache shell asset statis.
+- Asset visual utama landing page sudah dipindah ke format WebP untuk mengurangi payload.
+- CI menjalankan `scripts/check-image-budget.mjs` untuk mencegah aset non-legacy > 1 MB masuk ke branch utama.
+- CI menjalankan `scripts/generate-sitemap.mjs --check` agar `frontend/sitemap.xml` selalu sinkron.

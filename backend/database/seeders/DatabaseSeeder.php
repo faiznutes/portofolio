@@ -27,20 +27,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Schema::disableForeignKeyConstraints();
-        DB::table('tag_work')->truncate();
-        DB::table('works')->truncate();
-        DB::table('categories')->truncate();
-        DB::table('tags')->truncate();
-        DB::table('services')->truncate();
-        DB::table('testimonials')->truncate();
-        DB::table('cv_items')->truncate();
-        DB::table('highlights')->truncate();
-        DB::table('banners')->truncate();
-        DB::table('settings')->truncate();
-        Schema::enableForeignKeyConstraints();
-
         $isSafeSeedEnv = app()->environment(['local', 'testing']);
+        if ($isSafeSeedEnv) {
+            Schema::disableForeignKeyConstraints();
+            DB::table('tag_work')->truncate();
+            DB::table('works')->truncate();
+            DB::table('categories')->truncate();
+            DB::table('tags')->truncate();
+            DB::table('services')->truncate();
+            DB::table('testimonials')->truncate();
+            DB::table('cv_items')->truncate();
+            DB::table('highlights')->truncate();
+            DB::table('banners')->truncate();
+            DB::table('settings')->truncate();
+            Schema::enableForeignKeyConstraints();
+        }
+
         $adminEmail = env('SEED_ADMIN_EMAIL', 'admin@portfolio.local');
         $adminPassword = env('SEED_ADMIN_PASSWORD', $isSafeSeedEnv ? 'Admin!2026Strong' : null);
         $editorEmail = env('SEED_EDITOR_EMAIL', 'editor@portfolio.local');
@@ -89,48 +91,48 @@ class DatabaseSeeder extends Seeder
                 'slug' => 'logo-fossei-rakereg-2021',
                 'title' => 'Logo FoSSEI RAKEREG 2021',
                 'category' => 'design',
-                'image' => 'assets/images/legacy/fossei/logo.jpg',
+                'image' => 'assets/images/real-portrait.jpg',
                 'excerpt' => 'Logo organisasi dengan filosofi simbolik untuk acara Rakereg FoSSEI.',
                 'content' => 'Identitas visual FoSSEI dengan pendekatan geometris modern, elemen kebersamaan, dan semangat progresif untuk regenerasi organisasi.',
                 'tags' => ['Logo', 'Design'],
                 'tools' => ['Adobe Illustrator', 'Adobe Photoshop'],
                 'gallery' => [
-                    ['type' => 'image', 'title' => 'Logo Utama', 'src' => 'assets/images/legacy/fossei/logo.jpg'],
-                    ['type' => 'image', 'title' => 'Filosofi 1', 'src' => 'assets/images/legacy/fossei/FIlsof 1.jpg'],
-                    ['type' => 'image', 'title' => 'Filosofi 2', 'src' => 'assets/images/legacy/fossei/FIlsof 2.jpg'],
-                    ['type' => 'image', 'title' => 'Banner Zoom', 'src' => 'assets/images/legacy/fossei/banner zoom.jpg'],
+                    ['type' => 'image', 'title' => 'Logo Utama', 'src' => 'assets/images/real-portrait.jpg'],
+                    ['type' => 'image', 'title' => 'Filosofi 1', 'src' => 'assets/images/real-banner.jpg'],
+                    ['type' => 'image', 'title' => 'Filosofi 2', 'src' => 'assets/images/real-social.jpg'],
+                    ['type' => 'image', 'title' => 'Banner Zoom', 'src' => 'assets/images/real-event.jpg'],
                 ],
             ],
             [
                 'slug' => 'pencalonan-bupati-lamongan',
                 'title' => 'Pencalonan Bupati Lamongan',
                 'category' => 'design',
-                'image' => 'assets/images/legacy/banner/Social.jpg',
+                'image' => 'assets/images/real-social.jpg',
                 'excerpt' => 'Produksi visual kampanye dari banner utama, media sosial, hingga kebutuhan acara.',
                 'content' => 'Eksekusi materi kampanye dengan visual yang tegas, mudah dibaca, dan konsisten lintas kanal online serta offline.',
                 'tags' => ['Design', 'Banner', 'Politik'],
                 'tools' => ['Adobe Illustrator', 'Adobe Photoshop'],
                 'gallery' => [
-                    ['type' => 'image', 'title' => 'Social Banner', 'src' => 'assets/images/legacy/banner/Social.jpg'],
-                    ['type' => 'image', 'title' => 'Campaign Visual 1', 'src' => 'assets/images/real-social.jpg'],
-                    ['type' => 'image', 'title' => 'Banner 2', 'src' => 'assets/images/legacy/banner/banner2.jpg'],
-                    ['type' => 'image', 'title' => 'Banner 3', 'src' => 'assets/images/legacy/banner/banner3.jpg'],
+                    ['type' => 'image', 'title' => 'Social Banner', 'src' => 'assets/images/real-social.jpg'],
+                    ['type' => 'image', 'title' => 'Campaign Visual 1', 'src' => 'assets/images/real-banner.jpg'],
+                    ['type' => 'image', 'title' => 'Banner 2', 'src' => 'assets/images/real-event.jpg'],
+                    ['type' => 'image', 'title' => 'Banner 3', 'src' => 'assets/images/real-property.jpg'],
                 ],
             ],
             [
                 'slug' => 'ayam-lepas-lebak-bulus',
                 'title' => 'Ayam Lepas Lebak Bulus',
                 'category' => 'design',
-                'image' => 'assets/images/legacy/ayam lepas/Kemasan.png',
+                'image' => 'assets/images/real-catering.jpg',
                 'excerpt' => 'Desain kemasan, stiker, dan aset sosial media untuk brand kuliner Ayam Lepas.',
                 'content' => 'Pengerjaan branding visual F&B dari packaging sampai konten sosial media untuk meningkatkan konsistensi dan daya tarik brand.',
                 'tags' => ['Design', 'Packaging', 'Social Media'],
                 'tools' => ['Adobe Illustrator', 'Adobe Photoshop'],
                 'gallery' => [
-                    ['type' => 'image', 'title' => 'Kemasan', 'src' => 'assets/images/legacy/ayam lepas/Kemasan.png'],
-                    ['type' => 'image', 'title' => 'Sticker', 'src' => 'assets/images/legacy/ayam lepas/Sticker Kemasan 2.png'],
-                    ['type' => 'image', 'title' => 'Social Post', 'src' => 'assets/images/legacy/ayam lepas/paket20rb.png'],
-                    ['type' => 'image', 'title' => 'Promo Post', 'src' => 'assets/images/legacy/ayam lepas/29.png'],
+                    ['type' => 'image', 'title' => 'Kemasan', 'src' => 'assets/images/real-catering.jpg'],
+                    ['type' => 'image', 'title' => 'Sticker', 'src' => 'assets/images/real-coffee.jpg'],
+                    ['type' => 'image', 'title' => 'Social Post', 'src' => 'assets/images/real-social.jpg'],
+                    ['type' => 'image', 'title' => 'Promo Post', 'src' => 'assets/images/real-event.jpg'],
                 ],
             ],
             [
@@ -467,7 +469,7 @@ class DatabaseSeeder extends Seeder
 
         Highlight::query()->updateOrCreate(
             ['title' => 'Muhamad Faiz Abdurrahman - Graphic Designer & Video Editor'],
-            ['subtitle' => 'Visual modern, elegan, dan siap membantu brand tampil lebih kuat.', 'image' => 'assets/images/legacy/1000121680.png', 'cta_label' => 'Lihat Karya', 'cta_url' => 'works.html', 'is_active' => true, 'sort_order' => 1]
+            ['subtitle' => 'Visual modern, elegan, dan siap membantu brand tampil lebih kuat.', 'image' => 'assets/images/1000121680-KuDX9S0_.png', 'cta_label' => 'Lihat Karya', 'cta_url' => 'works.html', 'is_active' => true, 'sort_order' => 1]
         );
 
         Banner::query()->updateOrCreate(
@@ -475,7 +477,7 @@ class DatabaseSeeder extends Seeder
             ['subtitle' => 'Diskusikan kebutuhan desain, video, dan strategi konten untuk campaign yang lebih terarah.', 'image' => 'assets/images/banner-index.webp', 'cta_label' => 'Diskusi via WhatsApp', 'cta_url' => 'https://wa.me/6285155043133?text=Halo%2C%20saya%20ingin%20diskusi%20branding%20visual%20dan%20video%20campaign.', 'is_active' => true, 'sort_order' => 1]
         );
 
-        if ($admin) {
+        if ($admin && $isSafeSeedEnv) {
             $admin->tokens()->delete();
         }
     }

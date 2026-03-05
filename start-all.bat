@@ -8,6 +8,6 @@ start "Portfolio Frontend" cmd /k "cd /d "%~dp0frontend" && python -m http.serve
 echo Backend  : http://127.0.0.1:8000
 echo Frontend : http://127.0.0.1:8080
 echo.
-echo Use admin login: admin@portfolio.local / admin12345
+echo Use admin login: admin@portfolio.local / Admin!2026Strong
 
 endlocal

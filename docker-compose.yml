@@ -7,13 +7,20 @@ services:
     ports:
       - "80"
     depends_on:
-      - portofolio-api
+      portofolio-api:
+        condition: service_healthy
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.portofolio-frontend.rule=Host(`faiznute.site`) || Host(`www.faiznute.site`)"
       - "traefik.http.routers.portofolio-frontend.entrypoints=http,https"
       - "traefik.http.routers.portofolio-frontend.tls=true"
       - "traefik.http.services.portofolio-frontend.loadbalancer.server.port=80"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1/ || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
 
   portofolio-api:
     build:
@@ -35,8 +42,15 @@ services:
       SESSION_DRIVER: file
       QUEUE_CONNECTION: sync
       LOG_CHANNEL: stderr
+      RUN_MIGRATIONS: "true"
     volumes:
       - portofolio_api_database:/var/www/html/database
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:8000/api/public/health || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
 
 volumes:
   portofolio_api_database:

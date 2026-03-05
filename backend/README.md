@@ -14,7 +14,7 @@ Production backend untuk portfolio + CMS admin.
 - Admin endpoints require `auth:sanctum` + `admin` middleware.
 
 ## Seeded admin
-- `admin@portfolio.local` / `admin12345`
+- `admin@portfolio.local` / `Admin!2026Strong` (default local/testing fallback)
 
 ## API groups
 - `/api/auth/*`
@@ -22,7 +22,7 @@ Production backend untuk portfolio + CMS admin.
 - `/api/admin/*`
 
 ## Hardening
-- Rate limiting: `auth-api`, `public-api`, `admin-api`.
+- Rate limiting: `auth-login`, `auth-user`, `public-api`, `lead-submit`, `admin-api`.
 - Standard JSON error responses for API routes.
 - CORS origins configurable via `CORS_ALLOWED_ORIGINS` in `.env`.
 
@@ -33,8 +33,10 @@ Production backend untuk portfolio + CMS admin.
 ## Operational scripts
 - Deploy routine (Windows):
   - `powershell -ExecutionPolicy Bypass -File ../scripts/deploy-backend.ps1`
+  - First bootstrap only: `powershell -ExecutionPolicy Bypass -File ../scripts/deploy-backend.ps1 -Bootstrap`
+  - Baseline seed is opt-in: `powershell -ExecutionPolicy Bypass -File ../scripts/deploy-backend.ps1 -SeedBaseline`
 - Production cutover check:
-  - `powershell -ExecutionPolicy Bypass -File ../scripts/cutover-check.ps1 -ApiBase "https://api.faiznute.site" -FrontendOrigin "https://faiznute.site"`
+  - `powershell -ExecutionPolicy Bypass -File ../scripts/cutover-check.ps1 -ApiBase "https://faiznute.site" -FrontendOrigin "https://faiznute.site"`
 - Local major verification:
   - `powershell -ExecutionPolicy Bypass -File ../scripts/local-major-check.ps1`
 

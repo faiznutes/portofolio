@@ -1,10 +1,51 @@
 param(
   [string]$ApiBase = "http://127.0.0.1:8000",
-  [string]$AdminEmail = "admin@portfolio.local",
-  [string]$AdminPassword = "admin12345"
+  [string]$AdminEmail = "",
+  [string]$AdminPassword = "",
+  [string]$BackendEnvPath = "$PSScriptRoot/../backend/.env"
 )
 
 $ErrorActionPreference = "Stop"
+
+function Get-EnvFileValue {
+  param(
+    [string]$Path,
+    [string]$Key
+  )
+
+  if (-not (Test-Path $Path)) {
+    return ""
+  }
+
+  $pattern = "^\s*" + [regex]::Escape($Key) + "\s*=\s*(.*)$"
+  foreach ($line in Get-Content $Path) {
+    if ($line -match $pattern) {
+      return $Matches[1].Trim().Trim('"').Trim("'")
+    }
+  }
+
+  return ""
+}
+
+if ([string]::IsNullOrWhiteSpace($AdminEmail)) {
+  $AdminEmail = $env:SEED_ADMIN_EMAIL
+}
+if ([string]::IsNullOrWhiteSpace($AdminEmail)) {
+  $AdminEmail = Get-EnvFileValue -Path $BackendEnvPath -Key "SEED_ADMIN_EMAIL"
+}
+if ([string]::IsNullOrWhiteSpace($AdminEmail)) {
+  $AdminEmail = "admin@portfolio.local"
+}
+
+if ([string]::IsNullOrWhiteSpace($AdminPassword)) {
+  $AdminPassword = $env:SEED_ADMIN_PASSWORD
+}
+if ([string]::IsNullOrWhiteSpace($AdminPassword)) {
+  $AdminPassword = Get-EnvFileValue -Path $BackendEnvPath -Key "SEED_ADMIN_PASSWORD"
+}
+if ([string]::IsNullOrWhiteSpace($AdminPassword)) {
+  $AdminPassword = "Admin!2026Strong"
+}
 
 function Assert-True($Condition, $Message) {
   if (-not $Condition) {

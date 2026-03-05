@@ -24,6 +24,15 @@
     document.head.appendChild(el);
   }
 
+  function registerServiceWorker() {
+    if (!('serviceWorker' in navigator)) return;
+    var isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    if (window.location.protocol !== 'https:' && !isLocalhost) return;
+    navigator.serviceWorker.register('/sw.js').catch(function () {
+      // Ignore registration error to avoid blocking page UX.
+    });
+  }
+
   ensureAsset('link', 'popup-css', { rel: 'stylesheet', href: 'assets/action-popup.css' });
   ensureAsset('link', 'public-shared-css', { rel: 'stylesheet', href: 'assets/public-shared.css' });
   ensureAsset('link', 'public-polish-css', { rel: 'stylesheet', href: 'assets/public-polish.css' });
@@ -150,4 +159,6 @@
       mainEl.style.minHeight = 'calc(100vh - 156px)';
     }
   }
+
+  registerServiceWorker();
 })();

@@ -54,9 +54,9 @@
       thumbnail: 'https://images.unsplash.com/photo-1544148103-0773bf10d330?w=1200&h=800&auto=format&fit=crop',
       summary: 'Landing page Nasi Campur dengan visual menu, opsi custom, dan CTA pemesanan cepat.'
     },
-    'bangalexzz-dimsum-modern-landing': { type: 'internal', url: '/landing-pages/snack-dimsum-modern', thumbnail: 'assets/images/dimsum-spread.png' },
-    'bangalexzz-dimsum-playful-landing': { type: 'internal', url: '/landing-pages/snack-dimsum-playful', thumbnail: 'assets/images/dimsum-hero.png' },
-    'bangalexzz-dimsum-luxury-landing': { type: 'internal', url: '/landing-pages/snack-dimsum-luxury', thumbnail: 'assets/images/dimsum-xlb.png' },
+    'bangalexzz-dimsum-modern-landing': { type: 'internal', url: '/landing-pages/snack-dimsum-modern', thumbnail: 'assets/images/dimsum-spread.webp' },
+    'bangalexzz-dimsum-playful-landing': { type: 'internal', url: '/landing-pages/snack-dimsum-playful', thumbnail: 'assets/images/dimsum-hero.webp' },
+    'bangalexzz-dimsum-luxury-landing': { type: 'internal', url: '/landing-pages/snack-dimsum-luxury', thumbnail: 'assets/images/dimsum-xlb.webp' },
     'property-agent-classic': { type: 'internal', url: '/landing-pages/property-agent-classic', thumbnail: 'assets/images/real-property.jpg' },
     'property-agent-eco-living': { type: 'internal', url: '/landing-pages/property-agent-eco-living', thumbnail: 'assets/images/real-property.jpg' },
     'property-agent-urban': { type: 'internal', url: '/landing-pages/property-agent-urban', thumbnail: 'assets/images/real-property.jpg' },
@@ -93,7 +93,7 @@
       slug: 'bangalexzz-dimsum-modern-landing',
       title: 'Bangalexzz Dimsum Modern Landing Page',
       excerpt: 'Landing page dimsum modern dengan visual premium.',
-      cover_image: 'assets/images/dimsum-spread.png',
+      cover_image: 'assets/images/dimsum-spread.webp',
       project_url: '/landing-pages/snack-dimsum-modern.html',
       category: { name: 'Landing Page' }
     },
@@ -101,7 +101,7 @@
       slug: 'bangalexzz-dimsum-playful-landing',
       title: 'Bangalexzz Dimsum Playful Landing Page',
       excerpt: 'Landing page playful dengan tone cerah dan interaktif.',
-      cover_image: 'assets/images/dimsum-hero.png',
+      cover_image: 'assets/images/dimsum-hero.webp',
       project_url: '/landing-pages/snack-dimsum-playful.html',
       category: { name: 'Landing Page' }
     },

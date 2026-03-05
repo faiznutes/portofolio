@@ -1,0 +1,17 @@
+.git
+.github
+
+**/node_modules/
+
+legacy-portfolio-source/
+frontend/assets/images/legacy/
+
+frontend/package.json
+frontend/package-lock.json
+frontend/tailwind.config.cjs
+frontend/assets/tailwind-input.css
+
+/*.json
+/api_health_*.txt
+/coolify_*.json
+/cf_*.json

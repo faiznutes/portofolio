@@ -1,0 +1,51 @@
+name: Frontend Quality
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "frontend/**"
+      - "scripts/check-frontend-quality.mjs"
+      - "scripts/check-image-budget.mjs"
+      - "scripts/generate-sitemap.mjs"
+      - ".github/workflows/frontend-quality.yml"
+  pull_request:
+    paths:
+      - "frontend/**"
+      - "scripts/check-frontend-quality.mjs"
+      - "scripts/check-image-budget.mjs"
+      - "scripts/generate-sitemap.mjs"
+      - ".github/workflows/frontend-quality.yml"
+
+jobs:
+  static-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: "npm"
+          cache-dependency-path: "frontend/package-lock.json"
+
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Verify generated Tailwind CSS is up-to-date
+        working-directory: frontend
+        run: |
+          npm run build:css
+          git diff --exit-code -- assets/tailwind.css
+
+      - name: Run frontend quality checks
+        run: node scripts/check-frontend-quality.mjs
+
+      - name: Run image budget checks
+        run: node scripts/check-image-budget.mjs
+
+      - name: Verify sitemap is up-to-date
+        run: node scripts/generate-sitemap.mjs --check

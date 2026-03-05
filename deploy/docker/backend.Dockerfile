@@ -1,25 +1,32 @@
-FROM php:8.4-cli-alpine
+FROM php:8.4-apache-bookworm
 
-RUN apk add --no-cache \
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
     bash \
     git \
     curl \
     unzip \
     libzip-dev \
-    icu-dev \
-    oniguruma-dev \
-    sqlite-dev \
+    libicu-dev \
+    libonig-dev \
+    sqlite3 \
+    libsqlite3-dev \
+    && rm -rf /var/lib/apt/lists/* \
     && docker-php-ext-install \
     bcmath \
     intl \
     mbstring \
     pdo \
     pdo_sqlite \
-    zip
+    zip \
+    && a2enmod rewrite headers expires
 
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
 WORKDIR /var/www/html
+
+COPY deploy/docker/apache-backend.conf /etc/apache2/sites-available/000-default.conf
+RUN sed -ri 's!Listen 80!Listen 8000!g' /etc/apache2/ports.conf
 
 COPY backend/ ./
 
@@ -30,6 +37,10 @@ RUN mkdir -p database storage/framework/cache storage/framework/sessions storage
     && chown -R www-data:www-data storage bootstrap/cache database \
     && chmod -R 775 storage bootstrap/cache database
 
+COPY deploy/docker/backend-entrypoint.sh /usr/local/bin/backend-entrypoint.sh
+RUN chmod +x /usr/local/bin/backend-entrypoint.sh
+
 EXPOSE 8000
 
-CMD ["sh", "-lc", "[ -f .env ] || cp .env.example .env; php artisan migrate --force; php artisan serve --host=0.0.0.0 --port=8000 --no-reload"]
+ENTRYPOINT ["backend-entrypoint.sh"]
+CMD ["apache2-foreground"]

@@ -6,33 +6,10 @@
   <meta charset="utf-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
   <title>Nasi Campur Bangalexzz - Hidangan Indonesia Modern</title>
-  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
     rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
     rel="stylesheet" />
-  <script id="tailwind-config">
-    tailwind.config = {
-      darkMode: "class",
-      theme: {
-        extend: {
-          colors: {
-            "primary": "#13eca4",
-            "primary-dark": "#0eb57d",
-            "background-light": "#f6f8f7",
-            "background-dark": "#10221c",
-            "text-main": "#0d1b17",
-            "text-muted": "#4c9a80",
-          },
-          fontFamily: {
-            "display": ["Plus Jakarta Sans", "sans-serif"],
-            "sans": ["Plus Jakarta Sans", "sans-serif"]
-          },
-          borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
-        },
-      },
-    }
-  </script>
   <style>
     .no-scrollbar::-webkit-scrollbar {
       display: none;
@@ -43,9 +20,10 @@
       scrollbar-width: none;
     }
   </style>
+    <link rel="stylesheet" href="../assets/tailwind.css" />
 </head>
 
-<body class="bg-background-light dark:bg-background-dark text-text-main font-display antialiased overflow-x-hidden">
+<body data-theme="green" class="bg-background-light dark:bg-background-dark text-text-main font-display antialiased overflow-x-hidden">
   <div class="relative flex h-auto min-h-screen w-full flex-col group/design-root">
     <!-- Header -->
     <header
@@ -527,3 +505,5 @@
 </body>
 
 </html>
+
+
