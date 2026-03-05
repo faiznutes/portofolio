@@ -50,8 +50,9 @@ if ([string]::IsNullOrWhiteSpace($AdminPassword)) {
   $AdminPassword = "Admin!2026Strong"
 }
 
-Write-Host "[1/7] Prepare database (migrate + seed)..." -ForegroundColor Cyan
+Write-Host "[1/7] Clear Laravel caches + prepare database (migrate + seed)..." -ForegroundColor Cyan
 Push-Location $backend
+php artisan optimize:clear
 php artisan migrate
 php artisan db:seed
 Pop-Location
@@ -75,6 +76,7 @@ try {
 
   Write-Host "[6/7] Quick route checks..." -ForegroundColor Cyan
   Push-Location $backend
+  php artisan route:list --path=api/health
   php artisan route:list --path=api/public/health
   php artisan route:list --path=api/admin/works
   Pop-Location

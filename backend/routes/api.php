@@ -15,6 +15,18 @@ use App\Http\Controllers\Api\PublicContentController;
 use App\Http\Controllers\Api\PublicLeadController;
 use Illuminate\Support\Facades\Route;
 
+$healthHandler = static function () {
+    return response()->json([
+        'success' => true,
+        'message' => 'API is healthy.',
+        'data' => [
+            'service' => config('app.name'),
+            'env' => config('app.env'),
+            'timestamp' => now()->toISOString(),
+        ],
+    ]);
+};
+
 Route::prefix('auth')->middleware('api-observability')->group(function (): void {
     Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:auth-login');
 
@@ -24,18 +36,10 @@ Route::prefix('auth')->middleware('api-observability')->group(function (): void 
     });
 });
 
-Route::prefix('public')->middleware(['api-observability', 'throttle:public-api'])->group(function (): void {
-    Route::get('/health', function () {
-        return response()->json([
-            'success' => true,
-            'message' => 'API is healthy.',
-            'data' => [
-                'service' => config('app.name'),
-                'env' => config('app.env'),
-                'timestamp' => now()->toISOString(),
-            ],
-        ]);
-    });
+Route::middleware(['api-observability', 'throttle:public-api'])->get('/health', $healthHandler);
+
+Route::prefix('public')->middleware(['api-observability', 'throttle:public-api'])->group(function () use ($healthHandler): void {
+    Route::get('/health', $healthHandler);
     Route::get('/works', [PublicContentController::class, 'works']);
     Route::get('/works/{slug}', [PublicContentController::class, 'workDetail']);
     Route::get('/categories', [PublicContentController::class, 'categories']);

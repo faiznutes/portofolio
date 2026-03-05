@@ -54,6 +54,9 @@ Nginx + worker templates:
 ## 6) Domain target
 - Frontend: `https://faiznute.site`
 - API: `https://faiznute.site/api/*` (same-origin)
+- Health endpoints:
+  - `GET https://faiznute.site/api/public/health` (utama)
+  - `GET https://faiznute.site/api/health` (alias monitoring)
 - Cutover command:
   - `powershell -ExecutionPolicy Bypass -File scripts/cutover-check.ps1 -ApiBase "https://faiznute.site" -FrontendOrigin "https://faiznute.site"`
 
@@ -66,7 +69,7 @@ Nginx + worker templates:
 - Keep seed admin credentials rotated after first production login.
 - Verifikasi healthcheck container:
   - Frontend: `GET /`
-  - Backend API: `GET /api/public/health`
+  - Backend API: `GET /api/public/health` (atau alias `GET /api/health`)
 - Verifikasi response header security:
   - Frontend: CSP + HSTS + Permissions-Policy aktif.
   - Backend API: CSP restrictive (`default-src 'none'`) + HSTS aktif.

@@ -3,7 +3,7 @@
 This folder contains ready-to-use production templates.
 
 ## Nginx
-- `deploy/nginx/faiznute.site.conf` -> frontend static host (same-origin `/api` recommended)
+- `deploy/nginx/faiznute.site.conf` -> frontend static host + proxy same-origin `/api/*` dan `/sanctum/*`
 - `deploy/nginx/api.faiznute.site.conf` -> optional dedicated API subdomain template (legacy option)
 - `deploy/docker/apache-backend.conf` -> Apache vhost untuk backend container runtime
 

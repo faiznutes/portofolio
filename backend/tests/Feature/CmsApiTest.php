@@ -21,6 +21,12 @@ class CmsApiTest extends TestCase
 
     public function test_public_endpoints_return_content_and_accept_contact_lead(): void
     {
+        $this->getJson('/api/health')
+            ->assertOk()
+            ->assertHeader('X-Request-Id')
+            ->assertJsonPath('success', true)
+            ->assertJsonPath('message', 'API is healthy.');
+
         $this->getJson('/api/public/health')
             ->assertOk()
             ->assertHeader('X-Request-Id')
