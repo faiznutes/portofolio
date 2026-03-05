@@ -2,5 +2,6 @@ User-agent: *
 Allow: /
 Disallow: /admin/
 Disallow: /api/admin/
+Disallow: /test-all-pages.html
 
 Sitemap: https://faiznute.site/sitemap.xml
