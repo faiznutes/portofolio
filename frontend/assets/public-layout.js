@@ -60,6 +60,7 @@
       '      <a class="' + navClass('home') + '" href="/"' + ariaCurrent('home') + '>Home</a>' +
       '      <a class="' + navClass('works') + '" href="/works"' + ariaCurrent('works') + '>Karya</a>' +
       '      <a class="' + navClass('services') + '" href="/services"' + ariaCurrent('services') + '>Layanan</a>' +
+      '      <a class="' + navClass('insights') + '" href="/insights"' + ariaCurrent('insights') + '>Insights</a>' +
       '      <a class="' + navClass('cv') + '" href="/cv"' + ariaCurrent('cv') + '>CV</a>' +
       '      <a class="' + navClass('contact') + '" href="/contact"' + ariaCurrent('contact') + '>Kontak</a>' +
       '    </nav>' +
@@ -75,6 +76,7 @@
       '      <a class="rounded-lg px-3 py-2 ' + mobileNavClass('home') + '" href="/"' + ariaCurrent('home') + '>Home</a>' +
       '      <a class="rounded-lg px-3 py-2 ' + mobileNavClass('works') + '" href="/works"' + ariaCurrent('works') + '>Karya</a>' +
       '      <a class="rounded-lg px-3 py-2 ' + mobileNavClass('services') + '" href="/services"' + ariaCurrent('services') + '>Layanan</a>' +
+      '      <a class="rounded-lg px-3 py-2 ' + mobileNavClass('insights') + '" href="/insights"' + ariaCurrent('insights') + '>Insights</a>' +
       '      <a class="rounded-lg px-3 py-2 ' + mobileNavClass('cv') + '" href="/cv"' + ariaCurrent('cv') + '>CV</a>' +
       '      <a class="rounded-lg px-3 py-2 ' + mobileNavClass('contact') + '" href="/contact"' + ariaCurrent('contact') + '>Kontak</a>' +
       '      <a href="/contact" class="mt-2 rounded-xl bg-primary px-4 py-2.5 text-center text-sm font-bold text-white">Konsultasi</a>' +
@@ -140,7 +142,7 @@
       '<footer class="border-t border-slate-200 bg-white px-6 py-6 lg:px-10">' +
       '  <div class="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 text-sm text-slate-500 md:flex-row">' +
       '    <p>© 2026 Faiznute. All rights reserved.</p>' +
-      '    <div class="flex gap-6"><a href="/contact" class="hover:text-primary">Contact</a><a href="/cv" class="hover:text-primary">About</a></div>' +
+      '    <div class="flex gap-6"><a href="/contact" class="hover:text-primary">Contact</a><a href="/cv" class="hover:text-primary">About</a><a href="/insights" class="hover:text-primary">Insights</a></div>' +
       '  </div>' +
       '</footer>';
     var mainEl = document.querySelector('main');

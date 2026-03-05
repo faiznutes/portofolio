@@ -9,7 +9,11 @@ $pages = @(
   "/works",
   "/services",
   "/cv",
-  "/contact"
+  "/contact",
+  "/insights",
+  "/portofolio-web-dev-umkm",
+  "/jasa-video-editor-umkm",
+  "/jasa-editor-konten-sosmed"
 )
 
 function Get-TagContent {
