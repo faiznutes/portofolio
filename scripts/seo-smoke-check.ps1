@@ -59,6 +59,8 @@ foreach ($path in $pages) {
 
 $robotsTxt = Invoke-WebRequest -Uri "$BaseUrl/robots.txt" -UseBasicParsing
 $sitemap = Invoke-WebRequest -Uri "$BaseUrl/sitemap.xml" -UseBasicParsing
+$feed = Invoke-WebRequest -Uri "$BaseUrl/insights-feed.xml" -UseBasicParsing
 
 Write-Output "[robots.txt] status=$($robotsTxt.StatusCode)"
 Write-Output "[sitemap.xml] status=$($sitemap.StatusCode)"
+Write-Output "[insights-feed.xml] status=$($feed.StatusCode)"
