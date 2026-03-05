@@ -3,27 +3,84 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Faiznute | Layanan</title>
-    <meta name="description" content="Paket layanan landing page, company profile, dan konten visual untuk meningkatkan kredibilitas dan leads bisnis." />
+    <title>Layanan Faiznute | Web Dev, Design, Editor & Video Editor</title>
+    <meta name="description" content="Paket layanan Faiznute untuk web dev, company profile, desain visual, editor konten, dan video editor dari promo hingga premium." />
+    <meta name="keywords" content="layanan faiznute, jasa web dev, jasa editor, jasa video editor, jasa desain" />
     <meta name="robots" content="index,follow" />
+    <link rel="canonical" href="https://faiznute.site/services" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Faiznute | Layanan" />
-    <meta property="og:description" content="Paket layanan branding visual dan video campaign dari promo hingga premium." />
-    <meta property="og:image" content="assets/images/banner-layanan.webp" />
-    <meta property="og:url" content="/services.html" />
+    <meta property="og:site_name" content="Faiznute" />
+    <meta property="og:title" content="Layanan Faiznute | Web Dev, Design, Editor & Video Editor" />
+    <meta property="og:description" content="Paket layanan branding visual, web dev, dan video campaign dari promo hingga premium." />
+    <meta property="og:image" content="https://faiznute.site/assets/images/banner-layanan.webp" />
+    <meta property="og:url" content="https://faiznute.site/services" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Layanan Faiznute" />
+    <meta name="twitter:description" content="Paket web dev, editor visual, dan video editor untuk bisnis." />
+    <meta name="twitter:image" content="https://faiznute.site/assets/images/banner-layanan.webp" />
     <link rel="stylesheet" href="assets/public-shared.css" />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "Service",
-        "serviceType": "Branding Visual & Video Campaign Services",
-        "provider": {
-          "@type": "ProfessionalService",
-          "name": "Faiznute"
-        },
-        "url": "/services.html",
-        "description": "Paket layanan landing page, company profile, dan konten visual untuk bisnis."
+        "@graph": [
+          {
+            "@type": "Service",
+            "serviceType": "Web Dev, Branding Visual, Editor, dan Video Editor",
+            "provider": {
+              "@type": "ProfessionalService",
+              "name": "Faiznute",
+              "url": "https://faiznute.site/"
+            },
+            "url": "https://faiznute.site/services",
+            "description": "Paket layanan landing page, company profile, konten visual, editor, dan video editor untuk bisnis."
+          },
+          {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://faiznute.site/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Layanan",
+                "item": "https://faiznute.site/services"
+              }
+            ]
+          },
+          {
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Apakah Faiznute bisa bantu web dev dan video editor sekaligus?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Ya, layanan Faiznute mencakup web dev, desain visual, editor konten, dan video editor sesuai kebutuhan campaign bisnis."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Bagaimana cara pilih paket layanan yang tepat?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Pilih paket berdasarkan target campaign, timeline, dan budget. Jika masih ragu, gunakan tombol order WhatsApp untuk konsultasi awal."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Apakah bisa mulai dari paket kecil dulu?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Bisa. Paket disusun dari opsi promo hingga premium agar bisnis bisa mulai dari kebutuhan paling prioritas."
+                }
+              }
+            ]
+          }
+        ]
       }
     </script>
     <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
@@ -32,7 +89,7 @@
   </head>
   <body data-page="services" class="bg-bg-light font-display text-slate-900">
     <noscript>
-      <div class="noscript-fallback">JavaScript nonaktif. Navigasi cepat: <a href="index.html">Home</a><a href="works.html">Karya</a><a href="services.html">Layanan</a><a href="cv.html">CV</a><a href="contact.html">Kontak</a></div>
+      <div class="noscript-fallback">JavaScript nonaktif. Navigasi cepat: <a href="/">Home</a><a href="/works">Karya</a><a href="/services">Layanan</a><a href="/cv">CV</a><a href="/contact">Kontak</a></div>
     </noscript>
     <div id="app-header"></div>
     <main class="px-6 py-14 lg:px-10">
@@ -52,12 +109,30 @@
             <p class="text-sm text-slate-500">Memuat perbandingan paket...</p>
           </div>
         </section>
+        <section class="mt-10 rounded-2xl border border-slate-200 bg-white p-6">
+          <p class="text-xs font-bold uppercase tracking-wide text-primary">FAQ Layanan</p>
+          <h2 class="mt-1 text-2xl font-black">Pertanyaan yang Sering Ditanyakan</h2>
+          <div class="mt-5 space-y-4 text-sm text-slate-700">
+            <details class="rounded-xl border border-slate-200 bg-slate-50 p-4">
+              <summary class="cursor-pointer font-bold text-slate-900">Apakah Faiznute bisa bantu web dev dan video editor sekaligus?</summary>
+              <p class="mt-2">Ya. Anda bisa ambil layanan terpadu untuk website, desain visual, editor konten, dan video campaign dalam workflow yang konsisten.</p>
+            </details>
+            <details class="rounded-xl border border-slate-200 bg-slate-50 p-4">
+              <summary class="cursor-pointer font-bold text-slate-900">Bagaimana cara memilih paket layanan?</summary>
+              <p class="mt-2">Pilih berdasarkan target campaign dan budget. Jika butuh arahan cepat, lanjutkan ke <a href="/contact" class="font-bold text-primary hover:underline">halaman kontak konsultasi</a>.</p>
+            </details>
+            <details class="rounded-xl border border-slate-200 bg-slate-50 p-4">
+              <summary class="cursor-pointer font-bold text-slate-900">Bisa mulai dari paket kecil dulu?</summary>
+              <p class="mt-2">Bisa. Paket disusun dari tier promo sampai premium, jadi Anda bisa mulai dari prioritas utama lalu scale-up bertahap.</p>
+            </details>
+          </div>
+        </section>
         <section class="mt-10 overflow-hidden rounded-3xl border border-slate-200 bg-white">
           <img data-global-cta-image data-banner-fixed="1" src="assets/images/banner-layanan.webp?v=20260304b" alt="CTA layanan" class="aspect-[3/1] w-full object-cover" />
           <div class="p-8">
             <h2 data-global-cta-title class="text-3xl font-black">Siap kolaborasi project?</h2>
             <p data-global-cta-subtitle class="mt-2 text-slate-600">Kirim brief dan target bisnismu, saya bantu eksekusi dengan workflow jelas.</p>
-            <a data-global-cta-link href="contact.html" class="mt-4 inline-flex rounded-xl bg-primary px-5 py-3 text-sm font-bold text-white"><span data-global-cta-label>Mulai Diskusi</span></a>
+            <a data-global-cta-link href="/contact" class="mt-4 inline-flex rounded-xl bg-primary px-5 py-3 text-sm font-bold text-white"><span data-global-cta-label>Mulai Diskusi</span></a>
           </div>
         </section>
       </div>

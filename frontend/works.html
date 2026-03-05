@@ -3,28 +3,55 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Faiznute | Karya</title>
-    <meta name="description" content="Lihat portofolio karya web, branding, dan video dari project bisnis nyata yang dikerjakan Faiznute." />
+    <title>Portofolio Karya Faiznute | Web Dev, Design & Video Editor</title>
+    <meta name="description" content="Lihat portofolio karya Faiznute untuk web dev, desain visual, dan video editor dari project bisnis nyata." />
+    <meta name="keywords" content="portofolio faiznute, karya web dev, portfolio video editor, project desain" />
     <meta name="robots" content="index,follow" />
+    <link rel="canonical" href="https://faiznute.site/works" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Faiznute | Karya" />
-    <meta property="og:description" content="Kumpulan project web, design, dan video untuk kebutuhan bisnis." />
-    <meta property="og:image" content="assets/images/real-clinic.jpg" />
-    <meta property="og:url" content="/works.html" />
+    <meta property="og:site_name" content="Faiznute" />
+    <meta property="og:title" content="Portofolio Karya Faiznute | Web Dev, Design & Video Editor" />
+    <meta property="og:description" content="Kumpulan project web dev, design, dan video editor untuk kebutuhan bisnis." />
+    <meta property="og:image" content="https://faiznute.site/assets/images/real-clinic.jpg" />
+    <meta property="og:url" content="https://faiznute.site/works" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Portofolio Karya Faiznute" />
+    <meta name="twitter:description" content="Portfolio web dev, editor visual, dan video editor untuk bisnis." />
+    <meta name="twitter:image" content="https://faiznute.site/assets/images/real-clinic.jpg" />
     <link rel="stylesheet" href="assets/public-shared.css" />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "CollectionPage",
-        "name": "Koleksi Karya Faiznute",
-        "url": "/works.html",
-        "description": "Portofolio project web, branding, dan video untuk kebutuhan bisnis.",
-        "isPartOf": {
-          "@type": "WebSite",
-          "name": "Faiznute",
-          "url": "/index.html"
-        }
+        "@graph": [
+          {
+            "@type": "CollectionPage",
+            "name": "Koleksi Karya Faiznute",
+            "url": "https://faiznute.site/works",
+            "description": "Portofolio project web dev, branding visual, dan video editor untuk kebutuhan bisnis.",
+            "isPartOf": {
+              "@type": "WebSite",
+              "name": "Faiznute",
+              "url": "https://faiznute.site/"
+            }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://faiznute.site/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Karya",
+                "item": "https://faiznute.site/works"
+              }
+            ]
+          }
+        ]
       }
     </script>
     <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
@@ -33,13 +60,14 @@
   </head>
   <body data-page="works" class="bg-bg-light font-display text-slate-900">
     <noscript>
-      <div class="noscript-fallback">JavaScript nonaktif. Navigasi cepat: <a href="index.html">Home</a><a href="works.html">Karya</a><a href="services.html">Layanan</a><a href="cv.html">CV</a><a href="contact.html">Kontak</a></div>
+      <div class="noscript-fallback">JavaScript nonaktif. Navigasi cepat: <a href="/">Home</a><a href="/works">Karya</a><a href="/services">Layanan</a><a href="/cv">CV</a><a href="/contact">Kontak</a></div>
     </noscript>
     <div id="app-header"></div>
     <main class="px-6 py-14 lg:px-10">
       <div class="mx-auto max-w-7xl">
         <h1 class="text-4xl font-black">Koleksi Karya</h1>
         <p class="mt-3 max-w-2xl text-slate-600">Portofolio project nyata untuk kebutuhan UMKM, F&amp;B, properti, dan event dengan pendekatan visual yang terukur dan berorientasi hasil.</p>
+        <p class="mt-3 text-sm text-slate-600">Cari contoh kerja yang relevan? Lanjut ke <a href="/services" class="font-bold text-primary hover:underline">halaman layanan web dev, design, dan video editor</a> atau <a href="/contact" class="font-bold text-primary hover:underline">kirim brief project sekarang</a>.</p>
         <div class="mt-10 grid grid-cols-1 gap-7 md:grid-cols-2 lg:grid-cols-2" data-works-grid></div>
         <p class="mt-6 text-sm text-slate-500" data-works-notice></p>
         <section class="mt-10 overflow-hidden rounded-3xl border border-slate-200 bg-white">
@@ -47,7 +75,7 @@
           <div class="p-8">
             <h2 data-global-cta-title class="text-3xl font-black">Punya project serupa?</h2>
             <p data-global-cta-subtitle class="mt-2 text-slate-600">Diskusikan kebutuhanmu, saya bantu susun konsep visual dan eksekusi teknis.</p>
-            <a data-global-cta-link href="contact.html" class="mt-4 inline-flex rounded-xl bg-primary px-5 py-3 text-sm font-bold text-white"><span data-global-cta-label>Mulai Konsultasi</span></a>
+            <a data-global-cta-link href="/contact" class="mt-4 inline-flex rounded-xl bg-primary px-5 py-3 text-sm font-bold text-white"><span data-global-cta-label>Mulai Konsultasi</span></a>
           </div>
         </section>
       </div>

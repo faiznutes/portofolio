@@ -3,26 +3,59 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Faiznute | CV</title>
-    <meta name="description" content="Profil Muhamad Faiz A sebagai Graphic Designer & Video Editor dengan pengalaman branding visual, campaign video, dan live commerce." />
+    <title>CV Faiznute | Graphic Designer, Video Editor, dan Web Dev</title>
+    <meta name="description" content="CV Faiznute menampilkan profil Graphic Designer, Video Editor, dan kemampuan web dev untuk project branding dan campaign bisnis." />
+    <meta name="keywords" content="cv faiznute, graphic designer, video editor, editor konten, web dev" />
     <meta name="robots" content="index,follow" />
+    <link rel="canonical" href="https://faiznute.site/cv" />
     <meta property="og:type" content="profile" />
-    <meta property="og:title" content="Faiznute | CV" />
-    <meta property="og:description" content="Profil profesional Graphic Designer & Video Editor Faiznute." />
-    <meta property="og:image" content="assets/images/1000121680-KuDX9S0_.png" />
-    <meta property="og:url" content="/cv.html" />
+    <meta property="og:site_name" content="Faiznute" />
+    <meta property="og:title" content="CV Faiznute | Graphic Designer, Video Editor, dan Web Dev" />
+    <meta property="og:description" content="Profil profesional Faiznute untuk kebutuhan desain, editing, dan pengembangan web." />
+    <meta property="og:image" content="https://faiznute.site/assets/images/1000121680-KuDX9S0_.png" />
+    <meta property="og:url" content="https://faiznute.site/cv" />
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="CV Faiznute" />
+    <meta name="twitter:description" content="Profil Graphic Designer, Video Editor, dan web dev Faiznute." />
+    <meta name="twitter:image" content="https://faiznute.site/assets/images/1000121680-KuDX9S0_.png" />
     <link rel="stylesheet" href="assets/public-shared.css" />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "Person",
-        "name": "Muhamad Faiz A",
-        "jobTitle": "Graphic Designer & Video Editor",
-        "url": "/cv.html",
-        "email": "faiznute07@gmail.com",
-        "telephone": "085155043133",
-        "knowsAbout": ["Web Development", "UI Design", "Video Editing"]
+        "@graph": [
+          {
+            "@type": "Person",
+            "name": "Muhamad Faiz A",
+            "alternateName": "Faiznute",
+            "jobTitle": "Graphic Designer & Video Editor",
+            "url": "https://faiznute.site/cv",
+            "email": "faiznute07@gmail.com",
+            "telephone": "085155043133",
+            "knowsAbout": ["Web Development", "Graphic Design", "Content Editing", "Video Editing"],
+            "sameAs": [
+              "https://instagram.com/faiznute",
+              "https://tiktok.com/@bangalexzz",
+              "https://youtube.com/bangalexzz"
+            ]
+          },
+          {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://faiznute.site/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "CV",
+                "item": "https://faiznute.site/cv"
+              }
+            ]
+          }
+        ]
       }
     </script>
     <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
@@ -31,7 +64,7 @@
   </head>
   <body data-page="cv" class="bg-bg-light font-display text-slate-900">
     <noscript>
-      <div class="noscript-fallback">JavaScript nonaktif. Navigasi cepat: <a href="index.html">Home</a><a href="works.html">Karya</a><a href="services.html">Layanan</a><a href="cv.html">CV</a><a href="contact.html">Kontak</a></div>
+      <div class="noscript-fallback">JavaScript nonaktif. Navigasi cepat: <a href="/">Home</a><a href="/works">Karya</a><a href="/services">Layanan</a><a href="/cv">CV</a><a href="/contact">Kontak</a></div>
     </noscript>
     <div id="app-header"></div>
     <main class="px-6 py-14 lg:px-10">
@@ -50,12 +83,17 @@
           <article class="lg:col-span-2 rounded-2xl border border-slate-200 bg-white p-8"><h2 class="text-xl font-black">Pengalaman</h2><div class="mt-5 space-y-5 text-sm text-slate-700" data-cv-experience></div></article>
           <article class="rounded-2xl border border-slate-200 bg-white p-8"><h2 class="text-xl font-black">Skills</h2><div class="mt-4 flex flex-wrap gap-2 text-sm" data-cv-skills></div></article>
         </section>
+        <section class="rounded-2xl border border-slate-200 bg-white p-6 text-sm text-slate-700">
+          Ingin lihat hasil kerja langsung? Buka <a href="/works" class="font-bold text-primary hover:underline">portofolio karya Faiznute</a>,
+          cek <a href="/services" class="font-bold text-primary hover:underline">paket layanan web dev dan video editor</a>,
+          lalu lanjut ke <a href="/contact" class="font-bold text-primary hover:underline">konsultasi project</a>.
+        </section>
         <section class="overflow-hidden rounded-3xl border border-slate-200 bg-white">
           <img data-global-cta-image data-banner-fixed="1" src="assets/images/banner-cv.webp?v=20260304b" alt="CTA CV" class="aspect-[3/1] w-full object-cover" />
           <div class="p-8">
             <h2 data-global-cta-title class="text-3xl font-black">Butuh partner desain dan video?</h2>
             <p data-global-cta-subtitle class="mt-2 text-slate-600">Saya siap bantu dari konsep sampai eksekusi visual campaign.</p>
-            <a data-global-cta-link href="contact.html" class="mt-4 inline-flex rounded-xl bg-primary px-5 py-3 text-sm font-bold text-white"><span data-global-cta-label>Hubungi Sekarang</span></a>
+            <a data-global-cta-link href="/contact" class="mt-4 inline-flex rounded-xl bg-primary px-5 py-3 text-sm font-bold text-white"><span data-global-cta-label>Hubungi Sekarang</span></a>
           </div>
         </section>
       </div>
