@@ -15,7 +15,9 @@ $pages = @(
   "/jasa-video-editor-umkm",
   "/jasa-editor-konten-sosmed",
   "/jasa-graphic-designer-umkm",
-  "/landing-page-umkm-conversion"
+  "/landing-page-umkm-conversion",
+  "/jasa-video-editor-surabaya",
+  "/jasa-web-dev-surabaya"
 )
 
 function Get-TagContent {
